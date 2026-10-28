@@ -8,21 +8,38 @@ use shimcache_forensic::{audit, read_system_file, ShimcacheAnomaly, SystemCaches
 use std::io::Write;
 use std::process::ExitCode;
 
+const USAGE: &str = "usage: shimcache4n6 <SYSTEM hive> [--list] [--csv FILE]";
+
+/// A mistake in the arguments: said on stderr with the usage, exit status 2.
+fn usage(problem: &str) -> ExitCode {
+    eprintln!("shimcache4n6: {problem}\n{USAGE}");
+    ExitCode::from(2)
+}
+
 fn main() -> ExitCode {
-    let args: Vec<String> = std::env::args().skip(1).collect();
-    let list = args.iter().any(|a| a == "--list");
-    let csv = args
-        .iter()
-        .position(|a| a == "--csv")
-        .and_then(|i| args.get(i + 1).cloned());
-    let Some(hive_path) = args
-        .iter()
-        .enumerate()
-        .find(|(i, a)| !a.starts_with("--") && (*i == 0 || args[*i - 1] != "--csv"))
-        .map(|(_, a)| a.clone())
-    else {
-        eprintln!("usage: shimcache4n6 <SYSTEM hive> [--list] [--csv FILE]");
-        return ExitCode::from(2);
+    let mut list = false;
+    let mut csv = None;
+    let mut hive_path = None;
+    let mut args = std::env::args().skip(1);
+    while let Some(arg) = args.next() {
+        match arg.as_str() {
+            "--list" => list = true,
+            // a file name that starts with "-" is given as ./-name
+            "--csv" => match args.next() {
+                Some(file) if !file.starts_with('-') => csv = Some(file),
+                _ => return usage("--csv needs a file name"),
+            },
+            "-h" | "--help" => {
+                println!("{USAGE}");
+                return ExitCode::SUCCESS;
+            }
+            _ if arg.starts_with('-') => return usage(&format!("unknown option {arg}")),
+            _ if hive_path.is_none() => hive_path = Some(arg),
+            _ => return usage(&format!("more than one hive given ({arg})")),
+        }
+    }
+    let Some(hive_path) = hive_path else {
+        return usage("no SYSTEM hive given");
     };
     let caches = match read_system_file(std::path::Path::new(&hive_path)) {
         Ok(c) => c,
@@ -82,7 +99,8 @@ fn print_report(w: &mut impl Write, caches: &SystemCaches, list: bool) -> std::i
                 for p in &c.problems {
                     writeln!(w, "  {p}")?;
                 }
-                for a in audit(&c.entries) {
+                // the entries recovered from the slack too
+                for a in audit(&c.entries).into_iter().chain(audit(&cs.slack)) {
                     if !anomalies.contains(&a) {
                         anomalies.push(a);
                     }

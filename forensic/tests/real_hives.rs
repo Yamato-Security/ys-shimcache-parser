@@ -198,3 +198,36 @@ fn a_32bit_windows7_hive_with_two_control_sets() {
     assert!(rows.iter().all(|r| r.duplicate == (r.control_set == 2)));
     let _ = std::fs::remove_dir_all(dir);
 }
+
+#[test]
+fn a_log_whose_entries_are_damaged_is_not_applied() {
+    let dir = scenario(
+        "w11-damaged-log",
+        &[
+            (&format!("{W11}/SYSTEM.gz"), "SYSTEM"),
+            (&format!("{W11}/SYSTEM.LOG1.gz"), "SYSTEM.LOG1"),
+            (&format!("{W11}/SYSTEM.LOG2.gz"), "SYSTEM.LOG2"),
+        ],
+    );
+    // one byte of the first entry's pages: its hash no longer matches
+    let damage = |name: &str| {
+        let path = dir.join(name);
+        let mut b = std::fs::read(&path).unwrap();
+        b[512 + 100] ^= 0xff;
+        std::fs::write(&path, b).unwrap();
+    };
+    damage("SYSTEM.LOG1");
+    // LOG1 (entries 620 and 621) gives nothing, so LOG2 (622 to 635) is used
+    let c = read_system_file(&dir.join("SYSTEM")).unwrap();
+    assert!(c.recovery.recovered, "{:?}", c.recovery.messages);
+    assert_eq!(c.recovery.logs_applied, ["SYSTEM.LOG2"]);
+    assert_eq!(c.recovery.last_sequence, Some(635));
+    damage("SYSTEM.LOG2");
+    let c = read_system_file(&dir.join("SYSTEM")).unwrap();
+    assert!(c.recovery.dirty && !c.recovery.recovered);
+    assert_eq!(c.recovery.logs_applied, Vec::<String>::new());
+    assert_eq!(c.recovery.last_sequence, None);
+    // the hive is read as it is
+    assert_eq!(c.control_sets[0].cache.as_ref().unwrap().entries.len(), 359);
+    let _ = std::fs::remove_dir_all(dir);
+}

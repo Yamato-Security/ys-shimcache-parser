@@ -539,3 +539,64 @@ fn random_damage_never_panics() {
         }
     }
 }
+
+#[test]
+fn a_damaged_entry_signature_is_reported_not_skipped() {
+    let entries = [
+        win10_entry(r"C:\a.exe", 131_000_000_000_000_000, &[]),
+        win10_entry(r"C:\b.exe", 131_000_000_000_000_001, &[]),
+    ];
+    let mut v = win10(true, &entries);
+    let second = 0x34 + entries[0].len();
+    v[second..second + 4].copy_from_slice(b"10tX");
+    let c = decode(&v, None).unwrap();
+    assert_eq!(c.entries.len(), 1);
+    assert_eq!(c.expected_entries, Some(2));
+    assert_eq!(c.problems.len(), 1, "{:?}", c.problems);
+    assert!(
+        c.problems[0].starts_with(&format!(
+            "Entry 1 at offset 0x{second:X}: no entry signature"
+        )),
+        "{:?}",
+        c.problems
+    );
+    // Windows 8: the same (it has no count)
+    let mut v = win8(
+        true,
+        &[(r"C:\a.exe", 1, 2, "", &[]), (r"C:\b.exe", 2, 2, "", &[])],
+    );
+    let at = v.len() - (v.len() - 128) / 2;
+    v[at..at + 4].copy_from_slice(b"XXXX");
+    let c = decode(&v, None).unwrap();
+    assert_eq!(c.entries.len(), 1);
+    assert_eq!(c.problems.len(), 1, "{:?}", c.problems);
+}
+
+#[test]
+fn a_cache_that_ends_before_its_header_count_says_so() {
+    let entries = [
+        win10_entry(r"C:\a.exe", 131_000_000_000_000_000, &[]),
+        win10_entry(r"C:\b.exe", 131_000_000_000_000_001, &[]),
+    ];
+    // the first entry of a two-entry cache, then nothing (or zeros)
+    for tail in [0, 64] {
+        let mut v = win10(false, &entries);
+        v.truncate(0x30 + entries[0].len());
+        v.resize(v.len() + tail, 0);
+        let c = decode(&v, None).unwrap();
+        assert_eq!(c.entries.len(), 1);
+        assert_eq!(
+            c.problems,
+            ["The header gives 2 entries, but the cache ends after 1: entries may be missing"]
+        );
+    }
+    // a count lower than the entries (as Windows often writes it) is not a problem
+    let mut v = win10(false, &entries);
+    v[0x24..0x28].copy_from_slice(&0u32.to_le_bytes());
+    let c = decode(&v, None).unwrap();
+    assert_eq!((c.entries.len(), c.problems.len()), (2, 0));
+    // nor are zeros after the last entry
+    let mut v = win10(false, &entries);
+    v.extend([0u8; 100]);
+    assert_eq!(decode(&v, None).unwrap().problems.len(), 0);
+}

@@ -47,3 +47,13 @@ AppCompatCacheParser 2026.10.1 on every public value and hive found. (@YamatoSec
   others), were an unknown signature.
 - Damaged hives panicked (winreg-core `cell_reader.rs`); dirty hives were read without their logs;
   only the current control set was read.
+- The relocated-system-binary finding took any folder named `System32` or `SysWOW64` for Windows'
+  own (`C:\Program Files\Vendor\System32\svchost.exe` was not flagged): now only those in the
+  Windows directory (`C:\Windows`, `C:\WINNT`, `SYSVOL\Windows`, `%SystemRoot%`).
+- In review: a transaction log none of whose entries could be applied was counted as applied (as
+  AppCompatCacheParser and yarp do), so a dirty hive looked recovered; it is now not used, and
+  the other log is tried. A dirty page outside its entry's hive bins could make the hive grow to
+  4 GiB; such an entry now ends the log, and hive bins are at most 2 GiB. A signed cache that
+  stopped at a damaged entry signature lost the entries after it without a problem reported.
+  `shimcache4n6` left the entries recovered from the slack out of its findings, and took
+  `--csv --list` as a file named `--list`.

@@ -28,12 +28,22 @@ fn every_value_reads_as_appcompatcacheparser_reads_it() {
         if expected >= 0 {
             assert_eq!(cache.expected_entries, Some(expected as u32), "{file}");
         }
+        // AppCompatCacheParser's problems, and where a signed cache ends before its header's
+        // count (two of artemis's values are its first entries only), the note it doesn't make
+        let (notes, problems): (Vec<_>, Vec<_>) = cache
+            .problems
+            .iter()
+            .partition(|p| p.starts_with("The header gives"));
         assert_eq!(
-            cache.problems.len(),
+            problems.len(),
             ec["errors"].as_array().unwrap().len(),
-            "{file}: {:?}",
-            cache.problems
+            "{file}: {problems:?}"
         );
+        let cut = matches!(
+            file,
+            "artemis/win10Creatorsshim.raw" | "artemis/win11shim.raw"
+        );
+        assert_eq!(notes.len(), usize::from(cut), "{file}: {notes:?}");
         let ee = ec["entries"].as_array().unwrap();
         assert_eq!(cache.entries.len(), ee.len(), "{file}");
         for (e, x) in cache.entries.iter().zip(ee) {

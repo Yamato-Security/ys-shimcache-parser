@@ -439,3 +439,77 @@ fn damage_never_panics_or_hangs() {
     looped[ri + 4..ri + 8].copy_from_slice(&list.to_le_bytes()[..4]);
     let _ = read_system(looped, &[]);
 }
+
+/// `shimcache4n6` in `dir` with these arguments: (exit status, stdout, stderr).
+fn run_cli(dir: &std::path::Path, args: &[&str]) -> (i32, String, String) {
+    let out = std::process::Command::new(env!("CARGO_BIN_EXE_shimcache4n6"))
+        .current_dir(dir)
+        .args(args)
+        .output()
+        .unwrap();
+    (
+        out.status.code().unwrap_or(-1),
+        String::from_utf8_lossy(&out.stdout).into_owned(),
+        String::from_utf8_lossy(&out.stderr).into_owned(),
+    )
+}
+
+#[test]
+fn findings_include_the_entries_recovered_from_the_slack() {
+    let live = win10_entry(r"C:\Windows\System32\notepad.exe", false);
+    let gone = win10_entry(r"C:\Users\Public\Downloads\payload.exe", true);
+    let mut slack = vec![0xAA, 0xBB];
+    slack.extend(&gone);
+    let h = system(
+        vec![(
+            "ControlSet001",
+            Some((win10(std::slice::from_ref(&live)), slack)),
+            "AMD64",
+        )],
+        false,
+    );
+    let dir = std::env::temp_dir().join(format!("shimcache-cli-slack-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("SYSTEM"), h).unwrap();
+    let (code, out, err) = run_cli(&dir, &["SYSTEM"]);
+    assert_eq!(code, 0, "{err}");
+    assert!(
+        out.contains("1 entries (and 1 recovered from slack)"),
+        "{out}"
+    );
+    assert!(
+        out.contains(r"SHIMCACHE-SUSPICIOUS-PATH  C:\Users\Public\Downloads\payload.exe"),
+        "{out}"
+    );
+    let _ = std::fs::remove_dir_all(dir);
+}
+
+#[test]
+fn the_command_line_is_checked() {
+    let dir = std::env::temp_dir().join(format!("shimcache-cli-args-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("SYSTEM"), system(vec![], false)).unwrap();
+    for (args, problem) in [
+        (&[][..], "no SYSTEM hive given"),
+        (&["SYSTEM", "--csv"][..], "--csv needs a file name"),
+        (
+            &["SYSTEM", "--csv", "--list"][..],
+            "--csv needs a file name",
+        ),
+        (&["SYSTEM", "--bogus"][..], "unknown option --bogus"),
+        (&["SYSTEM", "OTHER"][..], "more than one hive given (OTHER)"),
+    ] {
+        let (code, out, err) = run_cli(&dir, args);
+        assert_eq!(code, 2, "{args:?}: {out}");
+        assert!(err.contains(problem), "{args:?}: {err}");
+        assert!(err.contains("usage: shimcache4n6"), "{args:?}: {err}");
+    }
+    // nothing was written in place of the missing CSV name
+    assert!(!dir.join("--list").exists());
+    let (code, out, _) = run_cli(&dir, &["--help"]);
+    assert_eq!((code, out.starts_with("usage:")), (0, true));
+    let (code, _, err) = run_cli(&dir, &["SYSTEM", "--list", "--csv", "out.csv"]);
+    assert_eq!(code, 0, "{err}");
+    assert!(dir.join("out.csv").exists());
+    let _ = std::fs::remove_dir_all(dir);
+}

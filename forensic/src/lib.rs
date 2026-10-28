@@ -289,11 +289,11 @@ pub fn audit(entries: &[ShimcacheEntry]) -> Vec<ShimcacheAnomaly> {
     let mut out = Vec::new();
     for e in entries {
         let name = base_name(&e.path);
-        let upper = e.path.to_uppercase();
-        let in_system = upper.contains(r"\SYSTEM32\") || upper.contains(r"\SYSWOW64\");
         // System-binary baseline + suspicious-location list are shared DFIR knowledge — they
         // live in forensicnomicon, not baked in here.
-        if forensicnomicon::processes::is_system32_binary(&name) && !in_system {
+        if forensicnomicon::processes::is_system32_binary(&name)
+            && !in_windows_system_directory(&e.path)
+        {
             out.push(ShimcacheAnomaly::SystemBinaryRelocated {
                 name: name.to_uppercase(),
                 path: e.path.clone(),
@@ -308,6 +308,38 @@ pub fn audit(entries: &[ShimcacheEntry]) -> Vec<ShimcacheAnomaly> {
         }
     }
     out
+}
+
+/// Whether `path` is in Windows' own `System32` or `SysWOW64` (or a folder in them): under the
+/// Windows directory of a drive (`C:\Windows`, `C:\WINNT`, also as `\\?\C:\Windows`), of the
+/// system volume as Windows 8 records it (`SYSVOL\Windows`), or of `%SystemRoot%`, `%windir%` or
+/// `\SystemRoot`. A `System32` folder anywhere else (`C:\Program Files\Vendor\System32`) is
+/// not Windows'.
+fn in_windows_system_directory(path: &str) -> bool {
+    let upper = path.replace('/', "\\").to_uppercase();
+    let p = [r"\\?\", r"\\.\", r"\??\"]
+        .iter()
+        .find_map(|prefix| upper.strip_prefix(prefix))
+        .unwrap_or(&upper);
+    let system = |rest: &str| rest.starts_with("SYSTEM32\\") || rest.starts_with("SYSWOW64\\");
+    if let Some(rest) = ["%SYSTEMROOT%\\", "%WINDIR%\\", "\\SYSTEMROOT\\"]
+        .iter()
+        .find_map(|root| p.strip_prefix(root))
+    {
+        return system(rest);
+    }
+    let b = p.as_bytes();
+    let volume = if let Some(rest) = p.strip_prefix("SYSVOL\\") {
+        rest
+    } else if b.len() > 3 && b[0].is_ascii_alphabetic() && b[1] == b':' && b[2] == b'\\' {
+        &p[3..]
+    } else {
+        return false;
+    };
+    ["WINDOWS\\", "WINNT\\"]
+        .iter()
+        .find_map(|windows| volume.strip_prefix(windows))
+        .is_some_and(system)
 }
 
 /// The base name (last `\`/`/`-component) of a Windows path.

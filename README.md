@@ -50,6 +50,9 @@ What the fork changes:
 | Transaction log replay: new-format logs (`HvLE`, Marvin32 hashes, sequence numbers, both logs in order, an invalid base block taken from the latest log) and old `DIRT` logs | Registry's `LogReplay`, the regf specification |
 | Every `ControlSetNNN`, with AppCompatCacheParser's `Duplicate` (an entry seen in an earlier control set or the slack) | AppCompatCacheParser |
 | `shimcache4n6 SYSTEM [--list] [--csv FILE]`: the logs next to the hive applied, a summary per control set, the findings, and AppCompatCacheParser's CSV | AppCompatCacheParser |
+| A log none of whose entries can be applied (or an old-format log with no dirty page) is not counted as applied, and the other log is tried; a dirty page must be inside its entry's hive bins (at most 2 GiB), and the hive grows only when the memory can be had. AppCompatCacheParser and yarp count such a log as applied, so a hive looked recovered with nothing applied | the regf specification; fork (found in review) |
+| A signed cache (Windows 8 to 11) that stops where bytes other than zeros have no entry signature, or before the count its Windows 10 / 11 header gives, is reported in `Cache::problems`; AppCompatCacheParser stops there without a word | fork (found in review) |
+| Findings: a system binary is in place only in the Windows directory's `System32` or `SysWOW64` (not in any folder of that name, such as `C:\Program Files\Vendor\System32`); the entries recovered from the slack are audited too; `shimcache4n6` rejects a missing `--csv` file name and unknown arguments | fork (found in review) |
 | One CI (Linux, macOS, Windows, MSRV 1.85, wasm32, cargo-deny), actions pinned by commit | fork |
 
 ## How it's checked

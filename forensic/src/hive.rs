@@ -21,6 +21,8 @@ use std::collections::HashSet;
 const BASE: usize = 4096;
 const LOG_BASE: usize = 512;
 const HBIN_ALIGNMENT: u32 = 4096;
+/// The largest hive bins data size: cell offsets are 31 bits, so a hive holds at most 2 GiB.
+const MAX_HIVE_BINS: u32 = 0x8000_0000;
 const MARVIN_SEED: u64 = 0x82EF_4D88_7A4E_55C5;
 /// Big data segments hold this much (the rest of their cell is padding).
 const SEGMENT: usize = 16344;
@@ -470,13 +472,34 @@ struct State {
 }
 
 impl State {
-    /// Write a page, growing the file when it is past the end.
-    fn write(&mut self, offset: usize, page: &[u8]) {
-        let end = offset + page.len();
+    /// Grow the file to hold `hbins_end` bytes of hive bins; `false` when the memory for it
+    /// can't be had (the file is then as it was).
+    fn grow(&mut self, hbins_end: u64) -> bool {
+        let Ok(end) = usize::try_from(hbins_end + BASE as u64) else {
+            return false;
+        };
         if end > self.bytes.len() {
+            if self
+                .bytes
+                .try_reserve_exact(end - self.bytes.len())
+                .is_err()
+            {
+                return false;
+            }
             self.bytes.resize(end, 0);
         }
-        self.bytes[offset..end].copy_from_slice(page);
+        true
+    }
+
+    /// Write a page at a hive bins offset, growing the file when it is past the end.
+    fn write(&mut self, offset: u32, page: &[u8]) -> bool {
+        let end = u64::from(offset) + page.len() as u64;
+        if !self.grow(end) {
+            return false;
+        }
+        let start = BASE + offset as usize;
+        self.bytes[start..start + page.len()].copy_from_slice(page);
+        true
     }
 }
 
@@ -663,21 +686,26 @@ fn apply_new_log(st: &mut State, log: &LogFile) -> Result<(), String> {
             log.name, bb.primary_sequence, st.primary.secondary_sequence
         ));
     }
-    st.log_base = Some(log.data.get(..LOG_BASE).unwrap_or_default().to_vec());
+    let flags = st.flags;
     st.flags = bb.flags;
     let applied = apply_entries(st, &log.data, bb.primary_sequence, &log.name);
+    if applied == 0 {
+        // nothing of it is in the hive: not applied (and with two logs, the other one is tried)
+        st.flags = flags;
+        return Err(format!(
+            "{}: no log entry could be applied, so it is not used",
+            log.name
+        ));
+    }
+    st.log_base = Some(log.data.get(..LOG_BASE).unwrap_or_default().to_vec());
     st.applied += 1;
     st.logs_applied.push(log.name.clone());
-    st.messages.push(if applied > 0 {
-        format!(
-            "{}: applied {applied} log entries (sequence numbers {} to {})",
-            log.name,
-            bb.primary_sequence,
-            st.last_sequence.unwrap_or(0)
-        )
-    } else {
-        format!("{}: no log entries to apply", log.name)
-    });
+    st.messages.push(format!(
+        "{}: applied {applied} log entries (sequence numbers {} to {})",
+        log.name,
+        bb.primary_sequence,
+        st.last_sequence.unwrap_or(0)
+    ));
     Ok(())
 }
 
@@ -693,30 +721,55 @@ fn apply_entries(st: &mut State, b: &[u8], first: u32, name: &str) -> usize {
             break;
         }
         let size = u32_at(b, pos + 4).unwrap_or(0) as usize;
+        let hbins = u32_at(b, pos + 16).unwrap_or(0);
         let count = u32_at(b, pos + 20).unwrap_or(0) as usize;
         let pages = pos + 40 + 8 * count;
-        let refs: Vec<(usize, usize)> = (0..count)
+        let refs: Vec<(u32, u32)> = (0..count)
             .map(|i| {
                 (
-                    u32_at(b, pos + 40 + 8 * i).unwrap_or(0) as usize,
-                    u32_at(b, pos + 44 + 8 * i).unwrap_or(0) as usize,
+                    u32_at(b, pos + 40 + 8 * i).unwrap_or(0),
+                    u32_at(b, pos + 44 + 8 * i).unwrap_or(0),
                 )
             })
             .collect();
-        if refs.iter().map(|r| r.1).sum::<usize>() + pages > b.len() {
+        let total = refs.iter().map(|r| u64::from(r.1)).sum::<u64>();
+        if total + pages as u64 > b.len() as u64 {
             st.messages.push(format!(
                 "{name}: the dirty pages of the entry with sequence number {expected} are past the end of the log"
             ));
             break;
         }
-        st.last_sequence = Some(expected);
-        st.flags = (st.flags & !1) | (u32_at(b, pos + 8).unwrap_or(0) & 1);
-        st.hive_bins_data_size = u32_at(b, pos + 16).unwrap_or(0);
+        // a page is in the hive bins the entry gives (which are never more than 2 GiB)
+        if refs
+            .iter()
+            .any(|&(offset, len)| u64::from(offset) + u64::from(len) > u64::from(hbins))
+        {
+            st.messages.push(format!(
+                "{name}: a dirty page of the entry with sequence number {expected} is past its hive bins data size (0x{hbins:X})"
+            ));
+            break;
+        }
+        // grow once, so that an entry is applied whole or not at all
+        let end = refs
+            .iter()
+            .map(|&(offset, len)| u64::from(offset) + u64::from(len))
+            .max()
+            .unwrap_or(0);
+        if !st.grow(end) {
+            st.messages.push(format!(
+                "{name}: the hive could not grow to 0x{end:X} bytes for the entry with sequence number {expected}"
+            ));
+            break;
+        }
         let mut at = pages;
-        for (offset, len) in refs {
-            st.write(BASE + offset, &b[at..at + len]);
+        for &(offset, len) in &refs {
+            let len = len as usize;
+            st.write(offset, &b[at..at + len]);
             at += len;
         }
+        st.last_sequence = Some(expected);
+        st.flags = (st.flags & !1) | (u32_at(b, pos + 8).unwrap_or(0) & 1);
+        st.hive_bins_data_size = hbins;
         applied += 1;
         pos += size;
         expected = expected.wrapping_add(1);
@@ -737,7 +790,7 @@ fn invalid_entry(b: &[u8], pos: usize, expected: u32) -> Option<String> {
         return Some("the entry is past the end of the log".to_owned());
     }
     let hbins = u32_at(b, pos + 16).unwrap_or(0);
-    if hbins < HBIN_ALIGNMENT || hbins % HBIN_ALIGNMENT != 0 {
+    if hbins < HBIN_ALIGNMENT || hbins % HBIN_ALIGNMENT != 0 || hbins > MAX_HIVE_BINS {
         return Some(format!("invalid hive bins data size 0x{hbins:X}"));
     }
     let count = u32_at(b, pos + 20).unwrap_or(0) as usize;
@@ -767,9 +820,12 @@ fn apply_old_log(st: &mut State, log: &LogFile) -> Result<(), String> {
     if bb.last_written < st.primary.last_written {
         return Err(format!("{}: it is older than the hive", log.name));
     }
-    st.log_base = Some(b.get(..LOG_BASE).unwrap_or_default().to_vec());
-    st.hive_bins_data_size = bb.hive_bins_data_size;
-    st.flags = bb.flags;
+    if bb.hive_bins_data_size > MAX_HIVE_BINS {
+        return Err(format!(
+            "{}: invalid hive bins data size 0x{:X}",
+            log.name, bb.hive_bins_data_size
+        ));
+    }
     let bitmap_len = (bb.hive_bins_data_size / 4096) as usize;
     let pages = dirty_pages_start(bb.hive_bins_data_size);
     let mut n = 0usize;
@@ -788,9 +844,25 @@ fn apply_old_log(st: &mut State, log: &LogFile) -> Result<(), String> {
             ));
             break;
         };
-        st.write(BASE + bit * 512, page);
+        // within the hive bins data size, which is at most 2 GiB
+        if !st.write((bit * 512) as u32, page) {
+            st.messages.push(format!(
+                "{}: the hive could not grow for dirty page {n}",
+                log.name
+            ));
+            break;
+        }
         n += 1;
     }
+    if n == 0 {
+        return Err(format!(
+            "{}: no dirty page could be applied, so it is not used",
+            log.name
+        ));
+    }
+    st.log_base = Some(b.get(..LOG_BASE).unwrap_or_default().to_vec());
+    st.hive_bins_data_size = bb.hive_bins_data_size;
+    st.flags = bb.flags;
     st.applied += 1;
     st.logs_applied.push(log.name.clone());
     st.messages.push(format!(
@@ -1081,6 +1153,94 @@ mod tests {
 
     /// An old-format log: its base block, the dirty vector (`DIRT`, a bit per 512-byte sector of
     /// the hive bins), then the dirty sectors.
+    /// A log entry with a byte of its pages changed after its hashes were computed.
+    fn damaged(mut e: Vec<u8>) -> Vec<u8> {
+        e[100] ^= 0xFF;
+        e
+    }
+
+    #[test]
+    fn a_log_with_no_entry_that_can_be_applied_is_not_used() {
+        let log = new_log(
+            "SYSTEM.LOG1",
+            10,
+            &[damaged(entry(10, 4096, &[(512, page(0xA))]))],
+        );
+        let r = replay(primary(), &[log]);
+        assert!(!r.recovered, "{:?}", r.messages);
+        assert_eq!(r.logs_applied, Vec::<String>::new());
+        assert_eq!(r.last_sequence, None);
+        assert!(
+            r.messages
+                .iter()
+                .any(|m| m.contains("SYSTEM.LOG1: no log entry could be applied")),
+            "{:?}",
+            r.messages
+        );
+        // the hive is as it was: still dirty
+        assert_eq!(r.bytes, primary());
+    }
+
+    #[test]
+    fn the_other_log_is_used_when_the_earlier_one_has_no_entry_that_can_be_applied() {
+        let log1 = new_log(
+            "SYSTEM.LOG1",
+            10,
+            &[damaged(entry(10, 4096, &[(512, page(0xA))]))],
+        );
+        let log2 = new_log("SYSTEM.LOG2", 12, &[entry(12, 4096, &[(1024, page(0xB))])]);
+        let r = replay(primary(), &[log1, log2]);
+        assert!(r.recovered, "{:?}", r.messages);
+        assert_eq!(r.logs_applied, ["SYSTEM.LOG2"]);
+        assert_eq!(r.last_sequence, Some(12));
+        assert_eq!((at(&r.bytes, 512), at(&r.bytes, 1024)), (0, 0xB));
+    }
+
+    #[test]
+    fn a_dirty_page_past_the_hive_bins_is_not_written() {
+        // correctly hashed, but its page is near 4 GiB in a hive of 4 KiB of hive bins
+        let log = new_log(
+            "SYSTEM.LOG1",
+            10,
+            &[entry(10, 4096, &[(0xFFFF_F000, page(0xA))])],
+        );
+        let r = replay(primary(), &[log]);
+        assert!(!r.recovered);
+        assert_eq!(r.bytes.len(), primary().len());
+        assert!(
+            r.messages
+                .iter()
+                .any(|m| m.contains("is past its hive bins data size")),
+            "{:?}",
+            r.messages
+        );
+        // and hive bins of more than 2 GiB end the log
+        let log = new_log(
+            "SYSTEM.LOG1",
+            10,
+            &[entry(10, 0xFFFF_F000, &[(0xFFFF_E000, page(0xA))])],
+        );
+        let r = replay(primary(), &[log]);
+        assert!(!r.recovered);
+        assert_eq!(r.bytes.len(), primary().len());
+    }
+
+    #[test]
+    fn an_old_format_log_with_no_dirty_page_is_not_used() {
+        let mut log = old_log("SYSTEM.LOG", 150, &[]);
+        log.data.extend(page(0));
+        let r = replay(primary(), &[log]);
+        assert!(!r.recovered, "{:?}", r.messages);
+        assert_eq!(r.logs_applied, Vec::<String>::new());
+        assert!(
+            r.messages
+                .iter()
+                .any(|m| m.contains("SYSTEM.LOG: no dirty page could be applied")),
+            "{:?}",
+            r.messages
+        );
+    }
+
     fn old_log(name: &str, written: u64, sectors: &[(usize, u8)]) -> LogFile {
         let hbins = 4096u32;
         let mut data = base_block(LOG_BASE, 10, 10, 1, hbins, written);

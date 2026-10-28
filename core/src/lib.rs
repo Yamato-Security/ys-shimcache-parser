@@ -681,9 +681,26 @@ fn decode_signed(blob: &[u8], start: usize, cache: &mut Cache) {
                 cache
                     .problems
                     .push(format!("Entry {position} at offset 0x{i:X}: {problem}"));
-                break;
+                return;
             }
         }
+    }
+    // The cache ends at the first place without an entry signature: in a whole value, its end
+    // (or zeros after it). AppCompatCacheParser stops there without a word; a damaged
+    // signature would hide the entries after it, so it is reported.
+    let n = cache.entries.len();
+    let rest = blob.get(i..).unwrap_or_default();
+    if rest.iter().any(|&b| b != 0) {
+        cache.problems.push(format!(
+            "Entry {n} at offset 0x{i:X}: no entry signature, so the 0x{:X} bytes from there are not read",
+            rest.len()
+        ));
+    } else if let Some(expected) = cache.expected_entries.filter(|&e| e as usize > n) {
+        // Windows 10 / 11: the header's count is not always the number of entries (it is often
+        // fewer), but a whole cache has never been seen with more
+        cache.problems.push(format!(
+            "The header gives {expected} entries, but the cache ends after {n}: entries may be missing"
+        ));
     }
 }
 

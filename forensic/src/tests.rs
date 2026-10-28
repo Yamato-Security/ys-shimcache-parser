@@ -46,6 +46,38 @@ fn system_binary_in_system32_is_not_flagged() {
 }
 
 #[test]
+fn a_system32_folder_outside_windows_does_not_hide_a_system_binary() {
+    let relocated = |path: &str| {
+        audit(&[entry(path, Some(true))])
+            .iter()
+            .any(|a| matches!(a, ShimcacheAnomaly::SystemBinaryRelocated { .. }))
+    };
+    for path in [
+        r"C:\Program Files\Vendor\System32\svchost.exe",
+        r"C:\Users\Public\SysWOW64\lsass.exe",
+        r"D:\Backup\Windows\System32\svchost.exe",
+        r"C:\Windows\Temp\System32\svchost.exe",
+        r"\\server\share\Windows\System32\svchost.exe",
+    ] {
+        assert!(relocated(path), "{path}");
+    }
+    // Windows' own, in every form the cache records them
+    for path in [
+        r"C:\Windows\System32\svchost.exe",
+        r"c:\windows\syswow64\svchost.exe",
+        r"D:\Windows\System32\wbem\WmiPrvSE.exe",
+        r"C:\WINNT\system32\svchost.exe",
+        r"SYSVOL\Windows\System32\svchost.exe",
+        r"\\?\C:\Windows\system32\svchost.exe",
+        r"%SystemRoot%\System32\svchost.exe",
+        r"\SystemRoot\System32\svchost.exe",
+        "C:/Windows/System32/svchost.exe",
+    ] {
+        assert!(!relocated(path), "{path}");
+    }
+}
+
+#[test]
 fn suspicious_path_carries_the_execution_flag() {
     let anomalies = audit(&[entry(
         r"C:\Users\a\AppData\Local\Temp\dropper.exe",
