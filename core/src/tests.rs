@@ -1,434 +1,541 @@
-//! Unit tests: spec-faithful synthetic blobs for each format variant, error paths, and
-//! panic-free robustness. The Windows 7 64-bit path is additionally validated Tier-1 against a
-//! real CFReDS SYSTEM-hive blob in `tests/win7_real.rs`.
+//! Values built here in each format (as Eric Zimmerman's AppCompatCacheParser tests build
+//! them): the executed flags, layouts, Windows XP's LRU order, damage, slack. The real values are
+//! in `tests/`.
 
 use super::*;
+
+const WHEN: u64 = 133_000_000_000_000_000; // 2022-06-14
+const DAY: u64 = 864_000_000_000;
 
 fn utf16(s: &str) -> Vec<u8> {
     s.encode_utf16().flat_map(u16::to_le_bytes).collect()
 }
 
-/// Build a Windows 7 32-bit blob from `(path, filetime, executed)` entries, spec-faithful:
-/// 128-byte header, 32-byte fixed records, then a path region the records point into.
-fn build_win7_32(entries: &[(&str, u64, bool)]) -> Vec<u8> {
-    let n = entries.len();
-    let mut header = vec![0u8; 128];
-    header[0..4].copy_from_slice(&signature::WIN7.to_le_bytes());
-    header[4..8].copy_from_slice(&(n as u32).to_le_bytes());
-    let records_start = 128;
-    let paths_start = records_start + n * 32;
-    let mut records = vec![0u8; n * 32];
-    let mut paths = Vec::new();
-    for (i, (path, ft, exec)) in entries.iter().enumerate() {
-        let pbytes = utf16(path);
-        let path_offset = (paths_start + paths.len()) as u32;
-        let r = &mut records[i * 32..i * 32 + 32];
-        r[0..2].copy_from_slice(&(pbytes.len() as u16).to_le_bytes()); // path_size
-        r[2..4].copy_from_slice(&(pbytes.len() as u16).to_le_bytes()); // max_path_size
-        r[4..8].copy_from_slice(&path_offset.to_le_bytes());
-        r[8..16].copy_from_slice(&ft.to_le_bytes());
-        r[16..20].copy_from_slice(&(if *exec { 2u32 } else { 0 }).to_le_bytes());
-        paths.extend_from_slice(&pbytes);
-    }
-    [header, records, paths].concat()
+fn u32b(n: u32) -> Vec<u8> {
+    n.to_le_bytes().to_vec()
 }
 
-/// Build a Windows 8.0/8.1 or Windows 10 blob (self-delimiting inline-path entries).
-fn build_modern(
-    sig: u32,
-    entry_sig: [u8; 4],
-    entries: &[(&str, u64, Option<bool>)],
-    v8_1: bool,
-    v10: bool,
-) -> Vec<u8> {
-    let header_size = if v10 { sig as usize } else { 128 };
-    let mut out = vec![0u8; header_size];
-    out[0..4].copy_from_slice(&sig.to_le_bytes());
-    for (path, ft, exec) in entries {
-        let pbytes = utf16(path);
-        let mut body = Vec::new();
-        body.extend_from_slice(&(pbytes.len() as u16).to_le_bytes()); // path_size
-        body.extend_from_slice(&pbytes); // inline path
-        if v10 {
-            body.extend_from_slice(&ft.to_le_bytes()); // last_mod
-            body.extend_from_slice(&0u32.to_le_bytes()); // data_size
-        } else {
-            let flags = if exec.unwrap_or(false) { 2u32 } else { 0 };
-            body.extend_from_slice(&flags.to_le_bytes()); // insertion_flags
-            body.extend_from_slice(&0u32.to_le_bytes()); // shim_flags
-            if v8_1 {
-                body.extend_from_slice(&0u16.to_le_bytes()); // unknown1
-            }
-            body.extend_from_slice(&ft.to_le_bytes()); // last_mod
-            body.extend_from_slice(&0u32.to_le_bytes()); // data_size
+/// Windows 10 / 11 data: (tag, size, value) records, 4-byte aligned.
+fn tags(records: &[(u32, &[u8])]) -> Vec<u8> {
+    let mut out = Vec::new();
+    for (tag, value) in records {
+        out.extend(u32b(*tag));
+        out.extend(u32b(value.len() as u32));
+        out.extend_from_slice(value);
+        while out.len() % 4 != 0 {
+            out.push(0);
         }
-        out.extend_from_slice(&entry_sig);
-        out.extend_from_slice(&0u32.to_le_bytes()); // unknown1
-        out.extend_from_slice(&(body.len() as u32).to_le_bytes()); // cached_entry_data_size
-        out.extend_from_slice(&body);
     }
     out
 }
 
+fn win10_entry(path: &str, ft: u64, data: &[u8]) -> Vec<u8> {
+    let p = utf16(path);
+    let mut body = Vec::new();
+    body.extend((p.len() as u16).to_le_bytes());
+    body.extend(&p);
+    body.extend(ft.to_le_bytes());
+    body.extend(u32b(data.len() as u32));
+    body.extend(data);
+    let mut e = b"10ts".to_vec();
+    e.extend(u32b(0x1234));
+    e.extend(u32b(body.len() as u32));
+    e.extend(body);
+    e
+}
+
+fn win10(creators: bool, entries: &[Vec<u8>]) -> Vec<u8> {
+    let header = if creators { 0x34 } else { 0x30 };
+    let mut v = vec![0u8; header];
+    v[..4].copy_from_slice(&(header as u32).to_le_bytes());
+    let count_at = if creators { 0x28 } else { 0x24 };
+    v[count_at..count_at + 4].copy_from_slice(&(entries.len() as u32).to_le_bytes());
+    for e in entries {
+        v.extend(e);
+    }
+    v
+}
+
+/// Windows 8.1 (`10ts`) or 8.0 (`00ts`): (path, time, insertion flags, package, data).
+fn win8(v81: bool, entries: &[(&str, u64, u32, &str, &[u8])]) -> Vec<u8> {
+    let mut v = vec![0u8; 128];
+    v[..4].copy_from_slice(&0x80u32.to_le_bytes());
+    for (path, ft, flags, package, data) in entries {
+        let p = utf16(path);
+        let pk = utf16(package);
+        let mut body = Vec::new();
+        body.extend((p.len() as u16).to_le_bytes());
+        body.extend(&p);
+        body.extend((pk.len() as u16).to_le_bytes());
+        body.extend(&pk);
+        body.extend(u32b(*flags));
+        body.extend(u32b(0x55));
+        body.extend(ft.to_le_bytes());
+        body.extend(u32b(data.len() as u32));
+        body.extend(*data);
+        v.extend(if v81 { b"10ts" } else { b"00ts" });
+        v.extend(u32b(7));
+        v.extend(u32b(body.len() as u32));
+        v.extend(body);
+    }
+    v
+}
+
+/// Windows 7 (`win7`) or 2003 / Vista table, 32 or 64 bit: (path, time, flags).
+fn table(win7: bool, is32: bool, entries: &[(&str, u64, u32)]) -> Vec<u8> {
+    let start = if win7 { 128 } else { 8 };
+    let size = match (win7, is32) {
+        (true, true) | (false, false) => 32,
+        (true, false) => 48,
+        (false, true) => 24,
+    };
+    let mut v = vec![0u8; start + entries.len() * size];
+    v[..4].copy_from_slice(&(if win7 { 0xbadc_0fee_u32 } else { 0xbadc_0ffe }).to_le_bytes());
+    v[4..8].copy_from_slice(&(entries.len() as u32).to_le_bytes());
+    for (i, (path, ft, flags)) in entries.iter().enumerate() {
+        let p = utf16(path);
+        let offset = v.len() as u64;
+        v.extend(&p);
+        let at = start + i * size;
+        v[at..at + 2].copy_from_slice(&(p.len() as u16).to_le_bytes());
+        v[at + 2..at + 4].copy_from_slice(&(p.len() as u16 + 2).to_le_bytes());
+        let (po, t, f) = if is32 { (4, 8, 16) } else { (8, 16, 24) };
+        if is32 {
+            v[at + po..at + po + 4].copy_from_slice(&(offset as u32).to_le_bytes());
+        } else {
+            v[at + po..at + po + 8].copy_from_slice(&offset.to_le_bytes());
+        }
+        v[at + t..at + t + 8].copy_from_slice(&ft.to_le_bytes());
+        v[at + f..at + f + 4].copy_from_slice(&flags.to_le_bytes());
+    }
+    v
+}
+
+/// Windows XP: the LRU array, and slots (path, last modified, last update).
+fn xp(lru: &[u32], slots: &[(&str, u64, u64)]) -> Vec<u8> {
+    let mut v = vec![0u8; XP_HEADER + 96 * XP_SLOT];
+    v[..4].copy_from_slice(&0xdead_beef_u32.to_le_bytes());
+    v[4..8].copy_from_slice(&96u32.to_le_bytes());
+    v[8..12].copy_from_slice(&(lru.len() as u32).to_le_bytes());
+    for (i, s) in lru.iter().enumerate() {
+        v[16 + i * 4..20 + i * 4].copy_from_slice(&s.to_le_bytes());
+    }
+    for (i, (path, ft, updated)) in slots.iter().enumerate() {
+        let at = XP_HEADER + i * XP_SLOT;
+        let p = utf16(path);
+        v[at..at + p.len()].copy_from_slice(&p);
+        v[at + 528..at + 536].copy_from_slice(&ft.to_le_bytes());
+        v[at + 536..at + 544].copy_from_slice(&1234u64.to_le_bytes());
+        v[at + 544..at + 552].copy_from_slice(&updated.to_le_bytes());
+    }
+    v
+}
+
+fn paths(c: &Cache) -> Vec<&str> {
+    c.entries.iter().map(|e| e.path.as_str()).collect()
+}
+
 #[test]
-fn win7_32bit_roundtrip() {
-    let blob = build_win7_32(&[
-        (
-            "\\??\\C:\\Windows\\system32\\evil.exe",
-            131_000_000_000_000_000,
+fn windows10_executed_is_tag_0x100() {
+    // "the last 4 bytes are 1" only works when tag 0x100 is the last record
+    let one = u32b(1);
+    let zero = u32b(0);
+    let x64: &[u8] = &[0x64, 0x86];
+    let v = win10(
+        true,
+        &[
+            win10_entry(
+                r"C:\a.exe",
+                WHEN,
+                &tags(&[(0x200, &zero), (0x800, x64), (0x100, &one), (0x20, &zero)]),
+            ),
+            win10_entry(
+                r"C:\b.exe",
+                WHEN,
+                &tags(&[(0x200, &zero), (0x800, x64), (0x40, &one)]),
+            ),
+            win10_entry(r"C:\c.exe", WHEN, &tags(&[(0x200, &one), (0x100, &one)])),
+            win10_entry(r"C:\d.exe", WHEN, &tags(&[(0x200, &zero), (0x800, x64)])),
+        ],
+    );
+    let c = decode(&v, None).unwrap();
+    assert_eq!(c.format, ShimcacheFormat::Win10Creators);
+    assert_eq!(c.format.name(), "Windows10C_11");
+    assert_eq!(
+        paths(&c),
+        [r"C:\a.exe", r"C:\b.exe", r"C:\c.exe", r"C:\d.exe"]
+    );
+    let executed: Vec<_> = c.entries.iter().map(|e| e.executed).collect();
+    assert_eq!(executed, [Some(true), Some(false), Some(true), Some(false)]);
+    assert_eq!(c.entries[0].last_modified(), Some(WHEN));
+    let t: Vec<u32> = c.entries[0].data_tags().iter().map(|(t, _)| *t).collect();
+    assert_eq!(t, [0x200, 0x800, 0x100, 0x20]);
+    assert_eq!(c.entries[0].machine(), Some(0x8664));
+    assert_eq!(c.entries[2].machine(), None);
+    assert_eq!(c.expected_entries, Some(4));
+}
+
+#[test]
+fn windows10_entries_with_little_or_no_data_are_read() {
+    let v = win10(
+        false,
+        &[
+            win10_entry(r"C:\a.exe", WHEN, &[]),
+            win10_entry(r"C:\b.exe", 0, &[1, 2]),
+            win10_entry(r"C:\c.exe", WHEN, &tags(&[(0x100, &u32b(1))])),
+        ],
+    );
+    let c = decode(&v, None).unwrap();
+    assert_eq!(c.format, ShimcacheFormat::Win10);
+    assert_eq!(paths(&c), [r"C:\a.exe", r"C:\b.exe", r"C:\c.exe"]);
+    assert_eq!(c.entries[1].last_modified(), None);
+    assert_eq!(c.entries[2].executed, Some(true));
+    assert_eq!(c.expected_entries, Some(3));
+    assert_eq!(c.problems, Vec::<String>::new());
+}
+
+#[test]
+fn a_truncated_windows10_value_keeps_the_entries_before() {
+    let one = u32b(1);
+    let v = win10(
+        true,
+        &[
+            win10_entry(r"C:\a.exe", WHEN, &tags(&[(0x100, &one)])),
+            win10_entry(r"C:\b.exe", WHEN, &tags(&[(0x100, &one)])),
+        ],
+    );
+    let c = decode(&v[..v.len() - 6], None).unwrap();
+    assert_eq!(paths(&c), [r"C:\a.exe"]);
+    assert_eq!(c.problems.len(), 1);
+    assert!(
+        c.problems[0].starts_with("Entry 1 at offset 0x"),
+        "{:?}",
+        c.problems
+    );
+}
+
+#[test]
+fn windows8_flags_package_and_data() {
+    let v = win8(
+        true,
+        &[
+            (r"\??\C:\a.exe", WHEN, 0x2, "", &[9, 9, 9]),
+            (
+                r"C:\b.exe",
+                WHEN,
+                0x4,
+                "Microsoft.App_8wekyb3d8bbwe",
+                &u32b(0xAABB_CCDD),
+            ),
+        ],
+    );
+    let c = decode(&v, None).unwrap();
+    assert_eq!(c.format, ShimcacheFormat::Win8_1);
+    assert_eq!(paths(&c), [r"C:\a.exe", r"C:\b.exe"]);
+    let executed: Vec<_> = c.entries.iter().map(|e| e.executed).collect();
+    assert_eq!(executed, [Some(true), Some(false)]);
+    assert_eq!(c.entries[1].insert_flags, Some(4));
+    assert_eq!(c.entries[1].shim_flags, Some(0x55));
+    assert_eq!(c.entries[1].package, "Microsoft.App_8wekyb3d8bbwe");
+    assert_eq!(c.entries[1].data, u32b(0xAABB_CCDD));
+    assert_eq!(c.entries[1].last_modified(), Some(WHEN));
+    assert_eq!(
+        decode(&win8(false, &[(r"C:\a.exe", WHEN, 0, "", &[])]), None)
+            .unwrap()
+            .format,
+        ShimcacheFormat::Win8_0
+    );
+    // the first dword is not always 0x80: the entries' signature at 128 says what it is
+    let mut zero = v.clone();
+    zero[..4].copy_from_slice(&0u32.to_le_bytes());
+    assert_eq!(decode(&zero, None).unwrap().entries.len(), 2);
+}
+
+#[test]
+fn the_windows7_layout_is_checked_against_the_data() {
+    for is32 in [true, false] {
+        let v = table(
             true,
-        ),
-        ("C:\\tool.dll", 130_000_000_000_000_000, false),
-    ]);
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win7_32));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e.len(), 2);
-    assert_eq!(e[0].path, "C:\\Windows\\system32\\evil.exe"); // \??\ stripped
-    assert_eq!(e[0].last_modified_filetime, 131_000_000_000_000_000);
-    assert_eq!(e[0].executed, Some(true));
-    assert_eq!(e[1].path, "C:\\tool.dll");
-    assert_eq!(e[1].executed, Some(false));
+            is32,
+            &[(r"\??\C:\a.exe", WHEN, 0x2), (r"C:\b.exe", WHEN, 0)],
+        );
+        // the architecture can be wrong, or unknown
+        for hint in [Some(true), Some(false), None] {
+            let c = decode(&v, hint).unwrap();
+            assert_eq!(
+                c.format,
+                if is32 {
+                    ShimcacheFormat::Win7_32
+                } else {
+                    ShimcacheFormat::Win7_64
+                },
+                "{is32} {hint:?}"
+            );
+            assert_eq!(c.expected_entries, Some(2));
+            assert_eq!(paths(&c), [r"C:\a.exe", r"C:\b.exe"]);
+            let executed: Vec<_> = c.entries.iter().map(|e| e.executed).collect();
+            assert_eq!(executed, [Some(true), Some(false)]);
+        }
+    }
 }
 
 #[test]
-fn win8_0_inline_entries() {
-    let blob = build_modern(
-        signature::WIN8,
-        *ENTRY_SIG_8_0,
-        &[("C:\\a.exe", 42, Some(true))],
-        false,
-        false,
+fn vista_and_2003() {
+    for is32 in [true, false] {
+        let v = table(
+            false,
+            is32,
+            &[(r"C:\a.exe", WHEN, 0x2), (r"C:\b.exe", WHEN, 0)],
+        );
+        let c = decode(&v, Some(!is32)).unwrap();
+        assert_eq!(
+            c.format,
+            if is32 {
+                ShimcacheFormat::Win2003_32
+            } else {
+                ShimcacheFormat::Win2003_64
+            }
+        );
+        assert_eq!(c.format.name(), "WindowsVistaWin2k3Win2k8");
+        assert_eq!(paths(&c), [r"C:\a.exe", r"C:\b.exe"]);
+        // Windows 2003 has the file size where 32-bit Vista has the flags
+        let executed: Vec<_> = c.entries.iter().map(|e| e.executed).collect();
+        assert_eq!(
+            executed,
+            if is32 {
+                [None, None]
+            } else {
+                [Some(true), Some(false)]
+            }
+        );
+        assert_eq!(c.entries[0].insert_flags, Some(2));
+    }
+}
+
+#[test]
+fn windows_xp_entries_are_the_lru_array_in_order() {
+    // 3 of 96 slots used; the LRU array lists them most recently updated first
+    let v = xp(
+        &[2, 0, 1],
+        &[
+            (r"C:\old.exe", WHEN - 1000 * DAY, WHEN - 2 * DAY),
+            (r"C:\older.exe", WHEN - 1400 * DAY, WHEN - 3 * DAY),
+            (r"C:\new.exe", WHEN - 300 * DAY, WHEN),
+        ],
     );
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win8_0));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e.len(), 1);
-    assert_eq!(e[0].path, "C:\\a.exe");
-    assert_eq!(e[0].last_modified_filetime, 42);
-    assert_eq!(e[0].executed, Some(true));
+    for hint in [Some(true), Some(false), None] {
+        let c = decode(&v, hint).unwrap();
+        assert_eq!(c.format, ShimcacheFormat::WinXp);
+        assert_eq!(c.expected_entries, Some(3));
+        assert_eq!(paths(&c), [r"C:\new.exe", r"C:\old.exe", r"C:\older.exe"]);
+        assert_eq!(
+            c.entries.iter().map(|e| e.position).collect::<Vec<_>>(),
+            [0, 1, 2]
+        );
+        assert_eq!(c.entries[0].last_update(), Some(WHEN));
+        assert_eq!(c.entries[0].last_modified(), Some(WHEN - 300 * DAY));
+        assert_eq!(c.entries[0].file_size, Some(1234));
+        assert!(c.entries.iter().all(|e| e.executed.is_none()));
+    }
+    // a slot listed twice, and an LRU array that claims more than its room
+    let mut bad = xp(&[0, 0], &[(r"C:\a.exe", WHEN, WHEN)]);
+    let c = decode(&bad, None).unwrap();
+    assert_eq!(paths(&c), [r"C:\a.exe"]);
+    assert!(c.problems[0].contains("more than once"), "{:?}", c.problems);
+    bad[8..12].copy_from_slice(&500u32.to_le_bytes());
+    let c = decode(&bad, None).unwrap();
+    assert_eq!(c.expected_entries, Some(96));
+    assert!(c.problems[0].contains("room for 96"), "{:?}", c.problems);
 }
 
 #[test]
-fn win8_1_has_the_extra_unknown_field() {
-    let blob = build_modern(
-        signature::WIN8,
-        *ENTRY_SIG_8_1,
-        &[("C:\\b.exe", 99, Some(false))],
+fn a_damaged_windows7_entry_is_reported_and_the_rest_read() {
+    let mut v = table(
         true,
         false,
+        &[
+            (r"C:\a.exe", WHEN, 0x2),
+            (r"C:\b.exe", WHEN, 0),
+            (r"C:\c.exe", WHEN, 0),
+        ],
     );
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win8_1));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e[0].path, "C:\\b.exe");
-    assert_eq!(e[0].last_modified_filetime, 99);
-    assert_eq!(e[0].executed, Some(false));
+    // entry 1's path offset past the end
+    v[128 + 48 + 8..128 + 48 + 16].copy_from_slice(&0x7FFF_FFFFu64.to_le_bytes());
+    let c = decode(&v, None).unwrap();
+    assert_eq!(paths(&c), [r"C:\a.exe", r"C:\c.exe"]);
+    assert_eq!(c.problems.len(), 1);
+    assert!(c.problems[0].starts_with("Entry 1"), "{:?}", c.problems);
 }
 
 #[test]
-fn win10_has_no_exec_flag() {
-    let blob = build_modern(
-        signature::WIN10_CREATORS,
-        *ENTRY_SIG_8_1,
-        &[("C:\\c.exe", 7, None)],
-        false,
-        true,
-    );
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win10));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e[0].path, "C:\\c.exe");
-    assert_eq!(e[0].last_modified_filetime, 7);
-    assert_eq!(e[0].executed, None); // Windows 10 dropped the flag
-}
-
-#[test]
-fn win10_pre_creators_0x30_header() {
-    let blob = build_modern(
-        signature::WIN10,
-        *ENTRY_SIG_8_1,
-        &[("C:\\d.exe", 5, None)],
-        false,
-        true,
-    );
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win10));
-    assert_eq!(parse(&blob).unwrap()[0].path, "C:\\d.exe");
-}
-
-#[test]
-fn unknown_signature_names_the_value() {
-    let blob = 0x1234_5678u32.to_le_bytes().to_vec();
-    match parse(&blob) {
-        Err(ShimcacheError::UnknownSignature { signature }) => assert_eq!(signature, 0x1234_5678),
-        other => panic!("expected UnknownSignature, got {other:?}"),
+fn values_that_are_not_caches() {
+    for short in [&[][..], &[1, 2, 3]] {
+        assert_eq!(
+            decode(short, None),
+            Err(ShimcacheError::TooShort { len: short.len() })
+        );
     }
-    // detect_format returns None for a recognized-length but unknown signature.
-    assert_eq!(detect_format(&blob), None);
-}
-
-/// Build a Windows XP blob: 400-byte header + fixed 552-byte entries with a 528-byte inline path.
-fn build_xp(entries: &[(&str, u64)]) -> Vec<u8> {
-    let mut blob = vec![0u8; 400];
-    blob[0..4].copy_from_slice(&signature::WINXP.to_le_bytes());
-    blob[4..8].copy_from_slice(&(entries.len() as u32).to_le_bytes());
-    for (path, ft) in entries {
-        let mut entry = vec![0u8; 552];
-        let p = utf16(path);
-        entry[..p.len()].copy_from_slice(&p);
-        entry[528..536].copy_from_slice(&ft.to_le_bytes());
-        blob.extend_from_slice(&entry);
-    }
-    blob
-}
-
-/// Build a Windows 2003 32-bit blob: 8-byte header + 24-byte records + a trailing path region.
-fn build_2003_32(entries: &[(&str, u64)]) -> Vec<u8> {
-    let n = entries.len();
-    let mut header = vec![0u8; 8];
-    header[0..4].copy_from_slice(&signature::WIN2003_VISTA.to_le_bytes());
-    header[4..8].copy_from_slice(&(n as u32).to_le_bytes());
-    let paths_start = 8 + n * 24;
-    let mut records = vec![0u8; n * 24];
-    let mut paths = Vec::new();
-    for (i, (path, ft)) in entries.iter().enumerate() {
-        let p = utf16(path);
-        let off = (paths_start + paths.len()) as u32;
-        let r = &mut records[i * 24..i * 24 + 24];
-        r[0..2].copy_from_slice(&(p.len() as u16).to_le_bytes());
-        r[2..4].copy_from_slice(&(p.len() as u16).to_le_bytes());
-        r[4..8].copy_from_slice(&off.to_le_bytes());
-        r[8..16].copy_from_slice(&ft.to_le_bytes());
-        paths.extend_from_slice(&p);
-    }
-    [header, records, paths].concat()
-}
-
-#[test]
-fn winxp_inline_path_entries() {
-    let blob = build_xp(&[(r"\??\C:\WINDOWS\system32\evil.exe", 131_000_000_000_000_000)]);
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::WinXp));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e.len(), 1);
-    assert_eq!(e[0].path, r"C:\WINDOWS\system32\evil.exe"); // \??\ + trailing NULs stripped
-    assert_eq!(e[0].last_modified_filetime, 131_000_000_000_000_000);
-    assert_eq!(e[0].executed, None); // XP records no execution flag
-}
-
-#[test]
-fn win2003_32bit_path_offset_entries() {
-    let blob = build_2003_32(&[(r"C:\a.exe", 42), (r"C:\b.dll", 99)]);
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win2003_32));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e.len(), 2);
-    assert_eq!(e[0].path, r"C:\a.exe");
-    assert_eq!(e[0].last_modified_filetime, 42);
-    assert_eq!(e[1].path, r"C:\b.dll");
-    assert_eq!(e[0].executed, None);
-}
-
-/// Build a Windows 2003 64-bit blob: 8-byte header + 32-byte records + a trailing path region.
-fn build_2003_64(entries: &[(&str, u64)]) -> Vec<u8> {
-    let n = entries.len();
-    let mut header = vec![0u8; 8];
-    header[0..4].copy_from_slice(&signature::WIN2003_VISTA.to_le_bytes());
-    header[4..8].copy_from_slice(&(n as u32).to_le_bytes());
-    let paths_start = 8 + n * 32;
-    let mut records = vec![0u8; n * 32];
-    let mut paths = Vec::new();
-    for (i, (path, ft)) in entries.iter().enumerate() {
-        let p = utf16(path);
-        let off = (paths_start + paths.len()) as u64;
-        let r = &mut records[i * 32..i * 32 + 32];
-        r[0..2].copy_from_slice(&(p.len() as u16).to_le_bytes());
-        r[2..4].copy_from_slice(&(p.len() as u16).to_le_bytes());
-        r[8..16].copy_from_slice(&off.to_le_bytes());
-        r[16..24].copy_from_slice(&ft.to_le_bytes());
-        paths.extend_from_slice(&p);
-    }
-    [header, records, paths].concat()
-}
-
-#[test]
-fn win2003_64bit_entries() {
-    let blob = build_2003_64(&[(r"C:\x.exe", 7)]);
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win2003_64));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e.len(), 1);
-    assert_eq!(e[0].path, r"C:\x.exe");
-    assert_eq!(e[0].last_modified_filetime, 7);
-    assert_eq!(e[0].executed, None);
-}
-
-#[test]
-fn xp_truncated_and_empty_entries_skip_cleanly() {
-    // Header claims 3 entries but no room for any → break, no panic.
-    let mut blob = vec![0u8; 402];
-    blob[0..4].copy_from_slice(&signature::WINXP.to_le_bytes());
-    blob[4..8].copy_from_slice(&3u32.to_le_bytes());
-    assert!(parse(&blob).unwrap().is_empty());
-    // An all-NUL (empty-path) entry is skipped.
-    assert!(parse(&build_xp(&[("", 1)])).unwrap().is_empty());
-}
-
-#[test]
-fn win2003_truncated_entries_skip_cleanly() {
-    // Header claims 5 entries but the records are truncated → the missing fields → break/skip.
-    let mut blob = vec![0u8; 10];
-    blob[0..4].copy_from_slice(&signature::WIN2003_VISTA.to_le_bytes());
-    blob[4..8].copy_from_slice(&5u32.to_le_bytes());
-    assert!(parse(&blob).unwrap().is_empty());
-    // A record whose path_offset points out of bounds is skipped.
-    let mut b = vec![0u8; 8 + 24];
-    b[0..4].copy_from_slice(&signature::WIN2003_VISTA.to_le_bytes());
-    b[4..8].copy_from_slice(&1u32.to_le_bytes());
-    b[8..10].copy_from_slice(&10u16.to_le_bytes()); // path_size
-    b[12..16].copy_from_slice(&99_999u32.to_le_bytes()); // path_offset out of bounds
-    assert!(parse(&b).unwrap().is_empty());
-}
-
-/// Build a valid Windows 7 64-bit blob (128-byte header, 48-byte records + path region).
-fn build_win7_64(entries: &[(&str, u64, bool)]) -> Vec<u8> {
-    let n = entries.len();
-    let mut header = vec![0u8; 128];
-    header[0..4].copy_from_slice(&signature::WIN7.to_le_bytes());
-    header[4..8].copy_from_slice(&(n as u32).to_le_bytes());
-    let paths_start = 128 + n * 48;
-    let mut records = vec![0u8; n * 48];
-    let mut paths = Vec::new();
-    for (i, (path, ft, exec)) in entries.iter().enumerate() {
-        let p = utf16(path);
-        let off = (paths_start + paths.len()) as u64;
-        let r = &mut records[i * 48..i * 48 + 48];
-        r[0..2].copy_from_slice(&(p.len() as u16).to_le_bytes());
-        r[2..4].copy_from_slice(&(p.len() as u16).to_le_bytes());
-        r[8..16].copy_from_slice(&off.to_le_bytes());
-        r[16..24].copy_from_slice(&ft.to_le_bytes());
-        r[24..28].copy_from_slice(&(if *exec { 2u32 } else { 0 }).to_le_bytes());
-        paths.extend_from_slice(&p);
-    }
-    [header, records, paths].concat()
-}
-
-#[test]
-fn win7_64bit_roundtrip() {
-    let blob = build_win7_64(&[(
-        r"C:\Windows\System32\svchost.exe",
-        130_000_000_000_000_000,
-        true,
-    )]);
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win7_64));
-    let e = parse(&blob).unwrap();
-    assert_eq!(e.len(), 1);
-    assert_eq!(e[0].path, r"C:\Windows\System32\svchost.exe");
-    assert_eq!(e[0].last_modified_filetime, 130_000_000_000_000_000);
-    assert_eq!(e[0].executed, Some(true));
-}
-
-#[test]
-fn too_short_blob_errors() {
-    assert_eq!(parse(&[0u8; 2]), Err(ShimcacheError::TooShort { len: 2 }));
-    assert_eq!(detect_format(&[0u8; 3]), None);
-}
-
-#[test]
-fn truncated_entry_is_skipped_never_panics() {
-    // A Win7 header claiming 5 entries but a blob with room for none — must not panic.
-    let mut blob = vec![0u8; 130];
-    blob[0..4].copy_from_slice(&signature::WIN7.to_le_bytes());
-    blob[4..8].copy_from_slice(&5u32.to_le_bytes());
-    let _ = parse(&blob); // no panic; returns whatever it can (likely empty)
-}
-
-#[test]
-fn win8_stops_at_a_bad_entry_signature() {
-    // Header ok, but the bytes at 128 are not 00ts/10ts → no entries, and detect_format None.
-    let mut blob = vec![0u8; 200];
-    blob[0..4].copy_from_slice(&signature::WIN8.to_le_bytes());
-    blob[128..132].copy_from_slice(b"junk");
-    assert_eq!(detect_format(&blob), None);
+    let e = decode(&[0x11; 200], None).unwrap_err();
     assert!(matches!(
-        parse(&blob),
-        Err(ShimcacheError::UnknownSignature { .. })
+        e,
+        ShimcacheError::UnknownSignature {
+            signature: 0x1111_1111,
+            ..
+        }
     ));
+    assert!(e.to_string().contains("11-11-11-11"), "{e}");
+    assert_eq!(detect_format(&[0x11; 200], None), None);
 }
 
 #[test]
-fn empty_utf16_and_non_ascii_paths_decode() {
-    let blob = build_win7_32(&[("C:\\Ünïcödé\\日本語.exe", 1, true)]);
-    let e = parse(&blob).unwrap();
-    assert_eq!(e[0].path, "C:\\Ünïcödé\\日本語.exe");
-}
-
-/// Build a Windows 7 64-bit blob with one entry whose `path_offset` is set explicitly (used to
-/// exercise the out-of-bounds path skip).
-fn build_win7_64_one(path_size: u16, path_offset: u64) -> Vec<u8> {
-    let mut blob = vec![0u8; 128 + 48];
-    blob[0..4].copy_from_slice(&signature::WIN7.to_le_bytes());
-    blob[4..8].copy_from_slice(&1u32.to_le_bytes());
-    let r = &mut blob[128..176];
-    r[0..2].copy_from_slice(&path_size.to_le_bytes());
-    r[8..16].copy_from_slice(&path_offset.to_le_bytes());
-    blob
-}
-
-#[test]
-fn win7_entry_with_out_of_bounds_path_offset_is_skipped() {
-    // path_offset points past the end of the blob → the entry is skipped, not a panic.
-    let blob = build_win7_64_one(10, 9_999_999);
-    assert_eq!(detect_format(&blob), Some(ShimcacheFormat::Win7_64));
-    assert!(parse(&blob).unwrap().is_empty());
-}
-
-#[test]
-fn win8_truncations_break_cleanly() {
-    let mut base = vec![0u8; 132];
-    base[0..4].copy_from_slice(&signature::WIN8.to_le_bytes());
-    base[128..132].copy_from_slice(ENTRY_SIG_8_0);
-    // (a) entry sig present but no cached_entry_data_size → break, zero entries.
-    assert!(parse(&base).unwrap().is_empty());
-    // (b) header + data_size but no path_size.
-    let mut b = base.clone();
-    b.extend_from_slice(&[0u8; 8]); // unknown1(4)+data_size(4)
-    assert!(parse(&b).unwrap().is_empty());
-    // (c) path_size claims more bytes than remain → path read fails, break.
-    let mut c = base.clone();
-    c.extend_from_slice(&0u32.to_le_bytes()); // unknown1
-    c.extend_from_slice(&99u32.to_le_bytes()); // data_size
-    c.extend_from_slice(&200u16.to_le_bytes()); // path_size=200 but nothing follows
-    assert!(parse(&c).unwrap().is_empty());
-}
-
-#[test]
-fn win10_truncations_break_cleanly() {
-    let mut base = vec![0u8; signature::WIN10_CREATORS as usize];
-    base[0..4].copy_from_slice(&signature::WIN10_CREATORS.to_le_bytes());
-    base.extend_from_slice(ENTRY_SIG_8_1); // entry sig, then nothing → break at data_size
-    assert!(parse(&base).unwrap().is_empty());
-    // + data_size but no path_size
-    let mut b = base.clone();
-    b.extend_from_slice(&[0u8; 8]);
-    assert!(parse(&b).unwrap().is_empty());
-    // + path_size too large
-    let mut c = base.clone();
-    c.extend_from_slice(&0u32.to_le_bytes());
-    c.extend_from_slice(&99u32.to_le_bytes());
-    c.extend_from_slice(&200u16.to_le_bytes());
-    assert!(parse(&c).unwrap().is_empty());
-}
-
-#[test]
-fn error_display_messages_show_the_offending_value() {
-    assert!(ShimcacheError::TooShort { len: 3 }
-        .to_string()
-        .contains('3'));
-    assert!(ShimcacheError::UnknownSignature {
-        signature: 0xabad_1dea
+fn times_that_are_not_times() {
+    let mut e = decode(&win10(true, &[win10_entry(r"C:\a.exe", WHEN, &[])]), None)
+        .unwrap()
+        .entries[0]
+        .clone();
+    for (ft, shown) in [
+        (0, None),
+        (1, None),
+        (YEAR_1602 - 1, None),
+        (YEAR_1602, Some(YEAR_1602)),
+        (MAX_FILETIME, Some(MAX_FILETIME)),
+        (MAX_FILETIME + 1, None),
+        (u64::MAX, None),
+    ] {
+        e.last_modified_filetime = ft;
+        assert_eq!(e.last_modified(), shown, "{ft}");
     }
-    .to_string()
-    .contains("abad1dea"));
 }
 
 #[test]
-fn win8_entry_variant_none_on_short_blob() {
-    // A WIN8 signature but a blob too short to hold the entry signature at 128.
-    let mut blob = signature::WIN8.to_le_bytes().to_vec();
-    blob.resize(100, 0);
-    assert_eq!(detect_format(&blob), None);
+fn packaged_app_records() {
+    let record = "00000009\t0001000763bb0000\t000a000027410000\t8664\tMicrosoft.NET.Native.Framework.1.7\t8wekyb3d8bbwe\t";
+    let c = decode(
+        &win10(
+            true,
+            &[
+                win10_entry(record, 0, &[]),
+                win10_entry(r"C:\a\b c.exe", WHEN, &[]),
+            ],
+        ),
+        None,
+    )
+    .unwrap();
+    let p = c.entries[0].package_record().unwrap();
+    assert_eq!(p.name, "Microsoft.NET.Native.Framework.1.7");
+    assert_eq!(p.publisher_id, "8wekyb3d8bbwe");
+    assert_eq!(p.architecture, "8664");
+    assert!(!p.neutral);
+    assert_eq!(
+        PackageRecord::dotted(p.version).as_deref(),
+        Some("1.7.25531.0")
+    );
+    assert_eq!(
+        PackageRecord::dotted(p.sdk_version).as_deref(),
+        Some("10.0.10049.0")
+    );
+    assert!(c.entries[1].package_record().is_none());
+    assert!(PackageRecord::dotted("123").is_none());
+}
+
+#[test]
+fn slack_entries_are_recovered() {
+    let one = u32b(1);
+    let evicted = win10_entry(r"C:\evicted.exe", WHEN, &tags(&[(0x100, &one)]));
+    let also = win10_entry(r"C:\also.exe", WHEN - DAY, &tags(&[(0x200, &u32b(0))]));
+    let live = win10_entry(r"C:\live.exe", WHEN, &[]);
+    let cache = decode(&win10(true, std::slice::from_ref(&live)), None).unwrap();
+    // the slack starts in the middle of an entry, has a stray signature, an older copy of the
+    // live entry, and ends with a cut off entry
+    let mut slack = evicted[20..].to_vec();
+    slack.extend([0x31, 0x30, 0x74, 0x73, 9, 9]);
+    slack.extend(&evicted);
+    slack.extend(&live);
+    slack.extend(&also);
+    slack.extend(&evicted[..evicted.len() - 3]);
+    let found = recover_slack(&slack, &cache);
+    let p: Vec<_> = found.iter().map(|e| e.path.as_str()).collect();
+    assert_eq!(p, [r"C:\evicted.exe", r"C:\also.exe"]);
+    assert!(found.iter().all(|e| e.from_slack));
+    assert_eq!(found.iter().map(|e| e.position).collect::<Vec<_>>(), [1, 2]);
+    assert_eq!(found[0].executed, Some(true));
+    // not in the table formats
+    let win7 = decode(&table(true, false, &[(r"C:\a.exe", WHEN, 0)]), None).unwrap();
+    assert_eq!(recover_slack(&slack, &win7), Vec::<ShimcacheEntry>::new());
+    // Windows 8 entries
+    let v = win8(true, &[(r"C:\a.exe", WHEN, 0, "", &[])]);
+    let c8 = decode(&v, None).unwrap();
+    let gone = win8(true, &[(r"C:\gone.exe", WHEN, 2, "", &[])]);
+    let found = recover_slack(&gone[128..], &c8);
+    assert_eq!(found.len(), 1);
+    assert_eq!(found[0].path, r"C:\gone.exe");
+}
+
+#[test]
+fn data_tags_stop_at_a_record_that_does_not_fit() {
+    let mut d = tags(&[(0x100, &u32b(1))]);
+    d.extend(u32b(0x200));
+    d.extend(u32b(100));
+    d.extend([1, 2]);
+    assert_eq!(data_tags(&d).len(), 1);
+    assert_eq!(data_tags(&[1, 2, 3]), Vec::<(u32, &[u8])>::new());
+}
+
+#[test]
+fn random_damage_never_panics() {
+    // every format, bytes changed and cut, 20,000 times
+    let one = u32b(1);
+    let samples = [
+        win10(
+            true,
+            &[
+                win10_entry(r"C:\a.exe", WHEN, &tags(&[(0x100, &one)])),
+                win10_entry(r"C:\b.exe", WHEN, &[]),
+            ],
+        ),
+        win10(false, &[win10_entry(r"C:\a.exe", WHEN, &[])]),
+        win8(true, &[(r"C:\a.exe", WHEN, 2, "p", &[1])]),
+        win8(false, &[(r"C:\a.exe", WHEN, 2, "", &[])]),
+        table(
+            true,
+            true,
+            &[(r"C:\a.exe", WHEN, 2), (r"C:\b.exe", WHEN, 0)],
+        ),
+        table(true, false, &[(r"C:\a.exe", WHEN, 2)]),
+        table(false, true, &[(r"C:\a.exe", WHEN, 2)]),
+        table(false, false, &[(r"C:\a.exe", WHEN, 2)]),
+        xp(
+            &[1, 0],
+            &[(r"C:\a.exe", WHEN, WHEN), (r"C:\b.exe", WHEN, WHEN)],
+        ),
+    ];
+    let mut seed = 0x9E37_79B9_7F4A_7C15_u64;
+    let mut next = || {
+        seed ^= seed << 13;
+        seed ^= seed >> 7;
+        seed ^= seed << 17;
+        seed
+    };
+    for n in 0..20_000 {
+        let mut v = samples[n % samples.len()].clone();
+        for _ in 0..=next() % 16 {
+            let at = (next() as usize) % v.len();
+            v[at] = next() as u8;
+        }
+        if next() % 3 == 0 {
+            let cut = (next() as usize) % (v.len() + 1);
+            v.truncate(cut);
+        }
+        if let Ok(c) = decode(&v, None) {
+            let _ = recover_slack(&v, &c);
+            for e in &c.entries {
+                let _ = (
+                    e.data_tags(),
+                    e.machine(),
+                    e.package_record(),
+                    e.last_modified(),
+                );
+            }
+        }
+    }
 }

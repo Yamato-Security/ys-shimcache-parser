@@ -1,109 +1,189 @@
-//! `shimcache4n6` — read a Windows `SYSTEM` hive's AppCompatCache (ShimCache) and print the shimmed
-//! executables (path, last-modification time, execution flag) plus graded findings.
-//!
-//! The decoding + analysis live in the `shimcache_forensic` / `shimcache_core` libraries; this
-//! binary only wires `winreg-core` (open the hive, extract the `AppCompatCache` value) to
-//! [`shimcache_forensic::analyze_blob`] and renders the result.
-#![forbid(unsafe_code)]
-
-use std::io::Cursor;
-use std::process::ExitCode;
+//! `shimcache4n6 SYSTEM [--list] [--csv FILE]`: a `SYSTEM` hive's AppCompatCaches (its
+//! transaction logs, next to it, replayed when it is dirty): a summary per control set and the
+//! findings; `--list` prints every entry, `--csv` writes them with Eric Zimmerman's
+//! AppCompatCacheParser's columns (times UTC, `yyyy-MM-dd HH:mm:ss`, as its default).
 
 use forensicnomicon::report::Observation;
-use shimcache_forensic::{analyze_blob, ShimcacheAnomaly, ShimcacheReport};
-use winreg_core::hive::Hive;
-use winreg_core::key::filetime_to_datetime;
-
-/// The AppCompatCache key path within a control set. `Session Manager` has a space; `winreg-core`
-/// splits the path on backslashes.
-const APPCOMPAT_SUBPATH: &str = r"Control\Session Manager\AppCompatCache";
+use shimcache_forensic::{audit, read_system_file, ShimcacheAnomaly, SystemCaches};
+use std::io::Write;
+use std::process::ExitCode;
 
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let list = args.iter().any(|a| a == "--list");
-    let Some(hive_path) = args.iter().find(|a| !a.starts_with("--")) else {
-        eprintln!("usage: shimcache4n6 <SYSTEM-hive> [--list]   (--list dumps every cache entry)");
+    let csv = args
+        .iter()
+        .position(|a| a == "--csv")
+        .and_then(|i| args.get(i + 1).cloned());
+    let Some(hive_path) = args
+        .iter()
+        .enumerate()
+        .find(|(i, a)| !a.starts_with("--") && (*i == 0 || args[*i - 1] != "--csv"))
+        .map(|(_, a)| a.clone())
+    else {
+        eprintln!("usage: shimcache4n6 <SYSTEM hive> [--list] [--csv FILE]");
         return ExitCode::from(2);
     };
-
-    match run(hive_path) {
-        Ok(report) => {
-            print_report(&report, list);
-            ExitCode::SUCCESS
+    let caches = match read_system_file(std::path::Path::new(&hive_path)) {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("shimcache4n6: {hive_path}: {e}");
+            return ExitCode::FAILURE;
         }
-        Err(msg) => {
-            eprintln!("shimcache4n6: {hive_path}: {msg}");
-            ExitCode::FAILURE
+    };
+    let stdout = std::io::stdout();
+    match print_report(&mut stdout.lock(), &caches, list) {
+        // `| head`: stop quietly
+        Err(e) if e.kind() == std::io::ErrorKind::BrokenPipe => return ExitCode::SUCCESS,
+        Err(e) => {
+            eprintln!("shimcache4n6: {e}");
+            return ExitCode::FAILURE;
+        }
+        Ok(()) => {}
+    }
+    if let Some(out) = csv {
+        if let Err(e) = write_csv(&caches, &hive_path, &out) {
+            eprintln!("shimcache4n6: {out}: {e}");
+            return ExitCode::FAILURE;
         }
     }
+    ExitCode::SUCCESS
 }
 
-/// Open the hive, extract the AppCompatCache value, and analyze it. Returns a human message on
-/// any failure (the binary reports it and exits non-zero).
-fn run(hive_path: &str) -> Result<ShimcacheReport, String> {
-    let hive = Hive::from_path(std::path::Path::new(hive_path)).map_err(|e| format!("{e}"))?;
-    let (control_set, blob) = appcompatcache_blob(&hive)?;
-    analyze_blob(&blob, control_set).map_err(|e| format!("{e}"))
-}
-
-/// Find the `AppCompatCache` value across the hive's control sets (`ControlSet001` then `002`,
-/// the standard forensic order). Returns the control-set name and the raw blob.
-fn appcompatcache_blob(hive: &Hive<Cursor<Vec<u8>>>) -> Result<(String, Vec<u8>), String> {
-    for cs in ["ControlSet001", "ControlSet002"] {
-        let key_path = format!("{cs}\\{APPCOMPAT_SUBPATH}");
-        let Some(key) = hive.open_key(&key_path).map_err(|e| format!("{e}"))? else {
-            continue;
-        };
-        if let Some(value) = key.value("AppCompatCache").map_err(|e| format!("{e}"))? {
-            let blob = value.raw_data().map_err(|e| format!("{e}"))?;
-            if !blob.is_empty() {
-                return Ok((cs.to_string(), blob));
+fn print_report(w: &mut impl Write, caches: &SystemCaches, list: bool) -> std::io::Result<()> {
+    let r = &caches.recovery;
+    if r.recovered {
+        writeln!(w, "Transaction logs applied: {}", r.logs_applied.join(", "))?;
+    } else if r.dirty {
+        writeln!(
+            w,
+            "The hive is dirty and its transaction logs were not applied: data may be missing"
+        )?;
+    }
+    for m in &r.messages {
+        writeln!(w, "  {m}")?;
+    }
+    let mut anomalies: Vec<ShimcacheAnomaly> = Vec::new();
+    for cs in &caches.control_sets {
+        match &cs.cache {
+            Some(c) => {
+                writeln!(
+                    w,
+                    "AppCompatCache: {}, ControlSet{:03}, {} entries{}",
+                    c.format.name(),
+                    cs.control_set,
+                    c.entries.len(),
+                    if cs.slack.is_empty() {
+                        String::new()
+                    } else {
+                        format!(" (and {} recovered from slack)", cs.slack.len())
+                    }
+                )?;
+                for p in &c.problems {
+                    writeln!(w, "  {p}")?;
+                }
+                for a in audit(&c.entries) {
+                    if !anomalies.contains(&a) {
+                        anomalies.push(a);
+                    }
+                }
             }
+            None => writeln!(
+                w,
+                "AppCompatCache: ControlSet{:03}: {}",
+                cs.control_set,
+                cs.error.as_deref().unwrap_or("not read")
+            )?,
         }
     }
-    Err("no AppCompatCache value found (checked ControlSet001/002 Session Manager)".to_string())
-}
-
-fn print_report(report: &ShimcacheReport, list: bool) {
-    println!(
-        "AppCompatCache: {:?}, {}, {} entries",
-        report.format,
-        report.control_set,
-        report.entries.len()
-    );
-
-    if report.anomalies.is_empty() {
-        println!("Findings: none");
+    if anomalies.is_empty() {
+        writeln!(w, "Findings: none")?;
     } else {
-        println!("Findings ({}):", report.anomalies.len());
-        for a in &report.anomalies {
+        writeln!(w, "Findings ({}):", anomalies.len())?;
+        for a in &anomalies {
             let sev = a
                 .severity()
                 .map_or_else(|| "INFO".to_string(), |s| format!("{s:?}").to_uppercase());
-            println!("  [{sev}] {}  {}", a.code(), subject_path(a));
-            println!("    {}", a.note());
+            let (ShimcacheAnomaly::SystemBinaryRelocated { path, .. }
+            | ShimcacheAnomaly::SuspiciousPath { path, .. }) = a;
+            writeln!(w, "  [{sev}] {}  {path}", a.code())?;
+            writeln!(w, "    {}", a.note())?;
         }
     }
-
     if list {
-        println!("\nEntries (most-recent first):");
-        for e in &report.entries {
-            let when = filetime_to_datetime(e.last_modified_filetime)
-                .map_or_else(|| "-".to_string(), |t| t.to_string());
+        writeln!(w, "\nEntries (most recently used first):")?;
+        for row in caches.rows() {
+            let e = row.entry;
             let exec = match e.executed {
                 Some(true) => "executed",
                 Some(false) => "present",
                 None => "-",
             };
-            println!("  {when}  {exec:<8}  {}", e.path);
+            writeln!(
+                w,
+                "  {:03} {:>4}  {:19}  {exec:<8}  {}{}",
+                row.control_set,
+                e.position,
+                e.last_modified().map_or_else(|| "-".to_string(), when),
+                e.path,
+                if e.from_slack { "  (slack)" } else { "" }
+            )?;
         }
+    }
+    Ok(())
+}
+
+fn write_csv(caches: &SystemCaches, hive: &str, out: &str) -> std::io::Result<()> {
+    let mut w = std::io::BufWriter::new(std::fs::File::create(out)?);
+    writeln!(w, "ControlSet,CacheEntryPosition,Path,LastModifiedTimeUTC,Executed,Duplicate,SourceFile,FromSlack")?;
+    for row in caches.rows() {
+        let e = row.entry;
+        let executed = match e.executed {
+            Some(true) => "Yes",
+            Some(false) => "No",
+            None => "NA",
+        };
+        writeln!(
+            w,
+            "{},{},{},{},{executed},{},{},{}",
+            row.control_set,
+            e.position,
+            quote(&e.path),
+            e.last_modified().map_or_else(String::new, when),
+            if row.duplicate { "True" } else { "False" },
+            quote(hive),
+            if e.from_slack { "True" } else { "False" },
+        )?;
+    }
+    w.flush()
+}
+
+/// A CSV field, quoted when it needs to be.
+fn quote(s: &str) -> String {
+    if s.contains([',', '"', '\n', '\r']) {
+        format!("\"{}\"", s.replace('"', "\"\""))
+    } else {
+        s.to_string()
     }
 }
 
-/// The path a finding points at (for the one-line summary).
-fn subject_path(a: &ShimcacheAnomaly) -> &str {
-    match a {
-        ShimcacheAnomaly::SystemBinaryRelocated { path, .. }
-        | ShimcacheAnomaly::SuspiciousPath { path, .. } => path,
-    }
+/// A FILETIME as `yyyy-MM-dd HH:mm:ss` UTC.
+fn when(ft: u64) -> String {
+    let secs = (ft / 10_000_000) as i64 - 11_644_473_600;
+    let (days, rest) = (secs.div_euclid(86_400), secs.rem_euclid(86_400));
+    let z = days + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = z - era * 146_097;
+    let yoe = (doe - doe / 1_460 + doe / 36_524 - doe / 146_096) / 365;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let day = doy - (153 * mp + 2) / 5 + 1;
+    let month = if mp < 10 { mp + 3 } else { mp - 9 };
+    let year = yoe + era * 400 + i64::from(month <= 2);
+    format!(
+        "{year:04}-{month:02}-{day:02} {:02}:{:02}:{:02}",
+        rest / 3_600,
+        rest % 3_600 / 60,
+        rest % 60
+    )
 }

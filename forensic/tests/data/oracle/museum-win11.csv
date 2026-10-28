@@ -1,0 +1,360 @@
+ControlSet,CacheEntryPosition,Path,LastModifiedTimeUTC,Executed,Duplicate,SourceFile,FromSlack
+1,0,C:\Windows\SoftwareDistribution\Download\Install\AM_Delta_Patch_1.357.209.0.exe,2022-02-07 07:37:13,No,False,SYSTEM,False
+1,1,C:\Windows\System32\PickerHost.exe,2021-06-05 12:05:02,No,False,SYSTEM,False
+1,2,C:\Users\ANDREW~1\AppData\Local\Temp\DA15D340-2806-4EF5-BB3C-C787E4CD384B\dismhost.exe,2021-06-05 12:05:42,No,False,SYSTEM,False
+1,3,C:\Users\AndrewRathbun\AppData\Local\Temp\DA15D340-2806-4EF5-BB3C-C787E4CD384B\DismHost.exe,2021-06-05 12:05:42,No,False,SYSTEM,False
+1,4,C:\Windows\TEMP\762C0BE5-40DC-4B38-9C61-AE1565A3A21E\dismhost.exe,2021-06-05 12:05:42,No,False,SYSTEM,False
+1,5,\\?\C:\Windows\System32\SecurityHealthHost.exe,2021-09-13 15:32:02,No,False,SYSTEM,False
+1,6,C:\Users\AndrewRathbun\AppData\Local\Microsoft\OneDrive\22.002.0103.0004\FileSyncConfig.exe,2022-02-06 21:36:19,No,False,SYSTEM,False
+1,7,C:\Users\AndrewRathbun\AppData\Local\Microsoft\OneDrive\StandaloneUpdater\OneDriveSetup.exe,2022-02-06 21:36:16,No,False,SYSTEM,False
+1,8,00000009	000a083700060000	0000000000000000	8664	Microsoft.WindowsNotepad	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,9,C:\Program Files\WindowsApps\Microsoft.WindowsNotepad_10.2103.6.0_x64__8wekyb3d8bbwe\Notepad\Notepad.exe,2022-02-05 21:03:49,No,False,SYSTEM,False
+1,10,00000009	000a083700060000	000a00004c550000	8664	Microsoft.WindowsNotepad	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,11,00000009	0001000b0d8f0000	000a000047ba0000	8664	Microsoft.WindowsTerminal	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,12,C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.11.3471.0_x64__8wekyb3d8bbwe\OpenConsole.exe,2022-02-05 21:04:27,No,False,SYSTEM,False
+1,13,C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.11.3471.0_x64__8wekyb3d8bbwe\WindowsTerminal.exe,2022-02-05 21:04:28,No,False,SYSTEM,False
+1,14,C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.11.3471.0_x64__8wekyb3d8bbwe\wt.exe,2022-02-05 21:04:28,No,False,SYSTEM,False
+1,15,00000009	0001000b0d8f0000	0000000000000000	8664	Microsoft.WindowsTerminal	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,16,C:\Windows\system32\winsat.exe,2021-06-05 12:06:16,No,False,SYSTEM,False
+1,17,C:\Users\ANDREW~1\AppData\Local\Temp\66214AE6-3FFF-4109-A526-E777D8EF5718\dismhost.exe,2021-06-05 12:05:42,No,False,SYSTEM,False
+1,18,C:\Users\AndrewRathbun\AppData\Local\Temp\66214AE6-3FFF-4109-A526-E777D8EF5718\DismHost.exe,2021-06-05 12:05:42,No,False,SYSTEM,False
+1,19,C:\Windows\TEMP\65CED95A-C9E1-4355-B63D-4A1902A242C6\dismhost.exe,2021-06-05 12:05:42,No,False,SYSTEM,False
+1,20,C:\Windows\system32\disksnapshot.exe,2021-06-05 12:05:16,No,False,SYSTEM,False
+1,21,C:\Windows\system32\cleanmgr.exe,2021-06-05 12:06:02,No,False,SYSTEM,False
+1,22,C:\Windows\system32\dstokenclean.exe,2021-06-05 12:05:02,No,False,SYSTEM,False
+1,23,C:\Windows\SoftwareDistribution\Download\Install\AM_Delta_Patch_1.357.176.0.exe,2022-02-06 19:28:49,No,False,SYSTEM,False
+1,24,00000009	0001000000960000	000a00004a610000	8664	Microsoft.PowerAutomateDesktop	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,25,C:\Windows\SoftwareDistribution\Download\17081bc968a33061f6a51840dce06cf0\unifiedinstaller.exe,2022-02-06 13:00:07,No,False,SYSTEM,False
+1,26,C:\Program Files (x86)\Microsoft\EdgeWebView\Application\98.0.1108.43\Installer\setup.exe,2022-02-06 13:00:28,No,False,SYSTEM,False
+1,27,C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{09614052-2D06-48C9-8590-9422A20BACDC}\EDGEMITMP_D9E36.tmp\setup.exe,2022-02-06 13:00:54,No,False,SYSTEM,False
+1,28,C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{09614052-2D06-48C9-8590-9422A20BACDC}\MicrosoftEdge_X64_98.0.1108.43.exe,2022-02-06 13:00:51,No,False,SYSTEM,False
+1,29,C:\Program Files\WindowsApps\Microsoft.Windows.Photos_2021.21120.8011.0_x64__8wekyb3d8bbwe\Application,2022-02-06 13:00:51,No,False,SYSTEM,False
+1,30,00000009	07e552801f4b0000	0000000000000000	8664	Microsoft.Windows.Photos	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,31,C:\Program Files (x86)\Microsoft\Edge\Application\98.0.1108.43\Installer\setup.exe,2022-02-06 13:00:28,No,False,SYSTEM,False
+1,32,C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{3C1404EC-46E6-4C4C-953A-F3C3D8E10385}\EDGEMITMP_EE965.tmp\setup.exe,2022-02-06 13:00:28,No,False,SYSTEM,False
+1,33,C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{3C1404EC-46E6-4C4C-953A-F3C3D8E10385}\MicrosoftEdge_X64_98.0.1108.43.exe,2022-02-06 13:00:26,No,False,SYSTEM,False
+1,34,C:\Windows\System32\sihclient.exe,2021-09-13 15:32:29,No,False,SYSTEM,False
+1,35,C:\Windows\system32\speech_onecore\common\SpeechModelDownload.exe,2021-06-05 12:05:17,No,False,SYSTEM,False
+1,36,C:\Windows\SoftwareDistribution\Download\Install\AM_Delta_Patch_1.357.161.0.exe,2022-02-06 04:04:06,No,False,SYSTEM,False
+1,37,C:\Windows\system32\ipconfig.exe,2021-06-05 12:06:00,No,False,SYSTEM,False
+1,38,C:\Windows\system32\MpSigStub.exe,2022-02-05 21:02:28,No,False,SYSTEM,False
+1,39,C:\Windows\SoftwareDistribution\Download\Install\AM_Delta_Patch_1.357.150.0.exe,2022-02-05 21:13:57,No,False,SYSTEM,False
+1,40,C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2111.5-0\MpCmdRun.exe,2022-02-05 21:03:30,No,False,SYSTEM,False
+1,41,C:\Windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.22000.345_none_04b3f78d4c83ab0f\TiWorker.exe,2021-10-30 04:55:00,No,False,SYSTEM,False
+1,42,C:\Program Files\WindowsApps\Microsoft.MicrosoftOfficeHub_18.2110.13110.0_x64__8wekyb3d8bbwe\Application,2022-02-05 21:04:51,No,False,SYSTEM,False
+1,43,00000009	0012083e33360000	0000000000000000	8664	Microsoft.MicrosoftOfficeHub	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,44,00000009	000c00532ee10000	000a000045630000	8664	Microsoft.XboxIdentityProvider	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,45,00000009	0012083e33360000	000a000042ee0000	8664	Microsoft.MicrosoftOfficeHub	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,46,C:\Program Files\WindowsApps\Microsoft.YourPhone_1.21121.256.0_x64__8wekyb3d8bbwe\Application,2022-02-05 21:04:48,No,False,SYSTEM,False
+1,47,00000009	0001528101000000	0000000000000000	8664	Microsoft.YourPhone	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,48,00000009	0001528101000000	000a000053350000	8664	Microsoft.YourPhone	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,49,00000009	000a526e2c930000	000a00004bc80000	8664	Microsoft.ZuneMusic	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,50,00000009	00010010345d0000	000a00004a610000	8664	Microsoft.DesktopAppInstaller	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,51,00000009	0001000b0d8f0000	000a00004a610000	8664	Microsoft.WindowsTerminal	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,52,00000009	0000003f14dd0000	000a000047ba0000	8664	Microsoft.Todos	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,53,C:\Program Files\WindowsApps\Microsoft.WindowsFeedbackHub_1.2201.61.0_x64__8wekyb3d8bbwe\Application,2022-02-05 21:04:23,No,False,SYSTEM,False
+1,54,00000009	00010899003d0000	0000000000000000	8664	Microsoft.WindowsFeedbackHub	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,55,00000009	00010899003d0000	000a000055f00000	8664	Microsoft.WindowsFeedbackHub	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,56,00000009	0001000000260000	000a000047ba0000	8664	Microsoft.WindowsAlarms	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,57,00000009	000b084000030000	000a000055f00000	8664	Microsoft.WindowsCalculator	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,58,00000009	0003083f313d0000	000a00004a610000	8664	Microsoft.549981C3F5F10	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,59,00000009	000a5277290f0000	000a00004bc80000	8664	Microsoft.ZuneVideo	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,60,00000009	0004000c041a0000	000a00004a610000	8664	Microsoft.MicrosoftSolitaireCollection	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,61,00000009	000a083fa99d0000	000a000047ba0000	8664	Microsoft.GetHelp	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,62,00000009	000a083f00020000	000a00004a610000	8664	Microsoft.Getstarted	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,63,00000009	0004000001a60000	000a00004a430000	8664	Microsoft.MicrosoftStickyNotes	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,64,C:\Program Files\WindowsApps\microsoft.windowscommunicationsapps_16005.14326.20544.0_x64__8wekyb3d8bbwe\Application,2022-02-05 21:03:52,No,False,SYSTEM,False
+1,65,00000009	3e8537f650400000	0000000000000000	8664	microsoft.windowscommunicationsapps	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,66,C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2111.5-0\NisSrv.exe,2022-02-05 21:03:30,No,False,SYSTEM,False
+1,67,00000009	3e8537f650400000	000a00004c610000	8664	microsoft.windowscommunicationsapps	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,68,00000009	000502d12eed0000	000a00004a610000	8664	Microsoft.XboxGamingOverlay	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,69,C:\Windows\SoftwareDistribution\Download\Install\MpSigStub.exe,2022-02-05 21:02:28,No,False,SYSTEM,False
+1,70,C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2111.5-0\MsMpEng.exe,2022-02-05 21:03:30,No,False,SYSTEM,False
+1,71,00000000	0002a41723290000	000a000047ba0000	8664	Microsoft.UI.Xaml.2.4	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,72,00000009	07e6083e00000000	000a000055f00000	8664	Microsoft.WindowsCamera	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,73,00000000	000e000077f00000	000a0000273a0000	8664	Microsoft.VCLibs.140.00.UWPDesktop	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,74,00000009	000e000077f00000	000a0000273a0000	8664	Microsoft.VCLibs.140.00.UWPDesktop	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,75,C:\Windows\SERVIC~1\NETWOR~1\AppData\Local\Temp\B28F6A0B-352D-4A98-9BB5-553A1E4FA0AF\MpSigStub.exe,2022-02-05 21:03:30,No,False,SYSTEM,False
+1,76,C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp\B28F6A0B-352D-4A98-9BB5-553A1E4FA0AF\MpSigStub.exe,2022-02-05 21:03:30,Yes,False,SYSTEM,False
+1,77,00000009	2f4d03e9000a0000	000a000047ba0000	8664	Microsoft.StorePurchaseApp	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,78,C:\Windows\SERVIC~1\NETWOR~1\AppData\Local\Temp\mpam-27e474a6.exe,2022-02-05 21:03:27,No,False,SYSTEM,False
+1,79,C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp\mpam-27e474a6.exe,2022-02-05 21:03:27,Yes,False,SYSTEM,False
+1,80,00000009	000b083e00000000	000a000055f00000	8664	Microsoft.Paint	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,81,C:\ProgramData\Microsoft\Windows Defender\Scans\MsMpEngCP.exe,2022-02-05 21:03:24,No,False,SYSTEM,False
+1,82,00000009	00010000002a0000	000a00004a330000	8664	Microsoft.WindowsSoundRecorder	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,83,00000009	00010000001c0000	000a00004a430000	8664	Microsoft.WindowsMaps	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,84,C:\Windows\SERVIC~1\NETWOR~1\AppData\Local\Temp\41B5A94E-B1AE-4C2A-BC55-F2E459CC941B\MpSigStub.exe,2022-02-05 21:03:14,No,False,SYSTEM,False
+1,85,C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp\41B5A94E-B1AE-4C2A-BC55-F2E459CC941B\MpSigStub.exe,2022-02-05 21:03:14,Yes,False,SYSTEM,False
+1,86,C:\Windows\SERVIC~1\NETWOR~1\AppData\Local\Temp\mpam-c3786e9e.exe,2022-02-05 21:03:13,No,False,SYSTEM,False
+1,87,C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Temp\mpam-c3786e9e.exe,2022-02-05 21:03:13,Yes,False,SYSTEM,False
+1,88,00000000	00027d0232c90000	000a000047ba0000	8664	Microsoft.UI.Xaml.2.3	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,89,00000009	000a083900040000	000a000045630000	8664	Microsoft.People	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,90,00000009	00027d0232c90000	000a000047ba0000	8664	Microsoft.UI.Xaml.2.3	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,91,00000009	00010000a4d00000	000a00004a610000	8664	Microsoft.WebMediaExtensions	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,92,C:\Program Files\WindowsApps\Microsoft.XboxGameOverlay_1.54.4001.0_x64__8wekyb3d8bbwe\Application,2022-02-05 21:02:49,No,False,SYSTEM,False
+1,93,00000009	000100360fa10000	0000000000000000	8664	Microsoft.XboxGameOverlay	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,94,C:\Windows\system32\MRT.exe,2022-02-05 21:02:46,No,False,SYSTEM,False
+1,95,00000009	000100360fa10000	000a000042ee0000	8664	Microsoft.XboxGameOverlay	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,96,00000009	0001001827110000	000a00003fab0000	8664	Microsoft.Xbox.TCUI	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,97,C:\Windows\SoftwareDistribution\Download\Install\Windows-KB890830-x64-V5.97.exe,2022-02-05 21:02:43,No,False,SYSTEM,False
+1,98,C:\Windows\system32\MusNotification.exe,2021-09-13 15:31:51,No,False,SYSTEM,False
+1,99,C:\Windows\System32\wsqmcons.exe,2021-06-05 12:05:23,No,False,SYSTEM,False
+1,100,C:\Windows\system32\OpenWith.exe,2021-06-05 12:05:33,No,False,SYSTEM,False
+1,101,00000009	000a0836000d0000	0000000000000000	8664	Microsoft.WindowsNotepad	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,102,C:\Program Files\WindowsApps\Microsoft.WindowsNotepad_10.2102.13.0_x64__8wekyb3d8bbwe\Notepad\Notepad.exe,2021-06-05 14:33:12,No,False,SYSTEM,False
+1,103,00000009	000a0836000d0000	000a00004c550000	8664	Microsoft.WindowsNotepad	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,104,C:\Users\AndrewRathbun\AppData\Local\Microsoft\OneDrive\OneDriveStandaloneUpdater.exe,2022-02-06 21:36:19,No,False,SYSTEM,False
+1,105,C:\Program Files\WindowsApps\Microsoft.MicrosoftOfficeHub_18.2104.12721.0_x64__8wekyb3d8bbwe\LocalBridge.exe,2021-06-05 14:33:52,No,False,SYSTEM,False
+1,106,C:\Program Files\WindowsApps\Microsoft.WindowsStore_22112.1401.2.0_x64__8wekyb3d8bbwe\Application,2022-02-05 19:17:24,No,False,SYSTEM,False
+1,107,00000009	5660057900020000	0000000000000000	8664	Microsoft.WindowsStore	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,108,00000000	0002000273480000	000a000027410000	8664	Microsoft.NET.Native.Framework.2.2	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,109,00000009	000b083e00140000	000a000055f00000	8664	Microsoft.ScreenSketch	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,110,00000000	000200026fbc0000	000a000027410000	8664	Microsoft.NET.Native.Runtime.2.2	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,111,00000009	07e552801f4b0000	000a000055f00000	8664	Microsoft.Windows.Photos	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,112,00000009	5660057900020000	000a000055f00000	8664	Microsoft.WindowsStore	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,113,00000000	000e000077f00000	000a0000273a0000	8664	Microsoft.VCLibs.140.00	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,114,00000009	000e000077f00000	000a0000273a0000	8664	Microsoft.VCLibs.140.00	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,115,00000009	01a54e5201f90000	000a00007fff0000	8664	MicrosoftWindows.Client.WebExperience	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,116,00000009	0007083d32cc0000	000a000047ba0000	8664	Microsoft.UI.Xaml.2.7	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,117,00000000	0007083d32cc0000	000a000047ba0000	8664	Microsoft.UI.Xaml.2.7	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,118,C:\Program Files\WindowsApps\Microsoft.MicrosoftOfficeHub_18.2104.12721.0_x64__8wekyb3d8bbwe\Application,2022-02-05 19:31:52,No,False,SYSTEM,False
+1,119,00000009	0012083831b10000	0000000000000000	8664	Microsoft.MicrosoftOfficeHub	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,120,C:\Program Files\WindowsApps\Microsoft.XboxGameOverlay_1.46.11001.0_x64__8wekyb3d8bbwe\Application,2022-02-05 19:16:25,No,False,SYSTEM,False
+1,121,00000009	0001002e2af90000	0000000000000000	8664	Microsoft.XboxGameOverlay	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,122,0000000b	03e855f000010000	000a000000000000	8664	Microsoft.Windows.PinningConfirmationDialog	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,123,0000000b	000a000055f00001	000a000055f00001	8664	F46D4000-FD22-4DB4-AC8E-4E1DDDE828FE	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,124,0000000b	000a00004cb803e8	000c000000000000	8664	E2A4F912-2574-4A75-9BB0-0D023378592B	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,125,0000000b	000a000055f00001	000a000042ee0000	8664	c5e2524a-ea46-4f67-841f-6a9465d9d515	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,126,0000000b	000a00004cb803e8	000c000000000000	8664	1527c705-839a-4832-9118-54d4Bd6a0c89	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,127,0000000b	03e855f000010000	000a000000000000	8664	Microsoft.Windows.ParentalControls	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,128,0000000b	000a000055f00001	000a000055f00001	8664	Microsoft.Windows.XGpuEjectDialog	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,129,C:\Windows\SystemApps\NcsiUwpApp_8wekyb3d8bbwe\Application,2022-02-05 19:16:20,No,False,SYSTEM,False
+1,130,0000000b	03e855f000010000	0000000000000000	8664	NcsiUwpApp	8wekyb3d8bbwe	neutral,,No,False,SYSTEM,False
+1,131,0000000b	000a000055f00001	000a0000452b0000	8664	Microsoft.Windows.NarratorQuickStart	8wekyb3d8bbwe	neutral,,No,False,SYSTEM,False
+1,132,0000000b	000a00004c7c03e8	000c000000000000	8664	Microsoft.Windows.CapturePicker	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,133,0000000b	03e855f000010000	000a000000000000	8664	Microsoft.Windows.AssignedAccessLockApp	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,134,0000000b	03e855f000010000	000a000000000000	8664	Microsoft.Windows.Apprep.ChxApp	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,135,0000000b	000a000055f00001	000b000000000000	8664	Microsoft.Win32WebViewHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,136,0000000b	000a000055f00001	000a000038390000	8664	Microsoft.AsyncTextService	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,137,0000000b	000a00004c7c03e8	000a000042990000	8664	Windows.CBSPreview	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,138,0000000b	03e855f000010000	000c000000000000	8664	Microsoft.MicrosoftEdgeDevToolsClient	8wekyb3d8bbwe	neutral,,No,False,SYSTEM,False
+1,139,0000000b	000a000055f00001	000a000038390000	8664	Microsoft.ECApp	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,140,0000000b	000a00004c8b03e9	000c000000000000	8664	Microsoft.CredDialogHost	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,141,C:\Windows\system32\dmclient.exe,2021-06-05 12:04:59,No,False,SYSTEM,False
+1,142,C:\Windows\system32\sc.exe,2021-06-05 12:06:02,No,False,SYSTEM,False
+1,143,C:\Windows\system32\WFS.exe,2021-06-05 01:24:00,No,False,SYSTEM,False
+1,144,C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe,2021-06-05 12:07:00,Yes,False,SYSTEM,False
+1,145,C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.6.10571.0_x64__8wekyb3d8bbwe\OpenConsole.exe,2021-06-05 14:33:19,No,False,SYSTEM,False
+1,146,C:\Windows\system32\wsl.exe,2021-06-05 12:06:17,Yes,False,SYSTEM,False
+1,147,00000009	00010006294b0000	0000000000000000	8664	Microsoft.WindowsTerminal	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,148,C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.6.10571.0_x64__8wekyb3d8bbwe\WindowsTerminal.exe,2021-06-05 14:33:20,No,False,SYSTEM,False
+1,149,0000000b	52e4040000050000	0000000000000000	8664	Microsoft.OneDriveSync	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,150,C:\Windows\SysWOW64\DllHost.exe,2021-06-05 12:05:53,No,False,SYSTEM,False
+1,151,0000000b	52e4040000050000	000a00004a640000	014c	Microsoft.OneDriveSync	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,152,C:\Windows\Microsoft.NET\Framework\v4.0.30319\mscorsvw.exe,2021-09-13 15:25:51,No,False,SYSTEM,False
+1,153,C:\Windows\Microsoft.NET\Framework64\v4.0.30319\mscorsvw.exe,2021-09-13 15:25:51,No,False,SYSTEM,False
+1,154,C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe,2021-09-13 15:25:51,No,False,SYSTEM,False
+1,155,C:\Windows\Microsoft.NET\Framework64\v4.0.30319\ngen.exe,2021-09-13 15:25:51,No,False,SYSTEM,False
+1,156,C:\Windows\Microsoft.NET\Framework\v4.0.30319\NGenTask.exe,2021-09-13 15:25:51,No,False,SYSTEM,False
+1,157,C:\Windows\Microsoft.NET\Framework64\v4.0.30319\NGenTask.exe,2021-09-13 15:25:51,No,False,SYSTEM,False
+1,158,C:\Windows\system32\defrag.exe,2021-06-05 12:06:05,No,False,SYSTEM,False
+1,159,C:\Windows\System32\conhost.exe,2021-09-13 15:31:59,No,False,SYSTEM,False
+1,160,C:\Users\AndrewRathbun\Desktop\kape.exe,2021-11-16 21:10:42,Yes,False,SYSTEM,False
+1,161,C:\Windows\system32\wbem\WmiApSrv.exe,2021-06-05 12:04:58,No,False,SYSTEM,False
+1,162,C:\Program Files\VMware\VMware Tools\VMwareResolutionSet.exe,2021-08-31 08:00:26,No,False,SYSTEM,False
+1,163,C:\Windows\System32\msdtc.exe,2021-06-05 12:06:02,No,False,SYSTEM,False
+1,164,C:\Program Files\Common Files\VMware\Drivers\vss\comreg.exe,2021-08-31 08:04:08,Yes,False,SYSTEM,False
+1,165,C:\Windows\system32\cmd.exe,2021-06-05 12:05:12,No,False,SYSTEM,False
+1,166,C:\Program Files\VMware\VMware Tools\vmtoolsd.exe,2021-08-31 08:00:32,No,False,SYSTEM,False
+1,167,C:\Windows\system32\vm3dservice.exe,2021-08-31 08:04:22,No,False,SYSTEM,False
+1,168,C:\Windows\syswow64\WOWReg32.exe,2021-09-13 15:32:20,No,False,SYSTEM,False
+1,169,C:\Program Files\VMware\VMware Tools\VMware VGAuth\VGAuthService.exe,2021-08-31 07:43:46,Yes,False,SYSTEM,False
+1,170,C:\Windows\syswow64\MsiExec.exe,2021-06-05 12:06:23,Yes,False,SYSTEM,False
+1,171,C:\Windows\Temp\{F6A3D6DF-0DEB-47A1-A8D5-519B61E785A3}\.be\VC_redist.x64.exe,2022-02-05 19:03:11,No,False,SYSTEM,False
+1,172,C:\Windows\Temp\{2195AA3A-2BCA-4BCB-9245-2AB549811529}\.cr\vcredist_x64.exe,2022-02-05 19:03:10,No,False,SYSTEM,False
+1,173,C:\Users\ANDREW~1\AppData\Local\Temp\{1FF5D624-5515-4343-837A-E54C101573E6}~setup\vcredist_x64.exe,2022-02-05 19:03:09,No,False,SYSTEM,False
+1,174,C:\Users\AndrewRathbun\AppData\Local\Temp\{1FF5D624-5515-4343-837A-E54C101573E6}~setup\vcredist_x64.exe,2022-02-05 19:03:09,No,False,SYSTEM,False
+1,175,C:\Windows\system32\msiexec.exe,2021-06-05 12:06:10,Yes,False,SYSTEM,False
+1,176,C:\Windows\Temp\{4B29EF5B-BDE3-439B-9947-E0E00356C8C8}\.be\VC_redist.x86.exe,2022-02-05 19:03:09,No,False,SYSTEM,False
+1,177,C:\Windows\Temp\{4115BC8D-125F-4AFA-9312-8246B8FDC387}\.cr\vcredist_x86.exe,2022-02-05 19:03:09,No,False,SYSTEM,False
+1,178,C:\Users\ANDREW~1\AppData\Local\Temp\{1FF5D624-5515-4343-837A-E54C101573E6}~setup\vcredist_x86.exe,2022-02-05 19:03:09,No,False,SYSTEM,False
+1,179,C:\Users\AndrewRathbun\AppData\Local\Temp\{1FF5D624-5515-4343-837A-E54C101573E6}~setup\vcredist_x86.exe,2022-02-05 19:03:09,No,False,SYSTEM,False
+1,180,SIGN.MEDIA=1FF3254 setup64.exe,2021-08-31 10:14:25,No,False,SYSTEM,False
+1,181,C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy\Application,2022-02-05 19:00:10,No,False,SYSTEM,False
+1,182,0000000b	000a000055f00047	0000000000000000	8664	Microsoft.Windows.ShellExperienceHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,183,C:\Users\AndrewRathbun\AppData\Local\Microsoft\OneDrive\21.220.1024.0005\FileSyncConfig.exe,2022-02-05 19:02:06,No,False,SYSTEM,False
+1,184,C:\Users\AndrewRathbun\AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe,2022-02-05 19:02:05,No,False,SYSTEM,False
+1,185,C:\Users\AndrewRathbun\AppData\Local\Microsoft\OneDrive\OneDrive.exe,2022-02-06 21:36:19,No,False,SYSTEM,False
+1,186,C:\Users\AndrewRathbun\AppData\Local\Microsoft\OneDrive\21.050.0310.0001\FileSyncConfig.exe,2022-02-05 19:01:59,No,False,SYSTEM,False
+1,187,C:\Windows\SysWOW64\OneDriveSetup.exe,2021-06-05 14:30:31,No,False,SYSTEM,False
+1,188,C:\Windows\system32\SecurityHealthService.exe,2021-09-13 15:32:02,No,False,SYSTEM,False
+1,189,C:\Windows\System32\SecurityHealthSystray.exe,2021-09-13 15:31:53,No,False,SYSTEM,False
+1,190,C:\Windows\System32\mobsync.exe,2021-06-05 12:06:11,No,False,SYSTEM,False
+1,191,C:\Windows\system32\verclsid.exe,2021-06-05 12:05:33,No,False,SYSTEM,False
+1,192,C:\Windows\System32\SLUI.exe,2021-06-05 12:05:34,No,False,SYSTEM,False
+1,193,C:\Windows\system32\SppExtComObj.exe,2021-09-13 15:32:05,No,False,SYSTEM,False
+1,194,C:\Windows\system32\AppHostRegistrationVerifier.exe,2021-06-05 12:05:02,No,False,SYSTEM,False
+1,195,C:\Windows\System32\LocationNotificationWindows.exe,2021-06-05 12:06:10,No,False,SYSTEM,False
+1,196,C:\Windows\system32\ClipRenew.exe,2021-06-05 14:30:33,No,False,SYSTEM,False
+1,197,C:\Windows\System32\fsquirt.exe,2021-06-05 12:05:23,No,False,SYSTEM,False
+1,198,C:\Windows\SystemApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\Application,2022-02-05 19:00:11,No,False,SYSTEM,False
+1,199,C:\Program Files\WindowsApps\Microsoft.WindowsStore_12104.1001.1.0_x64__8wekyb3d8bbwe\Application,2022-02-05 19:00:16,No,False,SYSTEM,False
+1,200,C:\Program Files\WindowsApps\microsoft.windowscommunicationsapps_16005.12827.20400.0_x64__8wekyb3d8bbwe\Application,2022-02-05 19:00:15,No,False,SYSTEM,False
+1,201,C:\Program Files\WindowsApps\Microsoft.Windows.Photos_21.21030.25003.0_x64__8wekyb3d8bbwe\Application,2022-02-05 19:00:15,No,False,SYSTEM,False
+1,202,0000000b	002c55f000780000	0000000000000000	8664	Microsoft.MicrosoftEdge	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,203,00000009	2f4803e900010000	0000000000000000	8664	Microsoft.WindowsStore	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,204,00000009	3e85321b4fb00000	0000000000000000	8664	microsoft.windowscommunicationsapps	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,205,00000009	0015522661ab0000	0000000000000000	8664	Microsoft.Windows.Photos	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,206,C:\Program Files\WindowsApps\MicrosoftTeams_22006.600.1133.7409_x64__8wekyb3d8bbwe\msteamsupdate.exe,2022-02-05 18:51:34,No,False,SYSTEM,False
+1,207,C:\Windows\System32\CompPkgSrv.exe,2021-06-05 12:04:54,No,False,SYSTEM,False
+1,208,C:\Program Files (x86)\Microsoft\EdgeWebView\Application\90.0.818.66\msedgewebview2.exe,2021-05-20 08:51:57,No,False,SYSTEM,False
+1,209,00000009	55f60258046d1cf1	0000000000000000	8664	MicrosoftTeams	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,210,C:\Program Files\WindowsApps\MicrosoftTeams_22006.600.1133.7409_x64__8wekyb3d8bbwe\msteams.exe,2022-02-05 18:51:34,No,False,SYSTEM,False
+1,211,00000009	55f60258046d1cf1	000a00004a610000	8664	MicrosoftTeams	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,212,C:\Windows\SystemApps\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy\Application,2022-02-05 19:00:08,No,False,SYSTEM,False
+1,213,0000000b	03e84c7c03e80000	0000000000000000	8664	Microsoft.AAD.BrokerPlugin	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,214,C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\Application,2022-02-05 19:00:10,No,False,SYSTEM,False
+1,215,C:\Windows\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\Application,2022-02-05 19:00:09,No,False,SYSTEM,False
+1,216,0000000b	000a000055f00025	0000000000000000	8664	Microsoft.Windows.StartMenuExperienceHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,217,00000009	03e855f0013e0000	0000000000000000	8664	MicrosoftWindows.Client.CBS	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,218,C:\Windows\system32\ByteCodeGenerator.exe,2021-09-13 15:31:44,No,False,SYSTEM,False
+1,219,00000009	0002000273480000	000a000027410000	8664	Microsoft.NET.Native.Framework.2.2	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,220,00000009	000200026fbc0000	000a000027410000	8664	Microsoft.NET.Native.Runtime.2.2	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,221,00000009	000e0000722f0000	000a0000273a0000	8664	Microsoft.VCLibs.140.00.UWPDesktop	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,222,0000000b	000a0000000603e8	000a000055f00001	8664	windows.immersivecontrolpanel	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,223,C:\Windows\system32\consent.exe,2021-06-05 12:05:33,No,False,SYSTEM,False
+1,224,C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe,2022-02-03 07:23:22,No,False,SYSTEM,False
+1,225,C:\Windows\System32\ie4uinit.exe,2021-09-13 15:32:24,No,False,SYSTEM,False
+1,226,C:\Windows\System32\unregmp2.exe,2021-06-05 01:35:00,No,False,SYSTEM,False
+1,227,C:\Windows\system32\ctfmon.exe,2021-06-05 12:05:12,No,False,SYSTEM,False
+1,228,C:\Windows\System32\oobe\UserOOBEBroker.exe,2021-06-05 12:05:39,No,False,SYSTEM,False
+1,229,C:\Windows\system32\DsmUserTask.Exe,2021-06-05 12:05:29,No,False,SYSTEM,False
+1,230,C:\Windows\System32\smartscreen.exe,2021-09-13 15:31:31,No,False,SYSTEM,False
+1,231,00000009	03e855f0013e0000	000a00007fff0000	8664	MicrosoftWindows.Client.CBS	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,232,C:\Windows\system32\vssvc.exe,2021-06-05 12:05:19,No,False,SYSTEM,False
+1,233,C:\Windows\system32\wuauclt.exe,2021-09-13 15:31:51,No,False,SYSTEM,False
+1,234,C:\Windows\system32\lpremove.exe,2021-06-05 12:05:31,No,False,SYSTEM,False
+1,235,\\?\C:\Windows\system32\wbem\WMIADAP.EXE,2021-06-05 12:04:58,No,False,SYSTEM,False
+1,236,C:\Windows\system32\SgrmBroker.exe,2021-06-05 12:06:00,No,False,SYSTEM,False
+1,237,C:\Program Files (x86)\Microsoft\EdgeUpdate\1.3.155.77\MicrosoftEdgeUpdateComRegisterShell64.exe,2022-02-05 18:52:12,Yes,False,SYSTEM,False
+1,238,C:\Program Files (x86)\Microsoft\Temp\EU3C48.tmp\MicrosoftEdgeUpdate.exe,2022-02-05 18:52:12,No,False,SYSTEM,False
+1,239,C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{FFA6E012-DD8E-4E6D-98FF-D81FFEB1A3C2}\MicrosoftEdgeUpdateSetup_X86_1.3.155.77.exe,2022-02-05 18:52:11,No,False,SYSTEM,False
+1,240,C:\Windows\system32\SearchFilterHost.exe,2021-09-13 15:31:41,No,False,SYSTEM,False
+1,241,C:\Windows\System32\SearchProtocolHost.exe,2021-09-13 15:31:41,No,False,SYSTEM,False
+1,242,C:\Windows\SysWOW64\regsvr32.exe,2021-06-05 12:06:23,Yes,False,SYSTEM,False
+1,243,C:\Windows\system32\regsvr32.exe,2021-06-05 12:06:11,Yes,False,SYSTEM,False
+1,244,C:\Windows\system32\wlrmdr.exe,2021-09-13 15:31:50,No,False,SYSTEM,False
+1,245,C:\Windows\system32\directxdatabaseupdater.exe,2021-06-05 12:05:06,No,False,SYSTEM,False
+1,246,C:\Windows\system32\MoNotificationUx.exe,2021-09-13 15:31:51,No,False,SYSTEM,False
+1,247,C:\Windows\uus\AMD64\MoUsoCoreWorker.exe,2021-09-13 15:31:51,No,False,SYSTEM,False
+1,248,C:\Windows\system32\usoclient.exe,2021-09-13 15:31:51,No,False,SYSTEM,False
+1,249,C:\Windows\system32\AUDIODG.EXE,2021-09-13 15:31:23,No,False,SYSTEM,False
+1,250,C:\Windows\System32\RuntimeBroker.exe,2021-06-05 12:05:12,No,False,SYSTEM,False
+1,251,0000000b	000a000055f00001	000a000055f00000	8664	Microsoft.Windows.CloudExperienceHost	cw5n1h2txyewy	neutral,,Yes,False,SYSTEM,False
+1,252,C:\Windows\SystemApps\Microsoft.Windows.CloudExperienceHost_cw5n1h2txyewy\Application,2022-02-05 18:51:11,No,False,SYSTEM,False
+1,253,0000000b	000a000055f00001	0000000000000000	8664	Microsoft.Windows.CloudExperienceHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,254,C:\Windows\SystemApps\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\Application,2022-02-05 19:00:11,No,False,SYSTEM,False
+1,255,0000000b	000a000055f00001	0000000000000000	8664	Microsoft.Windows.ContentDeliveryManager	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,256,0000000b	000a000055f00001	000a000055f00001	8664	MicrosoftWindows.UndockedDevKit	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,257,0000000b	000a0000533603e8	000c000000000000	8664	Microsoft.Windows.OOBENetworkCaptivePortal	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,258,0000000b	000a0000533603e8	000c000000000000	8664	Microsoft.Windows.OOBENetworkConnectionFlow	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,259,C:\Windows\system32\rundll32.exe,2021-06-05 12:05:33,No,False,SYSTEM,False
+1,260,C:\Windows\System32\pcaui.exe,2021-09-13 15:31:55,No,False,SYSTEM,False
+1,261,00000009	000e0000722f0000	000a0000273a0000	8664	Microsoft.VCLibs.140.00	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,262,C:\Windows\System32\CloudExperienceHostBroker.exe,2021-06-05 12:05:20,No,False,SYSTEM,False
+1,263,C:\Windows\Explorer.EXE,2021-09-13 15:31:26,No,False,SYSTEM,False
+1,264,C:\Windows\system32\userinit.exe,2021-09-13 15:31:59,No,False,SYSTEM,False
+1,265,C:\Windows\system32\MDMAgent.exe,2021-06-05 12:04:57,No,False,SYSTEM,False
+1,266,C:\Windows\system32\sihost.exe,2021-06-05 12:05:09,No,False,SYSTEM,False
+1,267,C:\Windows\system32\LogonUI.exe,2021-09-13 15:31:50,No,False,SYSTEM,False
+1,268,C:\Windows\system32\compattelrunner.exe,2021-06-05 12:05:21,No,False,SYSTEM,False
+1,269,C:\Windows\system32\MdmDiagnosticsTool.exe,2021-06-05 12:05:12,No,False,SYSTEM,False
+1,270,C:\Windows\system32\wermgr.exe,2021-06-05 12:05:25,No,False,SYSTEM,False
+1,271,C:\Windows\system32\dxgiadaptercache.exe,2021-06-05 12:05:06,No,False,SYSTEM,False
+1,272,C:\Windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.22000.190_none_0478e2b34cb0bdc3\TiWorker.exe,2021-09-03 05:00:21,No,False,SYSTEM,False
+1,273,C:\Windows\system32\SearchIndexer.exe,2021-09-13 15:31:41,No,False,SYSTEM,False
+1,274,C:\Windows\system32\DllHost.exe,2021-06-05 12:05:23,No,False,SYSTEM,False
+1,275,C:\Windows\system32\utilman.exe,2021-06-05 12:05:20,No,False,SYSTEM,False
+1,276,C:\Windows\system32\oobe\FirstLogonAnim.exe,2021-06-05 12:05:39,No,False,SYSTEM,False
+1,277,C:\Windows\system32\mcbuilder.exe,2021-06-05 12:05:33,No,False,SYSTEM,False
+1,278,C:\Windows\system32\oobe\msoobe.exe,2021-06-05 12:05:39,No,False,SYSTEM,False
+1,279,C:\Windows\system32\oobe\oobeldr.exe,2021-09-13 15:32:09,No,False,SYSTEM,False
+1,280,C:\Windows\system32\provtool.exe,2021-09-13 15:31:25,No,False,SYSTEM,False
+1,281,C:\Windows\System32\vds.exe,2021-06-05 12:05:14,No,False,SYSTEM,False
+1,282,C:\Windows\System32\vdsldr.exe,2021-06-05 12:05:14,No,False,SYSTEM,False
+1,283,00000009	0141396c00000009	000a00007fff0000	8664	MicrosoftWindows.Client.WebExperience	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,284,00000009	000a5214290f0000	000a00004bc80000	8664	Microsoft.ZuneVideo	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,285,00000009	000a5214290f0000	000a00004bc80000	8664	Microsoft.ZuneMusic	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,286,00000009	000c003217710000	000a000042ee0000	8664	Microsoft.XboxIdentityProvider	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,287,00000009	0001002e2af90000	000a000042ee0000	8664	Microsoft.XboxGameOverlay	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,288,00000009	00010006294b0000	000a000047ba0000	8664	Microsoft.WindowsTerminal	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,289,00000009	2f4803e900010000	000a000047ba0000	8664	Microsoft.WindowsStore	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,290,00000009	0001000000260000	000a00004a330000	8664	Microsoft.WindowsSoundRecorder	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,291,00000009	0001000000160000	000a00004a430000	8664	Microsoft.WindowsMaps	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,292,00000009	0001083704940000	000a00004c980000	8664	Microsoft.WindowsFeedbackHub	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,293,00000009	3e85321b4fb00000	000a00004c610000	8664	microsoft.windowscommunicationsapps	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,294,00000009	07e401f7003a0000	000a00004a610000	8664	Microsoft.WindowsCamera	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,295,00000009	000a07dc00150000	000a000047ba0000	8664	Microsoft.WindowsCalculator	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,296,00000009	0001000000240000	000a000047ba0000	8664	Microsoft.WindowsAlarms	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,297,00000009	0015522661ab0000	000a00004bc80000	8664	Microsoft.Windows.Photos	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,298,00000009	000100009f7f0000	000a00004a610000	8664	Microsoft.WebMediaExtensions	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,299,00000009	0002a41723290000	000a000047ba0000	8664	Microsoft.UI.Xaml.2.4	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,300,00000009	0000002182470000	000a000047ba0000	8664	Microsoft.Todos	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,301,00000009	2ee803e900010000	000a000045550000	8664	Microsoft.StorePurchaseApp	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,302,C:\Windows\system32\DeviceCensus.exe,2021-06-05 12:05:23,No,False,SYSTEM,False
+1,303,0000000b	03e855f000010000	03e855f000010000	8664	Microsoft.SecHealthUI	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,304,00000009	000b083800020000	000a000053600000	8664	Microsoft.ScreenSketch	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,305,00000009	000a077530a80000	000a000045630000	8664	Microsoft.People	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,306,C:\Windows\system32\wevtutil.exe,2021-09-13 15:31:50,No,False,SYSTEM,False
+1,307,00000009	0004000000020000	000a00004a430000	8664	Microsoft.MicrosoftStickyNotes	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,308,00000009	000400060c1e0000	000a00003fab0000	8664	Microsoft.MicrosoftSolitaireCollection	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,309,00000009	0012083831b10000	000a000042ee0000	8664	Microsoft.MicrosoftOfficeHub	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,310,00000009	000a0002a0d40000	000a000047ba0000	8664	Microsoft.Getstarted	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,311,00000009	000a07d87e370000	000a00003fab0000	8664	Microsoft.GetHelp	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,312,00000009	0839038400180000	000a00004a430000	8664	Microsoft.GamingApp	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,313,00000009	00010000a50b0000	000a000047ba0000	8664	Microsoft.DesktopAppInstaller	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,314,00000009	0001000000060000	000a00004a430000	8664	Microsoft.BingWeather	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,315,00000009	0001000000060000	000a00004a430000	8664	Microsoft.BingNews	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,316,C:\Program Files\Windows Defender\NisSrv.exe,2021-06-05 12:04:55,No,False,SYSTEM,False
+1,317,C:\Program Files\Windows Defender\MpCmdRun.exe,2021-06-05 12:04:55,No,False,SYSTEM,False
+1,318,00000009	0002083a0af70000	000a00004a610000	8664	Microsoft.549981C3F5F10	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,319,0000000b	0006000200010000	03e855f000010000	8664	Windows.PrintDialog	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,320,0000000b	03e855f000010000	03e855f000010000	8664	NcsiUwpApp	8wekyb3d8bbwe	neutral,,No,False,SYSTEM,False
+1,321,00000009	03e855f000c20000	000a00007fff0000	8664	MicrosoftWindows.Client.CBS	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,322,0000000b	03e855f000010000	000a000000000000	8664	Microsoft.XboxGameCallableUI	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,323,0000000b	000a000055f00025	000a00007fff0000	8664	Microsoft.Windows.StartMenuExperienceHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,324,0000000b	000a000055f00047	000a00007fff0000	8664	Microsoft.Windows.ShellExperienceHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,325,0000000b	000a000055f00001	000a000000000000	8664	Microsoft.Windows.SecureAssessmentBrowser	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,326,0000000b	00010010000055f0	000a000055f00000	8664	Microsoft.Windows.Search	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,327,0000000b	000a000055f00001	000a000055f00001	8664	Microsoft.Windows.PeopleExperienceHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,328,0000000b	000a000055f00001	000a000000000000	8664	Microsoft.Windows.ContentDeliveryManager	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,329,0000000b	000a000055f00001	000b000000000000	8664	Microsoft.Windows.CloudExperienceHost	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,330,0000000b	03e855f000010000	03e855f000010000	8664	Microsoft.Windows.CallingShellApp	cw5n1h2txyewy	neutral,,No,False,SYSTEM,False
+1,331,00000009	0002f29b3e810000	000a000047ba0000	8664	Microsoft.UI.Xaml.CBS	8wekyb3d8bbwe	,,No,False,SYSTEM,False
+1,332,0000000b	002c55f000780000	000a000047ba0000	8664	Microsoft.MicrosoftEdge	8wekyb3d8bbwe	,,Yes,False,SYSTEM,False
+1,333,C:\Program Files (x86)\Microsoft\Edge\Application\90.0.818.66\Installer\setup.exe,2021-05-20 23:05:42,No,False,SYSTEM,False
+1,334,0000000b	000a000055f00001	000a000000000000	8664	Microsoft.LockApp	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,335,0000000b	000a00004c8203e8	000c000000000000	8664	Microsoft.BioEnrollment	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,336,0000000b	000a000055f00001	000a000055f00001	8664	Microsoft.AccountsControl	cw5n1h2txyewy	,,No,False,SYSTEM,False
+1,337,0000000b	03e84c7c03e80000	000a0000295b0000	8664	Microsoft.AAD.BrokerPlugin	cw5n1h2txyewy	neutral,,Yes,False,SYSTEM,False
+1,338,C:\Windows\system32\taskkill.exe,2021-06-05 12:06:15,No,False,SYSTEM,False
+1,339,C:\Program Files (x86)\Microsoft\EdgeUpdate\1.3.143.57\MicrosoftEdgeUpdateComRegisterShell64.exe,2021-05-20 23:05:35,Yes,False,SYSTEM,False
+1,340,C:\Windows\system32\wbem\wmiprvse.exe,2021-06-05 12:05:14,No,False,SYSTEM,False
+1,341,C:\Windows\system32\taskhostw.exe,2021-06-05 12:05:12,No,False,SYSTEM,False
+1,342,C:\Windows\System32\AggregatorHost.exe,2021-06-05 12:05:25,No,False,SYSTEM,False
+1,343,C:\Windows\system32\DrvInst.exe,2021-06-05 12:05:39,No,False,SYSTEM,False
+1,344,C:\Windows\system32\wbem\mofcomp.exe,2021-06-05 12:04:58,No,False,SYSTEM,False
+1,345,C:\Program Files\Windows Defender\MsMpEng.exe,2021-06-05 12:04:55,No,False,SYSTEM,False
+1,346,C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe,2021-05-20 23:05:35,No,False,SYSTEM,False
+1,347,C:\Windows\System32\spoolsv.exe,2021-09-13 15:31:25,No,False,SYSTEM,False
+1,348,C:\Windows\servicing\TrustedInstaller.exe,2021-09-13 15:32:09,No,False,SYSTEM,False
+1,349,C:\Windows\System32\Upfc.exe,2021-06-05 12:05:09,No,False,SYSTEM,False
+1,350,C:\Windows\system32\secinit.exe,2021-06-05 12:05:29,No,False,SYSTEM,False
+1,351,C:\Windows\system32\oobe\setup.exe,2021-09-13 15:32:09,No,False,SYSTEM,False
+1,352,C:\Windows\system32\oobe\windeploy.exe,2021-09-13 15:32:09,No,False,SYSTEM,False
+1,353,C:\Windows\system32\dwm.exe,2021-06-05 12:05:23,Yes,False,SYSTEM,False
+1,354,C:\Windows\system32\sppsvc.exe,2021-09-13 15:32:05,No,False,SYSTEM,False
+1,355,C:\Windows\system32\fontdrvhost.exe,2021-09-13 15:32:01,No,False,SYSTEM,False
+1,356,C:\Windows\system32\svchost.exe,2021-06-05 12:05:23,No,False,SYSTEM,False
+1,357,C:\Windows\system32\lsass.exe,2021-06-05 12:05:25,No,False,SYSTEM,False
+1,358,C:\Windows\system32\services.exe,2021-09-13 15:32:01,No,False,SYSTEM,False

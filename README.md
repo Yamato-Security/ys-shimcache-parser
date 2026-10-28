@@ -1,42 +1,114 @@
-# shimcache-forensic
+# ys-shimcache-parser
 
-[![CI](https://github.com/SecurityRonin/shimcache-forensic/actions/workflows/ci.yml/badge.svg)](https://github.com/SecurityRonin/shimcache-forensic/actions)
-[![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org)
-[![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
-[![Sponsor](https://img.shields.io/badge/sponsor-h4x0r-ea4aaa?logo=github-sponsors)](https://github.com/sponsors/h4x0r)
+Yamato Security's maintained fork of Security Ronin's
+[shimcache-forensic](https://github.com/SecurityRonin/shimcache-forensic) (Albert Hui,
+Apache-2.0): the Windows AppCompatCache (ShimCache) parser used by
+[Juntei](https://github.com/Yamato-Security/juntei). Upstream's history is kept, with its licence.
 
-**Prove what was on a Windows box — and, on Windows 7/8, what *ran* — straight from the `SYSTEM` hive's AppCompatCache (ShimCache), on any OS.** A panic-free-by-construction decoder (Windows XP through 11) plus an analyzer that flags masquerading and execution from staging directories.
+| Crate | What it reads |
+| --- | --- |
+| [`shimcache-core`](core/) | An AppCompatCache value, Windows XP to 11: every entry's path, last-modification time, execution flag, position, flags, data and packaged-app record; damaged entries reported; entries recovered from the slack after the value |
+| [`shimcache-forensic`](forensic/) | A `SYSTEM` hive: its own registry reader, the transaction logs replayed when the hive is dirty, every control set's cache and the slack of its cell; graded findings; the `shimcache4n6` command |
 
-## Run it
+## Why this crate
+
+The reference is Eric Zimmerman's
+[AppCompatCacheParser](https://github.com/EricZimmerman/AppCompatCacheParser) (MIT, C#), built
+from source (2026.10.1) and its library run directly. The parsers were compared with it on the
+public data found: 20 `SYSTEM` hives with their logs (DFIR Artifact Museum, AppCompatCacheParser's
+and Eric Zimmerman's Registry's tests, regipy, notatin, plaso, python-registry, dissect.target),
+24 control sets with 7,290 cache entries.
+
+| Parser | Hives it fails on | Control sets not read | Entries read | Paths or times not AppCompatCacheParser's | Execution flag |
+| --- | --- | --- | --- | --- | --- |
+| **this fork** | **0** | **0** | **7,290** | **0** | **as AppCompatCacheParser's on all** |
+| postmortem 0.2.6 (AGPL-3.0) | 0 | 5 (reads the current one) | 5,836 | 0 | 50 wrong (Windows 10's old "last 4 bytes are 1" rule) |
+| chainsaw 2.17.1 (GPL-3.0) | 0 | 5 | 5,836 | 1,440 (Windows 8.1 paths kept as stored, `SYSVOL\…`; times to the millisecond) | none for Windows 10 and 11 |
+| artemis 0.21.0 (MIT) | 7 (Windows 8.1 values whose first dword is 0) | 0 | 6,427 | 535 paths, 519 times (a dirty hive read without its logs) | none |
+| shimcache-forensic 0.1.0 (upstream) | 8 (Windows 8.1 values whose first dword is 0, a base block whose checksum is wrong, a damaged hive bin) | 4 | 5,190 | 0 | 842 wrong (Windows 8), none for Windows 10 and 11 |
+| winreg-artifacts 0.4.1 (Apache-2.0) | 2 (a base block whose checksum is wrong, a damaged hive bin) | 5 | 5,116 | 2 | none |
+
+Also surveyed, for what a value holds: libyal's
+[winreg-kb](https://github.com/libyal/winreg-kb) documentation of the formats, Mandiant's
+[ShimCacheParser](https://github.com/mandiant/ShimCacheParser), TeamT5's ShimcacheParser, RegRipper
+3.0's `appcompatcache` plugin, regipy, plaso, dissect.target, Velociraptor's `AppCompatCache`
+artifact, cairn and others (Windows 10 1607 and later only, or no hive reader). Upstream was the
+best permissively licensed starting point: a bounds-checked decoder, a clean split between the
+value and the hive, and findings. Its hive layer (winreg-core) panicked on damaged hives and
+ignored the transaction logs, so it is replaced.
+
+What the fork changes:
+
+| Change | Reference |
+| --- | --- |
+| Windows 8.0 and 8.1 values whose first dword is 0 (Windows Server 2012 R2) read; Windows XP entries in the order of its LRU array; 32 or 64 bit Vista and 7 tables from `PROCESSOR_ARCHITECTURE`, checked against the data | AppCompatCacheParser |
+| The execution flag: Windows 7 and 8 insertion flag 0x2 (it was wrong on Windows 8), 64-bit Vista and 2008 too, Windows 10 and 11 data tag 0x100 (it was not read); 32-bit Vista has none | AppCompatCacheParser |
+| Every field of an entry: position, insertion and shim flags, data, the data's tags and machine type, a packaged app's record, Windows XP's file size and update time; `\??\` removed from paths; times outside 1602–9999 read as none | AppCompatCacheParser, winreg-kb |
+| A damaged entry goes to `Cache::problems`: formats whose entries carry a signature stop there, table formats go on | AppCompatCacheParser |
+| Entries in the slack of the value's cell (dropped from the cache) recovered, Windows 8 to 11, those not in the cache kept | AppCompatCacheParser |
+| An own registry reader (`hive`): base block, `lf`/`lh`/`li`/`ri` lists, big data (`db`), each value's cell slack; bounds-checked, loops and depth limited | Eric Zimmerman's [Registry](https://github.com/EricZimmerman/Registry) (MIT), Maxim Suhanov's [regf specification](https://github.com/msuhanov/regf) (CC BY 4.0) |
+| Transaction log replay: new-format logs (`HvLE`, Marvin32 hashes, sequence numbers, both logs in order, an invalid base block taken from the latest log) and old `DIRT` logs | Registry's `LogReplay`, the regf specification |
+| Every `ControlSetNNN`, with AppCompatCacheParser's `Duplicate` (an entry seen in an earlier control set or the slack) | AppCompatCacheParser |
+| `shimcache4n6 SYSTEM [--list] [--csv FILE]`: the logs next to the hive applied, a summary per control set, the findings, and AppCompatCacheParser's CSV | AppCompatCacheParser |
+| One CI (Linux, macOS, Windows, MSRV 1.85, wasm32, cargo-deny), actions pinned by commit | fork |
+
+## How it's checked
+
+- Values: on 41 values (the 24 above, read out of the hives, and 17 public value files: DFIR
+  Artifact Museum, artemis, upstream's, Velociraptor's truncated ones) all 10,925 entries equal
+  AppCompatCacheParser's in position, path, time, executed flag, insertion flags and data size,
+  with the same header count and problems.
+- Hives: the bytes of every control set's value and of its slack equal those AppCompatCacheParser
+  reads, after log replay; so do all 7,290 entries. The 12 dirty hives with logs, replayed, are
+  byte for byte what [yarp](https://github.com/msuhanov/yarp) recovers.
+- 16,400 damaged copies of the values and 2,000 of the hives read without a panic, a hang or an
+  allocation over 1 GiB (upstream's winreg-core panicked on them).
+- In the tests: AppCompatCacheParser's own format tests, rewritten; the 14 value files and 7 hive
+  scenarios above (a dirty Windows 11 hive with and without its logs, Windows 8.1 hives with logs
+  swapped or a broken base block, a 32-bit Windows 7 hive with two control sets) against its
+  output and its CSV, byte for byte; log replay on built logs; hives built with slack, big data
+  and `ri` lists; random damage. Test data provenance: `core/tests/data/README.md`,
+  `forensic/tests/data/README.md`.
+
+## Use
 
 ```console
-$ cargo install shimcache-forensic          # installs the shimcache4n6 binary
-$ shimcache4n6 /path/to/SYSTEM
-AppCompatCache: Win7_64, ControlSet001, 292 entries
-Findings (29):
-  [MEDIUM] SHIMCACHE-SUSPICIOUS-PATH  C:\Users\INFORM~1\AppData\Local\Temp\eraserInstallBootstrapper\dotNetFx40_Full_setup.exe
-    dotNetFx40_Full_setup.exe at …\eraserInstallBootstrapper\… sits in a directory commonly used to stage malware (execution flag set) — consistent with suspicious execution.
-  [MEDIUM] SHIMCACHE-SUSPICIOUS-PATH  C:\$Recycle.Bin\S-1-5-21-…-1000\$RJEMT64.exe
-    $RJEMT64.exe at C:\$Recycle.Bin\… sits in a directory commonly used to stage malware (no execution flag) — consistent with suspicious execution.
+$ shimcache4n6 SYSTEM --csv shimcache.csv
+Transaction logs applied: SYSTEM.LOG1, SYSTEM.LOG2
+  SYSTEM.LOG1: applied 2 log entries (sequence numbers 620 to 621)
+  SYSTEM.LOG2: applied 14 log entries (sequence numbers 622 to 635)
+AppCompatCache: Windows10C_11, ControlSet001, 359 entries
+Findings (27):
+  [MEDIUM] SHIMCACHE-SUSPICIOUS-PATH  C:\Users\ANDREW~1\AppData\Local\Temp\DA15D340-2806-4EF5-BB3C-C787E4CD384B\dismhost.exe
+  …
 ```
 
-`--list` dumps every cache entry with its last-modification time and execution state.
+`--list` prints every entry; `--csv` writes AppCompatCacheParser's columns (`ControlSet`,
+`CacheEntryPosition`, `Path`, `LastModifiedTimeUTC`, `Executed`, `Duplicate`, `SourceFile`,
+`FromSlack`).
 
-## What it decodes
+```rust
+let caches = shimcache_forensic::read_system_file(std::path::Path::new("SYSTEM"))?;
+if caches.recovery.dirty && !caches.recovery.recovered {
+    eprintln!("dirty hive, no logs: entries may be missing");
+}
+for row in caches.rows() {
+    let e = row.entry;
+    println!("{} {} {:?} {:?} {}", row.control_set, e.path, e.last_modified(), e.executed, e.from_slack);
+}
+// or a value's bytes alone
+let cache = shimcache_core::decode(&value, None)?;
+```
 
-The AppCompatCache value at `HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache`. Per entry: the **executable path**, the file's **last-modification `FILETIME`**, and — on Windows 7/8 — the **execution flag** (`insertion_flags & 0x2`). Windows 10 dropped the flag, so `executed` is `None` there. Supported formats: **Windows XP, Server 2003 / Vista / 2008 (32/64-bit), 7 (32/64-bit), 8.0, 8.1, 10/11** — every AppCompatCache version.
+From Cargo, by commit (the crates keep upstream's names and are not published):
 
-> **ShimCache is not proof of execution by itself.** An entry means the file was present on a shimmed path; the Windows 7/8 execution flag is the execution witness. Findings are observations ("consistent with …"), never verdicts.
+```toml
+shimcache-forensic = { git = "https://github.com/Yamato-Security/ys-shimcache-parser", rev = "<commit>" }
+```
 
-## Layers
-
-- **`shimcache-core`** — the pure decoder: `parse(&[u8]) -> Vec<ShimcacheEntry>`. No registry dependency, `#![forbid(unsafe_code)]`, panic-free (bounds-checked). Reusable anywhere the raw value bytes are in hand.
-- **`shimcache-forensic`** — `analyze_blob` + `audit` (graded `forensicnomicon` findings) and the `shimcache4n6` CLI, which reads the value out of a hive with [`winreg-core`](https://crates.io/crates/winreg-core).
-
-## Validation
-
-Tier-1 against a **real** Windows 7 64-bit AppCompatCache from the NIST **CFReDS** "Data Leakage" `SYSTEM` hive (public domain): all **292 entries** decode with `LogonUI.exe`/`bfsvc.exe` matching two independent oracles — Mandiant's `ShimCacheParser` and a from-spec read of libyal's dtfabric `appcompatcache.yaml`. `shimcache4n6` reproduces the same result end-to-end from the hive, surfacing the case's Temp/`$Recycle.Bin` executions. See `core/tests/data/README.md`.
+> **ShimCache is not proof of execution by itself.** An entry means the file was seen on a shimmed
+> path; the execution flag is the witness, and the time is the file's last modification, not when
+> it ran. Findings are observations ("consistent with …"), never verdicts.
 
 ## Findings
 
@@ -45,6 +117,18 @@ Tier-1 against a **real** Windows 7 64-bit AppCompatCache from the NIST **CFReDS
 | `SHIMCACHE-SYSTEM-BINARY-RELOCATED` | High | T1036.005 | A Windows system-binary name recorded at a non-`System32`/`SysWOW64` path (masquerading). |
 | `SHIMCACHE-SUSPICIOUS-PATH` | Medium | T1204 | An entry whose path is a common staging directory (Temp, Downloads, `$Recycle.Bin`, …). |
 
----
+## Credits
 
-[Privacy Policy](https://securityronin.github.io/shimcache-forensic/privacy/) · [Terms of Service](https://securityronin.github.io/shimcache-forensic/terms/) · © 2026 Security Ronin Ltd
+Eric Zimmerman's AppCompatCacheParser and Registry (MIT) for what an examiner expects and for the
+log replay; Joachim Metz's libyal (winreg-kb, libregf); Maxim Suhanov's regf specification and
+yarp; Mandiant's ShimCacheParser and Andrew Davis's research that started it; Andrew Rathbun's DFIR
+Artifact Museum; and the projects whose test data is used here: regipy, python-registry, artemis.
+The data found for this work is also kept, with its licences, in
+[juntei-sample-data](https://github.com/Yamato-Security/juntei-sample-data) (`Shimcache/`).
+
+## Licence
+
+Apache-2.0 (`LICENSE`), as upstream. The test data keeps its licences, each beside it: the DFIR
+Artifact Museum's, regipy's and artemis's (MIT), python-registry's (Apache-2.0), and the NIST
+CFReDS value (public domain). AppCompatCacheParser was only run to write the expected values,
+never included.

@@ -17,7 +17,7 @@ const BLOB: &[u8] = include_bytes!("data/win7_appcompatcache.bin");
 
 #[test]
 fn cfreds_win7_blob_is_detected_as_win7_64bit() {
-    assert_eq!(detect_format(BLOB), Some(ShimcacheFormat::Win7_64));
+    assert_eq!(detect_format(BLOB, None), Some(ShimcacheFormat::Win7_64));
 }
 
 #[test]

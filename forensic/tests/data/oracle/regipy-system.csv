@@ -1,0 +1,661 @@
+ControlSet,CacheEntryPosition,Path,LastModifiedTimeUTC,Executed,Duplicate,SourceFile,FromSlack
+1,0,C:\Program Files\McAfee\VirusScan Enterprise\mfeann.exe,2011-01-12 12:08:00,Yes,False,SYSTEM,False
+1,1,C:\Windows\servicing\TrustedInstaller.exe,2010-11-20 12:17:48,Yes,False,SYSTEM,False
+1,2,C:\Windows\system32\LogonUI.exe,2010-11-20 12:17:16,Yes,False,SYSTEM,False
+1,3,C:\Windows\system32\reg.exe,2009-07-14 01:14:30,Yes,False,SYSTEM,False
+1,4,C:\Windows\system32\cmd.exe,2010-11-20 12:17:00,Yes,False,SYSTEM,False
+1,5,C:\Windows\system32\sc.exe,2009-07-14 01:14:35,Yes,False,SYSTEM,False
+1,6,C:\Windows\system32\wbem\wmiprvse.exe,2010-11-20 12:17:55,Yes,False,SYSTEM,False
+1,7,C:\Windows\system32\spinlock.exe,2012-04-03 22:53:39,Yes,False,SYSTEM,False
+1,8,C:\Windows\system32\DllHost.exe,2009-07-14 01:14:18,Yes,False,SYSTEM,False
+1,9,C:\Windows\PSEXESVC.EXE,2012-04-04 01:46:37,Yes,False,SYSTEM,False
+1,10,C:\Program Files\Common Files\McAfee\SystemCore\EntVUtil.EXE,2011-09-16 20:48:40,Yes,False,SYSTEM,False
+1,11,C:\Windows\system32\wermgr.exe,2009-07-14 01:14:44,Yes,False,SYSTEM,False
+1,12,C:\Windows\system32\werfault.exe,2009-07-14 01:14:44,Yes,False,SYSTEM,False
+1,13,C:\Windows\System32\svchost.exe,2009-07-14 01:14:41,Yes,False,SYSTEM,False
+1,14,C:\windows\system32\hydrakatz.exe,2012-04-04 01:00:45,Yes,False,SYSTEM,False
+1,15,C:\Windows\system32\taskhost.exe,2010-11-20 12:17:47,Yes,False,SYSTEM,False
+1,16,C:\Windows\system32\vssvc.exe,2010-11-20 12:17:51,Yes,False,SYSTEM,False
+1,17,C:\Windows\system32\rundll32.exe,2009-07-14 01:14:31,Yes,False,SYSTEM,False
+1,18,C:\Windows\system32\lpremove.exe,2010-11-20 12:17:16,Yes,False,SYSTEM,False
+1,19,C:\Windows\TEMP\a.exe,2012-04-04 00:44:11,Yes,False,SYSTEM,False
+1,20,C:\Windows\TEMP\a.exe,2012-04-04 00:43:06,Yes,False,SYSTEM,False
+1,21,C:\Windows\TEMP\a.exe,2012-04-04 00:42:00,Yes,False,SYSTEM,False
+1,22,C:\Windows\TEMP\a.exe,2012-04-04 00:40:55,Yes,False,SYSTEM,False
+1,23,C:\Windows\TEMP\a.exe,2012-04-04 00:39:49,Yes,False,SYSTEM,False
+1,24,C:\Windows\TEMP\a.exe,2012-04-04 00:38:44,Yes,False,SYSTEM,False
+1,25,C:\Windows\TEMP\a.exe,2012-04-04 00:37:39,Yes,False,SYSTEM,False
+1,26,C:\Windows\TEMP\a.exe,2012-04-04 00:36:33,Yes,False,SYSTEM,False
+1,27,C:\Windows\TEMP\a.exe,2012-04-04 00:35:28,Yes,False,SYSTEM,False
+1,28,C:\Windows\TEMP\a.exe,2012-04-04 00:34:23,Yes,False,SYSTEM,False
+1,29,C:\Windows\TEMP\a.exe,2012-04-04 00:33:17,Yes,False,SYSTEM,False
+1,30,C:\Windows\TEMP\a.exe,2012-04-04 00:32:12,Yes,False,SYSTEM,False
+1,31,C:\Windows\TEMP\a.exe,2012-04-04 00:31:07,Yes,False,SYSTEM,False
+1,32,C:\Windows\TEMP\a.exe,2012-04-04 00:30:02,Yes,False,SYSTEM,False
+1,33,C:\Windows\TEMP\a.exe,2012-04-04 00:28:57,Yes,False,SYSTEM,False
+1,34,C:\Windows\TEMP\a.exe,2012-04-04 00:27:52,Yes,False,SYSTEM,False
+1,35,C:\Windows\TEMP\a.exe,2012-04-04 00:26:47,Yes,False,SYSTEM,False
+1,36,C:\Windows\TEMP\a.exe,2012-04-04 00:25:41,Yes,False,SYSTEM,False
+1,37,C:\Windows\TEMP\a.exe,2012-04-04 00:24:37,Yes,False,SYSTEM,False
+1,38,C:\Windows\TEMP\a.exe,2012-04-04 00:23:33,Yes,False,SYSTEM,False
+1,39,C:\Windows\TEMP\a.exe,2012-04-04 00:22:28,Yes,False,SYSTEM,False
+1,40,C:\Windows\TEMP\a.exe,2012-04-04 00:21:24,Yes,False,SYSTEM,False
+1,41,C:\Windows\TEMP\a.exe,2012-04-04 00:20:20,Yes,False,SYSTEM,False
+1,42,C:\Windows\TEMP\a.exe,2012-04-04 00:19:17,Yes,False,SYSTEM,False
+1,43,C:\Windows\TEMP\a.exe,2012-04-04 00:18:15,Yes,False,SYSTEM,False
+1,44,C:\Windows\TEMP\a.exe,2012-04-04 00:17:12,Yes,False,SYSTEM,False
+1,45,C:\Windows\TEMP\a.exe,2012-04-04 00:16:09,Yes,False,SYSTEM,False
+1,46,C:\Windows\TEMP\a.exe,2012-04-04 00:15:11,Yes,False,SYSTEM,False
+1,47,C:\Windows\system32\wbem\WMIADAP.EXE,2009-07-14 01:14:46,Yes,False,SYSTEM,False
+1,48,C:\Windows\TEMP\a.exe,2012-04-04 00:14:13,Yes,False,SYSTEM,False
+1,49,C:\Windows\System32\ieframe.dll,2011-12-14 03:10:13,No,False,SYSTEM,False
+1,50,C:\Windows\system32\SearchFilterHost.exe,2011-05-04 04:28:31,Yes,False,SYSTEM,False
+1,51,C:\Windows\system32\SearchProtocolHost.exe,2011-05-04 04:28:31,Yes,False,SYSTEM,False
+1,52,C:\Windows\TEMP\a.exe,2012-04-04 00:13:16,Yes,False,SYSTEM,False
+1,53,C:\Windows\system32\SearchIndexer.exe,2011-05-04 04:28:31,Yes,False,SYSTEM,False
+1,54,C:\Windows\system32\sppsvc.exe,2010-11-20 12:17:30,Yes,False,SYSTEM,False
+1,55,C:\Windows\Microsoft.NET\Framework\v4.0.30319\mscorsvw.exe,2010-03-18 17:16:28,Yes,False,SYSTEM,False
+1,56,C:\Windows\TEMP\a.exe,2012-04-04 00:12:17,Yes,False,SYSTEM,False
+1,57,C:\Program Files\VMware\VMware Tools\VMUpgradeHelper.exe,2009-11-08 03:47:48,Yes,False,SYSTEM,False
+1,58,C:\Program Files\Common Files\McAfee\SystemCore\mfefire.exe,2010-11-23 23:30:28,Yes,False,SYSTEM,False
+1,59,C:\Program Files\Common Files\McAfee\SystemCore\mcshield.exe,2011-09-16 20:48:40,Yes,False,SYSTEM,False
+1,60,C:\Windows\TEMP\a.exe,2012-04-04 00:10:44,Yes,False,SYSTEM,False
+1,61,c:\windows\system32\dllhost\svchost.exe,2012-04-03 22:40:25,Yes,False,SYSTEM,False
+1,62,C:\Program Files\VMware\VMware Tools\VMwareService.exe,2009-11-08 03:47:22,Yes,False,SYSTEM,False
+1,63,C:\Windows\system32\mfevtps.exe,2011-09-16 20:48:41,Yes,False,SYSTEM,False
+1,64,C:\Program Files\McAfee\Common Framework\naPrdMgr.exe,2011-05-19 20:05:00,Yes,False,SYSTEM,False
+1,65,C:\Program Files\McAfee\VirusScan Enterprise\VsTskMgr.exe,2011-01-12 12:08:00,Yes,False,SYSTEM,False
+1,66,C:\Program Files\McAfee\Host Intrusion Prevention\Helper.exe,2010-12-21 01:46:18,Yes,False,SYSTEM,False
+1,67,C:\Program Files\McAfee\Host Intrusion Prevention\FireTray.exe,2010-12-21 01:48:46,Yes,False,SYSTEM,False
+1,68,C:\Program Files\McAfee\Common Framework\FrameworkService.exe,2011-05-19 20:05:00,Yes,False,SYSTEM,False
+1,69,C:\Program Files\McAfee\SiteAdvisor Enterprise\McSACore.exe,2011-05-12 15:48:20,Yes,False,SYSTEM,False
+1,70,C:\Program Files\McAfee\Host Intrusion Prevention\FireSvc.exe,2010-12-21 01:48:36,Yes,False,SYSTEM,False
+1,71,C:\Program Files\Common Files\Adobe\ARM\1.0\armsvc.exe,2011-06-06 17:55:28,Yes,False,SYSTEM,False
+1,72,C:\Windows\System32\spoolsv.exe,2010-11-20 12:17:45,Yes,False,SYSTEM,False
+1,73,C:\Windows\system32\lsm.exe,2010-11-20 12:17:16,Yes,False,SYSTEM,False
+1,74,C:\Windows\system32\lsass.exe,2011-11-17 05:29:50,Yes,False,SYSTEM,False
+1,75,C:\Windows\system32\services.exe,2009-07-14 01:14:36,Yes,False,SYSTEM,False
+1,76,C:\Windows\system32\gpscript.exe,2009-07-14 01:14:20,Yes,False,SYSTEM,False
+1,77,C:\Windows\TEMP\a.exe,2012-04-04 00:07:16,Yes,False,SYSTEM,False
+1,78,C:\Windows\TEMP\a.exe,2012-04-04 00:06:47,Yes,False,SYSTEM,False
+1,79,C:\Windows\TEMP\a.exe,2012-04-04 00:06:10,Yes,False,SYSTEM,False
+1,80,C:\Windows\TEMP\a.exe,2012-04-04 00:05:42,Yes,False,SYSTEM,False
+1,81,C:\Windows\TEMP\a.exe,2012-04-04 00:05:05,Yes,False,SYSTEM,False
+1,82,C:\Windows\TEMP\a.exe,2012-04-04 00:04:36,Yes,False,SYSTEM,False
+1,83,C:\Windows\TEMP\a.exe,2012-04-04 00:03:31,Yes,False,SYSTEM,False
+1,84,C:\Windows\TEMP\a.exe,2012-04-04 00:02:25,Yes,False,SYSTEM,False
+1,85,C:\Windows\TEMP\a.exe,2012-04-04 00:01:20,Yes,False,SYSTEM,False
+1,86,C:\Windows\TEMP\a.exe,2012-04-04 00:00:14,Yes,False,SYSTEM,False
+1,87,C:\Windows\TEMP\a.exe,2012-04-03 23:59:08,Yes,False,SYSTEM,False
+1,88,C:\Windows\TEMP\a.exe,2012-04-03 23:58:03,Yes,False,SYSTEM,False
+1,89,C:\Windows\TEMP\a.exe,2012-04-03 23:56:57,Yes,False,SYSTEM,False
+1,90,C:\Windows\TEMP\a.exe,2012-04-03 23:55:52,Yes,False,SYSTEM,False
+1,91,C:\Windows\TEMP\a.exe,2012-04-03 23:54:46,Yes,False,SYSTEM,False
+1,92,C:\Windows\system32\NETSTAT.EXE,2009-07-14 01:14:27,Yes,False,SYSTEM,False
+1,93,C:\Windows\system32\PrintIsolationHost.exe,2009-07-14 01:14:29,Yes,False,SYSTEM,False
+1,94,C:\Users\vibranium\Downloads\winclient.exe,2012-04-03 22:40:25,No,False,SYSTEM,False
+1,95,C:\Windows\System32\networkexplorer.dll,2010-11-20 12:20:29,No,False,SYSTEM,False
+1,96,C:\Program Files\Common Files\McAfee\SystemCore\ScriptSn.20110916164857.dll,2011-09-16 20:48:42,No,False,SYSTEM,False
+1,97,C:\Windows\System32\ntshrui.dll,2012-01-04 08:58:41,No,False,SYSTEM,False
+1,98,C:\Windows\System32\cscui.dll,2010-11-20 12:18:25,No,False,SYSTEM,False
+1,99,C:\Windows\System32\EhStorShell.dll,2009-07-14 01:15:14,No,False,SYSTEM,False
+1,100,C:\Windows\Explorer.EXE,2011-02-25 05:30:54,Yes,False,SYSTEM,False
+1,101,C:\Program Files\Windows Defender\MpOAV.dll,2009-07-14 01:15:41,No,False,SYSTEM,False
+1,102,C:\Program Files\Mozilla Firefox\firefox.exe,2011-07-08 07:16:28,Yes,False,SYSTEM,False
+1,103,C:\Windows\system32\magnify.exe,2009-07-14 01:14:23,No,False,SYSTEM,False
+1,104,C:\Windows\system32\mstsc.exe,2010-11-20 12:17:25,Yes,False,SYSTEM,False
+1,105,C:\Windows\system32\mspaint.exe,2009-07-14 01:14:26,Yes,False,SYSTEM,False
+1,106,C:\Windows\system32\SnippingTool.exe,2009-07-14 01:14:39,No,False,SYSTEM,False
+1,107,C:\Windows\system32\StikyNot.exe,2009-07-14 01:14:41,No,False,SYSTEM,False
+1,108,C:\Windows\system32\calc.exe,2010-11-20 12:16:56,No,False,SYSTEM,False
+1,109,C:\Windows\ehome\ehshell.exe,2009-07-14 01:14:19,No,False,SYSTEM,False
+1,110,C:\Program Files\Adobe\Reader 10.0\Reader\AcroRd32.exe,2011-06-06 17:55:30,Yes,False,SYSTEM,False
+1,111,C:\Program Files\Windows Media Player\wmplayer.exe,2010-11-20 12:17:56,Yes,False,SYSTEM,False
+1,112,C:\Windows\Installer\{F1CECE09-7CBE-4E98-B435-DA87CDA86167}\SkypeIcon.exe,2011-08-28 21:01:38,No,False,SYSTEM,False
+1,113,C:\Program Files\TweetDeck\TweetDeck.exe,2011-08-28 21:21:56,Yes,False,SYSTEM,False
+1,114,C:\Program Files\Internet Explorer\iexplore.exe,2011-08-28 20:58:26,Yes,False,SYSTEM,False
+1,115,C:\Program Files\Common Files\Adobe\Acrobat\ActiveX\AcroIEHelperShim.dll,2011-06-06 17:55:30,No,False,SYSTEM,False
+1,116,C:\Program Files\McAfee\SiteAdvisor Enterprise\McIEPlg.dll,2011-05-12 15:48:12,No,False,SYSTEM,False
+1,117,C:\Windows\System32\ie4uinit.exe,2011-08-28 20:58:26,Yes,False,SYSTEM,False
+1,118,C:\Program Files\Mozilla Firefox\uninstall\helper.exe,2011-07-08 07:16:28,Yes,False,SYSTEM,False
+1,119,C:\$Recycle.Bin\S-1-5-21-2036804247-3058324640-2116585241-1673\$RR3GW21.exe,2012-04-03 18:08:50,No,False,SYSTEM,False
+1,120,C:\Windows\system32\consent.exe,2010-11-20 12:29:22,Yes,False,SYSTEM,False
+1,121,C:\Windows\system32\taskmgr.exe,2010-11-20 12:17:47,Yes,False,SYSTEM,False
+1,122,C:\dllhot.exe,2012-04-03 18:08:50,Yes,False,SYSTEM,False
+1,123,C:\Windows\system32\WFS.exe,2010-11-20 12:17:53,No,False,SYSTEM,False
+1,124,C:\Windows\System32\mydocs.dll,2010-11-20 12:20:27,No,False,SYSTEM,False
+1,125,C:\Windows\System32\sendmail.dll,2009-07-14 01:16:13,No,False,SYSTEM,False
+1,126,C:\Windows\System32\zipfldr.dll,2010-11-20 12:21:40,No,False,SYSTEM,False
+1,127,C:\Windows\System32\acppage.dll,2010-11-20 12:18:01,No,False,SYSTEM,False
+1,128,C:\Windows\System32\diskcopy.dll,2009-07-14 01:15:11,No,False,SYSTEM,False
+1,129,C:\Windows\System32\twext.dll,2010-11-20 12:21:32,No,False,SYSTEM,False
+1,130,C:\Windows\System32\syncui.dll,2010-11-20 12:21:27,No,False,SYSTEM,False
+1,131,C:\Program Files\McAfee\VirusScan Enterprise\shext.dll,2011-01-12 12:08:00,No,False,SYSTEM,False
+1,132,C:\Windows\System32\audiodev.dll,2010-11-20 12:18:04,No,False,SYSTEM,False
+1,133,C:\Windows\System32\wpdshext.dll,2010-11-20 12:21:38,No,False,SYSTEM,False
+1,134,C:\Windows\System32\prnfldr.dll,2010-11-20 12:20:56,No,False,SYSTEM,False
+1,135,C:\Windows\System32\shdocvw.dll,2010-11-20 12:21:15,No,False,SYSTEM,False
+1,136,C:\Windows\System32\mctadmin.exe,2009-07-14 01:14:23,Yes,False,SYSTEM,False
+1,137,C:\Program Files\Windows Sidebar\sidebar.exe,2010-11-20 12:17:41,Yes,False,SYSTEM,False
+1,138,C:\Program Files\McAfee\VirusScan Enterprise\shstat.exe,2011-01-12 12:08:00,Yes,False,SYSTEM,False
+1,139,C:\Program Files\McAfee\Common Framework\UdaterUI.exe,2011-05-19 20:05:00,Yes,False,SYSTEM,False
+1,140,C:\Program Files\Common Files\Adobe\ARM\1.0\AdobeARM.exe,2011-06-06 17:55:28,Yes,False,SYSTEM,False
+1,141,C:\Program Files\VMware\VMware Tools\VMwareUser.exe,2009-11-08 03:47:50,Yes,False,SYSTEM,False
+1,142,C:\Program Files\VMware\VMware Tools\VMwareTray.exe,2009-11-08 03:46:58,Yes,False,SYSTEM,False
+1,143,C:\Windows\System32\gameux.dll,2010-11-20 12:19:05,No,False,SYSTEM,False
+1,144,C:\Windows\System32\DeviceCenter.dll,2010-11-20 12:18:29,No,False,SYSTEM,False
+1,145,C:\Windows\System32\regsvr32.exe,2009-07-14 01:14:30,Yes,False,SYSTEM,False
+1,146,C:\Windows\System32\unregmp2.exe,2009-07-14 01:14:43,Yes,False,SYSTEM,False
+1,147,C:\Program Files\Common Files\System\wab32.dll,2011-10-01 04:37:08,No,False,SYSTEM,False
+1,148,C:\Program Files\Windows Mail\WinMail.exe,2009-07-14 01:14:45,Yes,False,SYSTEM,False
+1,149,C:\Windows\system32\Dwm.exe,2009-07-14 01:14:19,Yes,False,SYSTEM,False
+1,150,C:\Windows\system32\userinit.exe,2010-11-20 12:17:48,Yes,False,SYSTEM,False
+1,151,C:\Windows\system32\rdpclip.exe,2010-11-20 12:17:31,Yes,False,SYSTEM,False
+1,152,C:\Windows\system32\TSTheme.exe,2009-07-14 01:14:42,Yes,False,SYSTEM,False
+1,153,C:\Windows\System32\Wbem\WMIC.exe,2009-07-14 01:14:46,Yes,False,SYSTEM,False
+1,154,C:\Program Files\McAfee\Common Framework\McScript_InUse.exe,2011-05-19 20:05:00,Yes,False,SYSTEM,False
+1,155,C:\Program Files\McAfee\VirusScan Enterprise\MCUPDATE.EXE,2011-01-12 12:08:00,Yes,False,SYSTEM,False
+1,156,C:\dllhost.exe,2012-04-03 18:08:50,Yes,False,SYSTEM,False
+1,157,C:\Windows\system32\ipconfig.exe,2009-07-14 01:14:21,Yes,False,SYSTEM,False
+1,158,C:\Windows\PSEXESVC.EXE,2012-04-03 21:19:52,Yes,False,SYSTEM,False
+1,159,C:\Windows\oSCMpGpk.exe,2012-04-03 21:18:14,Yes,False,SYSTEM,False
+1,160,C:\Windows\PSEXESVC.EXE,2012-04-03 21:14:56,Yes,False,SYSTEM,False
+1,161,C:\Windows\PSEXESVC.EXE,2012-04-03 21:13:29,Yes,False,SYSTEM,False
+1,162,C:\Windows\PSEXESVC.EXE,2012-04-03 21:13:07,Yes,False,SYSTEM,False
+1,163,C:\Windows\PSEXESVC.EXE,2012-04-03 21:12:04,Yes,False,SYSTEM,False
+1,164,C:\Windows\PSEXESVC.EXE,2012-04-03 21:11:07,Yes,False,SYSTEM,False
+1,165,C:\Windows\TopLZAGU.exe,2012-04-03 21:03:23,Yes,False,SYSTEM,False
+1,166,C:\Program Files\Internet Explorer\IELowutil.exe,2011-08-28 20:58:26,Yes,False,SYSTEM,False
+1,167,C:\Windows\system32\msfeedssync.exe,2011-08-28 20:58:26,Yes,False,SYSTEM,False
+1,168,C:\Windows\system32\schtasks.exe,2010-11-20 12:17:36,Yes,False,SYSTEM,False
+1,169,C:\Windows\System32\wsqmcons.exe,2010-11-20 12:17:58,Yes,False,SYSTEM,False
+1,170,C:\Windows\System32\AuditNativeSnapIn.dll,2009-07-14 01:14:57,No,False,SYSTEM,False
+1,171,C:\Windows\System32\ipsecsnp.dll,2009-07-14 01:15:33,No,False,SYSTEM,False
+1,172,C:\Windows\System32\SrpUxNativeSnapIn.dll,2009-07-14 01:16:15,No,False,SYSTEM,False
+1,173,C:\Windows\System32\napdsnap.dll,2010-11-20 12:20:27,No,False,SYSTEM,False
+1,174,C:\Windows\System32\certmgr.dll,2010-11-20 12:18:11,No,False,SYSTEM,False
+1,175,C:\Windows\System32\wlangpui.dll,2010-11-20 12:21:36,No,False,SYSTEM,False
+1,176,C:\Windows\System32\nlmgp.dll,2009-07-14 01:16:03,No,False,SYSTEM,False
+1,177,C:\Windows\System32\AuthFWGP.dll,2009-07-14 01:14:57,No,False,SYSTEM,False
+1,178,C:\Windows\System32\dot3gpui.dll,2009-07-14 01:15:12,No,False,SYSTEM,False
+1,179,C:\Windows\System32\dnscmmc.dll,2010-11-20 12:18:32,No,False,SYSTEM,False
+1,180,C:\Windows\System32\eqossnap.dll,2009-07-14 01:15:19,No,False,SYSTEM,False
+1,181,C:\Windows\System32\wsecedit.dll,2009-07-14 01:16:20,No,False,SYSTEM,False
+1,182,C:\Windows\System32\ppcsnap.dll,2009-07-14 01:16:12,No,False,SYSTEM,False
+1,183,C:\Windows\System32\scrptadm.dll,2010-11-20 12:21:05,No,False,SYSTEM,False
+1,184,C:\Windows\System32\AdmTmpl.dll,2010-11-20 12:18:02,No,False,SYSTEM,False
+1,185,C:\Windows\System32\gpedit.dll,2009-07-14 01:15:22,No,False,SYSTEM,False
+1,186,C:\Windows\system32\mmc.exe,2009-07-14 01:14:24,Yes,False,SYSTEM,False
+1,187,C:\Windows\system32\atbroker.exe,2009-07-14 01:14:12,Yes,False,SYSTEM,False
+1,188,C:\Windows\system32\NetplWiz.exe,2009-07-14 01:14:27,Yes,False,SYSTEM,False
+1,189,C:\Windows\System32\usercpl.dll,2010-11-20 12:21:33,No,False,SYSTEM,False
+1,190,C:\Windows\System32\wscui.cpl,2009-07-14 01:14:09,No,False,SYSTEM,False
+1,191,C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe,2009-07-14 01:14:24,No,False,SYSTEM,False
+1,192,C:\Windows\system32\MdSched.exe,2010-11-20 12:17:17,No,False,SYSTEM,False
+1,193,C:\Windows\system32\msconfig.exe,2010-11-20 12:17:21,Yes,False,SYSTEM,False
+1,194,C:\Windows\system32\iscsicpl.exe,2009-07-14 01:14:22,No,False,SYSTEM,False
+1,195,C:\Windows\system32\odbcad32.exe,2009-07-14 01:14:28,No,False,SYSTEM,False
+1,196,C:\Windows\System32\sdclt.exe,2010-11-20 12:17:37,Yes,False,SYSTEM,False
+1,197,C:\Windows\System32\powercfg.exe,2009-07-14 01:14:28,Yes,False,SYSTEM,False
+1,198,C:\Windows\system32\aitagent.EXE,2010-11-20 12:16:54,Yes,False,SYSTEM,False
+1,199,C:\Program Files\McAfee\VirusScan Enterprise\SCAN32.EXE,2011-01-12 12:08:00,Yes,False,SYSTEM,False
+1,200,C:\Windows\system32\defrag.exe,2009-07-14 01:14:16,Yes,False,SYSTEM,False
+1,201,C:\Program Files\Common Files\microsoft shared\OFFICE14\msoshext.dll,2010-02-18 03:55:12,No,False,SYSTEM,False
+1,202,C:\Windows\System32\DfsShlEx.dll,2009-07-14 01:15:11,No,False,SYSTEM,False
+1,203,C:\Windows\System32\rshx32.dll,2009-07-14 01:16:13,No,False,SYSTEM,False
+1,204,C:\Windows\System32\mf.dll,2010-11-20 12:19:33,No,False,SYSTEM,False
+1,205,C:\Program Files\Windows Sidebar\sbdrop.dll,2009-07-14 01:16:13,No,False,SYSTEM,False
+1,206,C:\Windows\System32\wmpshell.dll,2010-11-20 12:21:37,No,False,SYSTEM,False
+1,207,C:\Windows\System32\PhotoMetadataHandler.dll,2009-07-14 01:16:12,No,False,SYSTEM,False
+1,208,C:\Program Files\Windows Media Player\WMPNSSUI.dll,2009-07-14 01:16:19,No,False,SYSTEM,False
+1,209,C:\Windows\System32\mssvp.dll,2011-05-04 04:32:02,No,False,SYSTEM,False
+1,210,C:\Windows\Microsoft.NET\Framework\v2.0.50727\cvtres.exe,2010-11-05 01:57:40,Yes,False,SYSTEM,False
+1,211,C:\Windows\Microsoft.NET\Framework\v2.0.50727\csc.exe,2009-06-10 21:22:49,Yes,False,SYSTEM,False
+1,212,C:\Windows\System32\sdiagnhost.exe,2009-07-14 01:14:35,Yes,False,SYSTEM,False
+1,213,C:\Windows\system32\scrnsave.scr,2009-07-14 01:14:09,Yes,False,SYSTEM,False
+1,214,C:\Windows\system32\f-response-ent.exe,2012-02-27 17:54:36,Yes,False,SYSTEM,False
+1,215,C:\Windows\System32\vds.exe,2010-11-20 12:17:49,Yes,False,SYSTEM,False
+1,216,C:\Windows\System32\vdsldr.exe,2009-07-14 01:14:43,Yes,False,SYSTEM,False
+1,217,C:\Windows\System32\devmgr.dll,2009-07-14 01:15:11,No,False,SYSTEM,False
+1,218,C:\Windows\System32\wdc.dll,2010-11-20 12:21:35,No,False,SYSTEM,False
+1,219,C:\Windows\System32\localsec.dll,2010-11-20 12:19:29,No,False,SYSTEM,False
+1,220,C:\Windows\System32\filemgmt.dll,2009-07-14 01:15:21,No,False,SYSTEM,False
+1,221,C:\Windows\System32\dmdskmgr.dll,2009-07-14 01:15:12,No,False,SYSTEM,False
+1,222,C:\Windows\System32\mycomput.dll,2009-07-14 01:16:02,No,False,SYSTEM,False
+1,223,C:\Windows\system32\CompMgmtLauncher.exe,2009-07-14 01:14:31,Yes,False,SYSTEM,False
+1,224,C:\Windows\system32\dfrgui.exe,2010-11-20 12:17:02,Yes,False,SYSTEM,False
+1,225,C:\Program Files\Microsoft Office\Office14\MAPISHELL.DLL,2010-03-23 03:29:56,No,False,SYSTEM,False
+1,226,C:\Windows\system32\plasrv.exe,2009-07-14 01:14:28,Yes,False,SYSTEM,False
+1,227,c:\Program Files\Common Files\Adobe AIR\Versions\1.0\Resources\Adobe AIR Updater.exe,2011-08-28 21:12:49,Yes,False,SYSTEM,False
+1,228,C:\Users\NROMAN~1\AppData\Local\Temp\AIR4C32.tmp\Adobe AIR Installer.exe,2012-03-16 21:36:21,Yes,False,SYSTEM,False
+1,229,C:\Users\nromanoff\AppData\Roaming\Adobe\AIR\Updater\Background\updater,2012-03-05 13:53:47,Yes,False,SYSTEM,False
+1,230,C:\Program Files\Microsoft Office\Office14\POWERPNT.EXE,2010-03-09 15:57:40,Yes,False,SYSTEM,False
+1,231,C:\Program Files\Microsoft Office\Office14\MSOHEVI.DLL,2010-01-10 03:21:18,No,False,SYSTEM,False
+1,232,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\pptico.exe,2010-11-10 10:33:27,No,False,SYSTEM,False
+1,233,C:\Program Files\Windows Photo Viewer\PhotoViewer.dll,2010-11-20 12:20:53,No,False,SYSTEM,False
+1,234,C:\Program Files\Common Files\Adobe\Acrobat\ActiveX\pdfshell.dll,2011-06-06 17:55:30,No,False,SYSTEM,False
+1,235,C:\Windows\System32\docprop.dll,2009-07-14 01:15:12,No,False,SYSTEM,False
+1,236,C:\Windows\System32\cryptext.dll,2009-07-14 01:15:07,No,False,SYSTEM,False
+1,237,C:\Program Files\Microsoft Office\Office14\EXCEL.EXE,2010-03-13 20:53:52,Yes,False,SYSTEM,False
+1,238,C:\Program Files\Microsoft Office\Office14\OUTLOOK.EXE,2010-03-23 16:57:48,Yes,False,SYSTEM,False
+1,239,C:\Program Files\Common Files\Microsoft Shared\OfficeSoftwareProtectionPlatform\OSPPSVC.EXE,2010-01-10 03:37:50,Yes,False,SYSTEM,False
+1,240,C:\Program Files\McAfee\Common Framework\McTray.exe,2011-05-19 20:05:00,Yes,False,SYSTEM,False
+1,241,C:\Program Files\Adobe\Reader 10.0\Reader\Reader_sl.exe,2011-06-06 17:55:32,Yes,False,SYSTEM,False
+1,242,C:\Program Files\Skype\Phone\Skype.exe,2011-08-18 22:54:02,Yes,False,SYSTEM,False
+1,243,C:\Program Files\Jetico\BCWipe\BCWipeTM.exe,2011-12-29 08:06:20,Yes,False,SYSTEM,False
+1,244,C:\Program Files\Jetico\BCWipe\BCWipeSvc.exe,2011-03-28 11:26:14,Yes,False,SYSTEM,False
+1,245,C:\Windows\BCUnInstall.exe,2011-06-23 03:08:24,Yes,False,SYSTEM,False
+1,246,C:\Windows\System32\appwiz.cpl,2010-11-20 12:16:50,No,False,SYSTEM,False
+1,247,C:\Windows\System32\remotepg.dll,2010-11-20 12:21:02,No,False,SYSTEM,False
+1,248,C:\Windows\system32\systempropertiesprotection.exe,2009-07-14 01:14:42,Yes,False,SYSTEM,False
+1,249,C:\Windows\System32\ExplorerFrame.dll,2010-11-20 12:19:01,No,False,SYSTEM,False
+1,250,C:\Windows\System32\control.exe,2009-07-14 01:14:15,Yes,False,SYSTEM,False
+1,251,C:\Program Files\Jetico\Shared\BCShExt.dll,2011-10-12 04:48:50,No,False,SYSTEM,False
+1,252,C:\Windows\system32\icacls.exe,2009-07-14 01:14:21,Yes,False,SYSTEM,False
+1,253,C:\Program Files\Jetico\BCWipe\BCWipe.exe,2011-09-29 08:23:32,Yes,False,SYSTEM,False
+1,254,C:\Program Files\Jetico\BCWipe\BCUpdt.exe,2011-10-12 08:05:48,Yes,False,SYSTEM,False
+1,255,C:\Windows\system32\wlrmdr.exe,2009-07-14 01:14:46,Yes,False,SYSTEM,False
+1,256,C:\Windows\system32\wuapp.exe,2010-11-20 12:17:58,Yes,False,SYSTEM,False
+1,257,C:\Program Files\Jetico\BCWipe\BCResident.exe,2011-02-17 05:24:44,Yes,False,SYSTEM,False
+1,258,C:\Users\rsydow\AppData\Local\Temp\~bcwipe5.TMP\Setup.exe,2011-11-21 06:04:50,Yes,False,SYSTEM,False
+1,259,C:\Program Files\DVD Maker\DVDMaker.exe,2009-07-14 01:14:19,No,False,SYSTEM,False
+1,260,C:\Windows\system32\xpsrchvw.exe,2009-07-14 01:14:51,No,False,SYSTEM,False
+1,261,C:\Windows\system32\wuauclt.exe,2010-11-20 12:17:58,Yes,False,SYSTEM,False
+1,262,C:\Windows\System32\rdrmemptylst.exe,2012-01-25 05:27:51,Yes,False,SYSTEM,False
+1,263,C:\Windows\system32\MRT.exe,2012-03-14 07:01:43,Yes,False,SYSTEM,False
+1,264,c:\4c76ada7aea6a4e3b16ff7d82b\mrtstub.exe,2012-03-04 20:17:38,Yes,False,SYSTEM,False
+1,265,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.6-delta.exe,2012-03-07 19:41:36,Yes,False,SYSTEM,False
+1,266,C:\Windows\SoftwareDistribution\Download\Install\mpsyschk.exe,2012-03-07 06:18:32,Yes,False,SYSTEM,False
+1,267,C:\Windows\System32\sbe.dll,2010-12-23 05:54:18,No,False,SYSTEM,False
+1,268,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\xlicons.exe,2010-11-10 10:33:27,No,False,SYSTEM,False
+1,269,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\outicon.exe,2010-11-10 10:33:27,No,False,SYSTEM,False
+1,270,C:\Program Files\Windows Media Player\setup_wm.exe,2010-11-20 12:17:39,Yes,False,SYSTEM,False
+1,271,C:\Windows\system32\NOTEPAD.EXE,2009-07-14 01:14:27,Yes,False,SYSTEM,False
+1,272,C:\Users\nromanoff\AppData\Local\Microsoft\Windows\Temporary Internet Files\Content.IE5\201RVRNG\7z920.exe,2012-03-09 20:58:33,Yes,False,SYSTEM,False
+1,273,C:\Users\nromanoff\Downloads\adberdr813.exe,2011-08-28 22:35:24,No,False,SYSTEM,False
+1,274,C:\Windows\system32\PhotoScreensaver.scr,2010-11-20 12:16:51,Yes,False,SYSTEM,False
+1,275,C:\Windows\System32\desk.cpl,2010-11-20 12:16:50,No,False,SYSTEM,False
+1,276,C:\Windows\System32\slui.exe,2010-11-20 12:17:46,Yes,False,SYSTEM,False
+1,277,C:\Windows\system32\Wat\WatAdminSvc.exe,2011-09-09 07:00:50,Yes,False,SYSTEM,False
+1,278,C:\Windows\system32\DrvInst.exe,2009-07-14 01:14:18,Yes,False,SYSTEM,False
+1,279,C:\Windows\system32\utilman.exe,2009-07-14 01:14:43,Yes,False,SYSTEM,False
+1,280,C:\Windows\system32\MRT.exe,2012-02-16 08:09:04,Yes,False,SYSTEM,False
+1,281,c:\2f65705acf3a48aae90b5c37e719dee0\mrtstub.exe,2012-01-27 04:13:54,Yes,False,SYSTEM,False
+1,282,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.5-delta.exe,2012-02-09 05:57:36,Yes,False,SYSTEM,False
+1,283,C:\Windows\system32\lodctr.exe,2009-07-14 01:14:22,Yes,False,SYSTEM,False
+1,284,C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe,2010-03-18 17:16:28,Yes,False,SYSTEM,False
+1,285,C:\Windows\system32\wbem\mofcomp.exe,2009-07-14 01:14:24,Yes,False,SYSTEM,False
+1,286,C:\Windows\Microsoft.NET\Framework\v4.0.30319\regtlibv12.exe,2010-03-18 17:16:28,Yes,False,SYSTEM,False
+1,287,C:\Windows\system32\unlodctr.exe,2010-11-20 12:17:48,Yes,False,SYSTEM,False
+1,288,C:\Windows\system32\msiexec.exe,2010-11-20 12:17:22,Yes,False,SYSTEM,False
+1,289,c:\49107904938d6bc8a1ff\Setup.exe,2011-10-26 19:41:40,Yes,False,SYSTEM,False
+1,290,C:\Windows\SoftwareDistribution\Download\Install\NDP40-KB2633870-x86.exe,2012-01-25 21:27:35,Yes,False,SYSTEM,False
+1,291,C:\Windows\SoftwareDistribution\Download\Install\MSIPatchRegFix-X86.exe,2011-11-22 17:56:35,Yes,False,SYSTEM,False
+1,292,C:\Windows\system32\makecab.exe,2009-07-14 01:14:23,Yes,False,SYSTEM,False
+1,293,C:\Windows\system32\lsass.exe,2009-07-14 01:14:23,Yes,False,SYSTEM,False
+1,294,C:\Windows\system32\MRT.exe,2012-01-11 08:06:10,Yes,False,SYSTEM,False
+1,295,c:\c0b3d462445487676b\mrtstub.exe,2012-01-04 22:15:16,Yes,False,SYSTEM,False
+1,296,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.4-delta.exe,2012-01-06 23:21:03,Yes,False,SYSTEM,False
+1,297,c:\b3a886a4ee2d6263678f55da\Setup.exe,2011-12-26 08:51:18,Yes,False,SYSTEM,False
+1,298,C:\Windows\SoftwareDistribution\Download\Install\NDP40-KB2656351-x86.exe,2011-12-28 07:55:12,Yes,False,SYSTEM,False
+1,299,C:\Windows\system32\mcbuilder.exe,2010-11-20 12:17:17,Yes,False,SYSTEM,False
+1,300,C:\Windows\servicing\GC32\tzupd.exe,2011-07-09 04:32:08,Yes,False,SYSTEM,False
+1,301,C:\Windows\WinSxS\x86_microsoft-windows-i..rnational-timezones_31bf3856ad364e35_6.1.7601.17720_none_173ff31967dfdad1\tzupd.exe,2011-07-09 04:32:08,Yes,False,SYSTEM,False
+1,302,C:\Windows\system32\MRT.exe,2011-12-15 08:01:37,Yes,False,SYSTEM,False
+1,303,c:\faac5ebcd01b1cd43f09f4\mrtstub.exe,2011-12-07 16:44:28,Yes,False,SYSTEM,False
+1,304,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.3-delta.exe,2011-12-12 17:58:34,Yes,False,SYSTEM,False
+1,305,C:\Windows\SoftwareDistribution\Download\Install\mpsyschk.exe,2011-11-22 19:12:13,Yes,False,SYSTEM,False
+1,306,C:\Windows\system32\MRT.exe,2011-11-09 08:00:45,Yes,False,SYSTEM,False
+1,307,c:\c1bc67e1618b233182f1\mrtstub.exe,2011-10-28 03:04:56,Yes,False,SYSTEM,False
+1,308,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.2-delta.exe,2011-11-02 23:28:09,Yes,False,SYSTEM,False
+1,309,C:\Windows\system32\MRT.exe,2011-10-13 07:10:31,Yes,False,SYSTEM,False
+1,310,c:\b5abcf8da429b15f7217b9e468db\mrtstub.exe,2011-10-05 14:09:48,Yes,False,SYSTEM,False
+1,311,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.1-delta.exe,2011-10-07 20:16:27,Yes,False,SYSTEM,False
+1,312,c:\0d44cd71ba48a690e56bc18809de\Setup.exe,2011-07-09 13:23:02,Yes,False,SYSTEM,False
+1,313,C:\Windows\SoftwareDistribution\Download\Install\NDP40-KB2572078-x86.exe,2011-09-16 20:06:26,Yes,False,SYSTEM,False
+1,314,C:\Windows\system32\MRT.exe,2011-09-28 07:01:31,Yes,False,SYSTEM,False
+1,315,c:\0255c8c0f671b09a227d73\mrtstub.exe,2011-09-16 14:38:00,Yes,False,SYSTEM,False
+1,316,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.0-delta.exe,2011-09-22 17:53:57,Yes,False,SYSTEM,False
+1,317,C:\Program Files\Common Files\System\wab32.dll,2009-07-14 01:16:17,No,False,SYSTEM,False
+1,318,C:\Windows\System32\ieframe.dll,2011-08-28 20:58:26,No,False,SYSTEM,False
+1,319,C:\Windows\WinSxS\x86_microsoft-windows-g..validatefntcache-02_31bf3856ad364e35_6.1.7601.17621_none_4ad2844778d15ff7\invalidateFntcache.exe,2011-05-24 10:38:07,Yes,False,SYSTEM,False
+1,320,C:\Windows\WinSxS\x86_microsoft-windows-g..ebuild-search-index_31bf3856ad364e35_6.1.7601.17610_none_c0f186c99f70eb28\rebuildSearchIndex.exe,2011-05-04 04:28:25,Yes,False,SYSTEM,False
+1,321,C:\Windows\System32\ntshrui.dll,2010-11-20 12:20:46,No,False,SYSTEM,False
+1,322,C:\Program Files\Microsoft Office\Office14\WINWORD.EXE,2010-03-27 14:38:44,Yes,False,SYSTEM,False
+1,323,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\wordicon.exe,2010-11-10 10:33:27,No,False,SYSTEM,False
+1,324,C:\Program Files\Adobe\Reader 10.0\Reader\Eula.exe,2011-06-06 17:55:32,Yes,False,SYSTEM,False
+1,325,C:\Windows\WinSxS\x86_microsoft-windows-p..g-xpsdocumentwriter_31bf3856ad364e35_6.1.7601.17514_none_24e008d5c14862bc\MxdwGc.exe,2010-11-20 12:17:25,Yes,False,SYSTEM,False
+1,326,C:\Windows\System32\netcfg.exe,2010-11-20 12:17:26,Yes,False,SYSTEM,False
+1,327,C:\Windows\System32\netsh.exe,2009-07-14 01:14:27,Yes,False,SYSTEM,False
+1,328,C:\Windows\WinSxS\x86_microsoft-windows-eudc-settings_31bf3856ad364e35_6.1.7601.17514_none_5c2f2db5367a1410\eudcsettings.exe,2010-11-20 12:17:08,Yes,False,SYSTEM,False
+1,329,C:\Windows\bfsvc.exe,2010-11-20 12:16:55,Yes,False,SYSTEM,False
+2,0,C:\Program Files\McAfee\VirusScan Enterprise\mfeann.exe,2011-01-12 12:08:00,Yes,True,SYSTEM,False
+2,1,C:\Windows\servicing\TrustedInstaller.exe,2010-11-20 12:17:48,Yes,True,SYSTEM,False
+2,2,C:\Windows\system32\LogonUI.exe,2010-11-20 12:17:16,Yes,True,SYSTEM,False
+2,3,C:\Windows\system32\reg.exe,2009-07-14 01:14:30,Yes,True,SYSTEM,False
+2,4,C:\Windows\system32\cmd.exe,2010-11-20 12:17:00,Yes,True,SYSTEM,False
+2,5,C:\Windows\system32\sc.exe,2009-07-14 01:14:35,Yes,True,SYSTEM,False
+2,6,C:\Windows\system32\wbem\wmiprvse.exe,2010-11-20 12:17:55,Yes,True,SYSTEM,False
+2,7,C:\Windows\system32\spinlock.exe,2012-04-03 22:53:39,Yes,True,SYSTEM,False
+2,8,C:\Windows\system32\DllHost.exe,2009-07-14 01:14:18,Yes,True,SYSTEM,False
+2,9,C:\Windows\PSEXESVC.EXE,2012-04-04 01:46:37,Yes,True,SYSTEM,False
+2,10,C:\Program Files\Common Files\McAfee\SystemCore\EntVUtil.EXE,2011-09-16 20:48:40,Yes,True,SYSTEM,False
+2,11,C:\Windows\system32\wermgr.exe,2009-07-14 01:14:44,Yes,True,SYSTEM,False
+2,12,C:\Windows\system32\werfault.exe,2009-07-14 01:14:44,Yes,True,SYSTEM,False
+2,13,C:\Windows\System32\svchost.exe,2009-07-14 01:14:41,Yes,True,SYSTEM,False
+2,14,C:\windows\system32\hydrakatz.exe,2012-04-04 01:00:45,Yes,True,SYSTEM,False
+2,15,C:\Windows\system32\taskhost.exe,2010-11-20 12:17:47,Yes,True,SYSTEM,False
+2,16,C:\Windows\system32\vssvc.exe,2010-11-20 12:17:51,Yes,True,SYSTEM,False
+2,17,C:\Windows\system32\rundll32.exe,2009-07-14 01:14:31,Yes,True,SYSTEM,False
+2,18,C:\Windows\system32\lpremove.exe,2010-11-20 12:17:16,Yes,True,SYSTEM,False
+2,19,C:\Windows\TEMP\a.exe,2012-04-04 00:44:11,Yes,True,SYSTEM,False
+2,20,C:\Windows\TEMP\a.exe,2012-04-04 00:43:06,Yes,True,SYSTEM,False
+2,21,C:\Windows\TEMP\a.exe,2012-04-04 00:42:00,Yes,True,SYSTEM,False
+2,22,C:\Windows\TEMP\a.exe,2012-04-04 00:40:55,Yes,True,SYSTEM,False
+2,23,C:\Windows\TEMP\a.exe,2012-04-04 00:39:49,Yes,True,SYSTEM,False
+2,24,C:\Windows\TEMP\a.exe,2012-04-04 00:38:44,Yes,True,SYSTEM,False
+2,25,C:\Windows\TEMP\a.exe,2012-04-04 00:37:39,Yes,True,SYSTEM,False
+2,26,C:\Windows\TEMP\a.exe,2012-04-04 00:36:33,Yes,True,SYSTEM,False
+2,27,C:\Windows\TEMP\a.exe,2012-04-04 00:35:28,Yes,True,SYSTEM,False
+2,28,C:\Windows\TEMP\a.exe,2012-04-04 00:34:23,Yes,True,SYSTEM,False
+2,29,C:\Windows\TEMP\a.exe,2012-04-04 00:33:17,Yes,True,SYSTEM,False
+2,30,C:\Windows\TEMP\a.exe,2012-04-04 00:32:12,Yes,True,SYSTEM,False
+2,31,C:\Windows\TEMP\a.exe,2012-04-04 00:31:07,Yes,True,SYSTEM,False
+2,32,C:\Windows\TEMP\a.exe,2012-04-04 00:30:02,Yes,True,SYSTEM,False
+2,33,C:\Windows\TEMP\a.exe,2012-04-04 00:28:57,Yes,True,SYSTEM,False
+2,34,C:\Windows\TEMP\a.exe,2012-04-04 00:27:52,Yes,True,SYSTEM,False
+2,35,C:\Windows\TEMP\a.exe,2012-04-04 00:26:47,Yes,True,SYSTEM,False
+2,36,C:\Windows\TEMP\a.exe,2012-04-04 00:25:41,Yes,True,SYSTEM,False
+2,37,C:\Windows\TEMP\a.exe,2012-04-04 00:24:37,Yes,True,SYSTEM,False
+2,38,C:\Windows\TEMP\a.exe,2012-04-04 00:23:33,Yes,True,SYSTEM,False
+2,39,C:\Windows\TEMP\a.exe,2012-04-04 00:22:28,Yes,True,SYSTEM,False
+2,40,C:\Windows\TEMP\a.exe,2012-04-04 00:21:24,Yes,True,SYSTEM,False
+2,41,C:\Windows\TEMP\a.exe,2012-04-04 00:20:20,Yes,True,SYSTEM,False
+2,42,C:\Windows\TEMP\a.exe,2012-04-04 00:19:17,Yes,True,SYSTEM,False
+2,43,C:\Windows\TEMP\a.exe,2012-04-04 00:18:15,Yes,True,SYSTEM,False
+2,44,C:\Windows\TEMP\a.exe,2012-04-04 00:17:12,Yes,True,SYSTEM,False
+2,45,C:\Windows\TEMP\a.exe,2012-04-04 00:16:09,Yes,True,SYSTEM,False
+2,46,C:\Windows\TEMP\a.exe,2012-04-04 00:15:11,Yes,True,SYSTEM,False
+2,47,C:\Windows\system32\wbem\WMIADAP.EXE,2009-07-14 01:14:46,Yes,True,SYSTEM,False
+2,48,C:\Windows\TEMP\a.exe,2012-04-04 00:14:13,Yes,True,SYSTEM,False
+2,49,C:\Windows\System32\ieframe.dll,2011-12-14 03:10:13,No,True,SYSTEM,False
+2,50,C:\Windows\system32\SearchFilterHost.exe,2011-05-04 04:28:31,Yes,True,SYSTEM,False
+2,51,C:\Windows\system32\SearchProtocolHost.exe,2011-05-04 04:28:31,Yes,True,SYSTEM,False
+2,52,C:\Windows\TEMP\a.exe,2012-04-04 00:13:16,Yes,True,SYSTEM,False
+2,53,C:\Windows\system32\SearchIndexer.exe,2011-05-04 04:28:31,Yes,True,SYSTEM,False
+2,54,C:\Windows\system32\sppsvc.exe,2010-11-20 12:17:30,Yes,True,SYSTEM,False
+2,55,C:\Windows\Microsoft.NET\Framework\v4.0.30319\mscorsvw.exe,2010-03-18 17:16:28,Yes,True,SYSTEM,False
+2,56,C:\Windows\TEMP\a.exe,2012-04-04 00:12:17,Yes,True,SYSTEM,False
+2,57,C:\Program Files\VMware\VMware Tools\VMUpgradeHelper.exe,2009-11-08 03:47:48,Yes,True,SYSTEM,False
+2,58,C:\Program Files\Common Files\McAfee\SystemCore\mfefire.exe,2010-11-23 23:30:28,Yes,True,SYSTEM,False
+2,59,C:\Program Files\Common Files\McAfee\SystemCore\mcshield.exe,2011-09-16 20:48:40,Yes,True,SYSTEM,False
+2,60,C:\Windows\TEMP\a.exe,2012-04-04 00:10:44,Yes,True,SYSTEM,False
+2,61,c:\windows\system32\dllhost\svchost.exe,2012-04-03 22:40:25,Yes,True,SYSTEM,False
+2,62,C:\Program Files\VMware\VMware Tools\VMwareService.exe,2009-11-08 03:47:22,Yes,True,SYSTEM,False
+2,63,C:\Windows\system32\mfevtps.exe,2011-09-16 20:48:41,Yes,True,SYSTEM,False
+2,64,C:\Program Files\McAfee\Common Framework\naPrdMgr.exe,2011-05-19 20:05:00,Yes,True,SYSTEM,False
+2,65,C:\Program Files\McAfee\VirusScan Enterprise\VsTskMgr.exe,2011-01-12 12:08:00,Yes,True,SYSTEM,False
+2,66,C:\Program Files\McAfee\Host Intrusion Prevention\Helper.exe,2010-12-21 01:46:18,Yes,True,SYSTEM,False
+2,67,C:\Program Files\McAfee\Host Intrusion Prevention\FireTray.exe,2010-12-21 01:48:46,Yes,True,SYSTEM,False
+2,68,C:\Program Files\McAfee\Common Framework\FrameworkService.exe,2011-05-19 20:05:00,Yes,True,SYSTEM,False
+2,69,C:\Program Files\McAfee\SiteAdvisor Enterprise\McSACore.exe,2011-05-12 15:48:20,Yes,True,SYSTEM,False
+2,70,C:\Program Files\McAfee\Host Intrusion Prevention\FireSvc.exe,2010-12-21 01:48:36,Yes,True,SYSTEM,False
+2,71,C:\Program Files\Common Files\Adobe\ARM\1.0\armsvc.exe,2011-06-06 17:55:28,Yes,True,SYSTEM,False
+2,72,C:\Windows\System32\spoolsv.exe,2010-11-20 12:17:45,Yes,True,SYSTEM,False
+2,73,C:\Windows\system32\lsm.exe,2010-11-20 12:17:16,Yes,True,SYSTEM,False
+2,74,C:\Windows\system32\lsass.exe,2011-11-17 05:29:50,Yes,True,SYSTEM,False
+2,75,C:\Windows\system32\services.exe,2009-07-14 01:14:36,Yes,True,SYSTEM,False
+2,76,C:\Windows\system32\gpscript.exe,2009-07-14 01:14:20,Yes,True,SYSTEM,False
+2,77,C:\Windows\TEMP\a.exe,2012-04-04 00:07:16,Yes,True,SYSTEM,False
+2,78,C:\Windows\TEMP\a.exe,2012-04-04 00:06:47,Yes,True,SYSTEM,False
+2,79,C:\Windows\TEMP\a.exe,2012-04-04 00:06:10,Yes,True,SYSTEM,False
+2,80,C:\Windows\TEMP\a.exe,2012-04-04 00:05:42,Yes,True,SYSTEM,False
+2,81,C:\Windows\TEMP\a.exe,2012-04-04 00:05:05,Yes,True,SYSTEM,False
+2,82,C:\Windows\TEMP\a.exe,2012-04-04 00:04:36,Yes,True,SYSTEM,False
+2,83,C:\Windows\TEMP\a.exe,2012-04-04 00:03:31,Yes,True,SYSTEM,False
+2,84,C:\Windows\TEMP\a.exe,2012-04-04 00:02:25,Yes,True,SYSTEM,False
+2,85,C:\Windows\TEMP\a.exe,2012-04-04 00:01:20,Yes,True,SYSTEM,False
+2,86,C:\Windows\TEMP\a.exe,2012-04-04 00:00:14,Yes,True,SYSTEM,False
+2,87,C:\Windows\TEMP\a.exe,2012-04-03 23:59:08,Yes,True,SYSTEM,False
+2,88,C:\Windows\TEMP\a.exe,2012-04-03 23:58:03,Yes,True,SYSTEM,False
+2,89,C:\Windows\TEMP\a.exe,2012-04-03 23:56:57,Yes,True,SYSTEM,False
+2,90,C:\Windows\TEMP\a.exe,2012-04-03 23:55:52,Yes,True,SYSTEM,False
+2,91,C:\Windows\TEMP\a.exe,2012-04-03 23:54:46,Yes,True,SYSTEM,False
+2,92,C:\Windows\system32\NETSTAT.EXE,2009-07-14 01:14:27,Yes,True,SYSTEM,False
+2,93,C:\Windows\system32\PrintIsolationHost.exe,2009-07-14 01:14:29,Yes,True,SYSTEM,False
+2,94,C:\Users\vibranium\Downloads\winclient.exe,2012-04-03 22:40:25,No,True,SYSTEM,False
+2,95,C:\Windows\System32\networkexplorer.dll,2010-11-20 12:20:29,No,True,SYSTEM,False
+2,96,C:\Program Files\Common Files\McAfee\SystemCore\ScriptSn.20110916164857.dll,2011-09-16 20:48:42,No,True,SYSTEM,False
+2,97,C:\Windows\System32\ntshrui.dll,2012-01-04 08:58:41,No,True,SYSTEM,False
+2,98,C:\Windows\System32\cscui.dll,2010-11-20 12:18:25,No,True,SYSTEM,False
+2,99,C:\Windows\System32\EhStorShell.dll,2009-07-14 01:15:14,No,True,SYSTEM,False
+2,100,C:\Windows\Explorer.EXE,2011-02-25 05:30:54,Yes,True,SYSTEM,False
+2,101,C:\Program Files\Windows Defender\MpOAV.dll,2009-07-14 01:15:41,No,True,SYSTEM,False
+2,102,C:\Program Files\Mozilla Firefox\firefox.exe,2011-07-08 07:16:28,Yes,True,SYSTEM,False
+2,103,C:\Windows\system32\magnify.exe,2009-07-14 01:14:23,No,True,SYSTEM,False
+2,104,C:\Windows\system32\mstsc.exe,2010-11-20 12:17:25,Yes,True,SYSTEM,False
+2,105,C:\Windows\system32\mspaint.exe,2009-07-14 01:14:26,Yes,True,SYSTEM,False
+2,106,C:\Windows\system32\SnippingTool.exe,2009-07-14 01:14:39,No,True,SYSTEM,False
+2,107,C:\Windows\system32\StikyNot.exe,2009-07-14 01:14:41,No,True,SYSTEM,False
+2,108,C:\Windows\system32\calc.exe,2010-11-20 12:16:56,No,True,SYSTEM,False
+2,109,C:\Windows\ehome\ehshell.exe,2009-07-14 01:14:19,No,True,SYSTEM,False
+2,110,C:\Program Files\Adobe\Reader 10.0\Reader\AcroRd32.exe,2011-06-06 17:55:30,Yes,True,SYSTEM,False
+2,111,C:\Program Files\Windows Media Player\wmplayer.exe,2010-11-20 12:17:56,Yes,True,SYSTEM,False
+2,112,C:\Windows\Installer\{F1CECE09-7CBE-4E98-B435-DA87CDA86167}\SkypeIcon.exe,2011-08-28 21:01:38,No,True,SYSTEM,False
+2,113,C:\Program Files\TweetDeck\TweetDeck.exe,2011-08-28 21:21:56,Yes,True,SYSTEM,False
+2,114,C:\Program Files\Internet Explorer\iexplore.exe,2011-08-28 20:58:26,Yes,True,SYSTEM,False
+2,115,C:\Program Files\Common Files\Adobe\Acrobat\ActiveX\AcroIEHelperShim.dll,2011-06-06 17:55:30,No,True,SYSTEM,False
+2,116,C:\Program Files\McAfee\SiteAdvisor Enterprise\McIEPlg.dll,2011-05-12 15:48:12,No,True,SYSTEM,False
+2,117,C:\Windows\System32\ie4uinit.exe,2011-08-28 20:58:26,Yes,True,SYSTEM,False
+2,118,C:\Program Files\Mozilla Firefox\uninstall\helper.exe,2011-07-08 07:16:28,Yes,True,SYSTEM,False
+2,119,C:\$Recycle.Bin\S-1-5-21-2036804247-3058324640-2116585241-1673\$RR3GW21.exe,2012-04-03 18:08:50,No,True,SYSTEM,False
+2,120,C:\Windows\system32\consent.exe,2010-11-20 12:29:22,Yes,True,SYSTEM,False
+2,121,C:\Windows\system32\taskmgr.exe,2010-11-20 12:17:47,Yes,True,SYSTEM,False
+2,122,C:\dllhot.exe,2012-04-03 18:08:50,Yes,True,SYSTEM,False
+2,123,C:\Windows\system32\WFS.exe,2010-11-20 12:17:53,No,True,SYSTEM,False
+2,124,C:\Windows\System32\mydocs.dll,2010-11-20 12:20:27,No,True,SYSTEM,False
+2,125,C:\Windows\System32\sendmail.dll,2009-07-14 01:16:13,No,True,SYSTEM,False
+2,126,C:\Windows\System32\zipfldr.dll,2010-11-20 12:21:40,No,True,SYSTEM,False
+2,127,C:\Windows\System32\acppage.dll,2010-11-20 12:18:01,No,True,SYSTEM,False
+2,128,C:\Windows\System32\diskcopy.dll,2009-07-14 01:15:11,No,True,SYSTEM,False
+2,129,C:\Windows\System32\twext.dll,2010-11-20 12:21:32,No,True,SYSTEM,False
+2,130,C:\Windows\System32\syncui.dll,2010-11-20 12:21:27,No,True,SYSTEM,False
+2,131,C:\Program Files\McAfee\VirusScan Enterprise\shext.dll,2011-01-12 12:08:00,No,True,SYSTEM,False
+2,132,C:\Windows\System32\audiodev.dll,2010-11-20 12:18:04,No,True,SYSTEM,False
+2,133,C:\Windows\System32\wpdshext.dll,2010-11-20 12:21:38,No,True,SYSTEM,False
+2,134,C:\Windows\System32\prnfldr.dll,2010-11-20 12:20:56,No,True,SYSTEM,False
+2,135,C:\Windows\System32\shdocvw.dll,2010-11-20 12:21:15,No,True,SYSTEM,False
+2,136,C:\Windows\System32\mctadmin.exe,2009-07-14 01:14:23,Yes,True,SYSTEM,False
+2,137,C:\Program Files\Windows Sidebar\sidebar.exe,2010-11-20 12:17:41,Yes,True,SYSTEM,False
+2,138,C:\Program Files\McAfee\VirusScan Enterprise\shstat.exe,2011-01-12 12:08:00,Yes,True,SYSTEM,False
+2,139,C:\Program Files\McAfee\Common Framework\UdaterUI.exe,2011-05-19 20:05:00,Yes,True,SYSTEM,False
+2,140,C:\Program Files\Common Files\Adobe\ARM\1.0\AdobeARM.exe,2011-06-06 17:55:28,Yes,True,SYSTEM,False
+2,141,C:\Program Files\VMware\VMware Tools\VMwareUser.exe,2009-11-08 03:47:50,Yes,True,SYSTEM,False
+2,142,C:\Program Files\VMware\VMware Tools\VMwareTray.exe,2009-11-08 03:46:58,Yes,True,SYSTEM,False
+2,143,C:\Windows\System32\gameux.dll,2010-11-20 12:19:05,No,True,SYSTEM,False
+2,144,C:\Windows\System32\DeviceCenter.dll,2010-11-20 12:18:29,No,True,SYSTEM,False
+2,145,C:\Windows\System32\regsvr32.exe,2009-07-14 01:14:30,Yes,True,SYSTEM,False
+2,146,C:\Windows\System32\unregmp2.exe,2009-07-14 01:14:43,Yes,True,SYSTEM,False
+2,147,C:\Program Files\Common Files\System\wab32.dll,2011-10-01 04:37:08,No,True,SYSTEM,False
+2,148,C:\Program Files\Windows Mail\WinMail.exe,2009-07-14 01:14:45,Yes,True,SYSTEM,False
+2,149,C:\Windows\system32\Dwm.exe,2009-07-14 01:14:19,Yes,True,SYSTEM,False
+2,150,C:\Windows\system32\userinit.exe,2010-11-20 12:17:48,Yes,True,SYSTEM,False
+2,151,C:\Windows\system32\rdpclip.exe,2010-11-20 12:17:31,Yes,True,SYSTEM,False
+2,152,C:\Windows\system32\TSTheme.exe,2009-07-14 01:14:42,Yes,True,SYSTEM,False
+2,153,C:\Windows\System32\Wbem\WMIC.exe,2009-07-14 01:14:46,Yes,True,SYSTEM,False
+2,154,C:\Program Files\McAfee\Common Framework\McScript_InUse.exe,2011-05-19 20:05:00,Yes,True,SYSTEM,False
+2,155,C:\Program Files\McAfee\VirusScan Enterprise\MCUPDATE.EXE,2011-01-12 12:08:00,Yes,True,SYSTEM,False
+2,156,C:\dllhost.exe,2012-04-03 18:08:50,Yes,True,SYSTEM,False
+2,157,C:\Windows\system32\ipconfig.exe,2009-07-14 01:14:21,Yes,True,SYSTEM,False
+2,158,C:\Windows\PSEXESVC.EXE,2012-04-03 21:19:52,Yes,True,SYSTEM,False
+2,159,C:\Windows\oSCMpGpk.exe,2012-04-03 21:18:14,Yes,True,SYSTEM,False
+2,160,C:\Windows\PSEXESVC.EXE,2012-04-03 21:14:56,Yes,True,SYSTEM,False
+2,161,C:\Windows\PSEXESVC.EXE,2012-04-03 21:13:29,Yes,True,SYSTEM,False
+2,162,C:\Windows\PSEXESVC.EXE,2012-04-03 21:13:07,Yes,True,SYSTEM,False
+2,163,C:\Windows\PSEXESVC.EXE,2012-04-03 21:12:04,Yes,True,SYSTEM,False
+2,164,C:\Windows\PSEXESVC.EXE,2012-04-03 21:11:07,Yes,True,SYSTEM,False
+2,165,C:\Windows\TopLZAGU.exe,2012-04-03 21:03:23,Yes,True,SYSTEM,False
+2,166,C:\Program Files\Internet Explorer\IELowutil.exe,2011-08-28 20:58:26,Yes,True,SYSTEM,False
+2,167,C:\Windows\system32\msfeedssync.exe,2011-08-28 20:58:26,Yes,True,SYSTEM,False
+2,168,C:\Windows\system32\schtasks.exe,2010-11-20 12:17:36,Yes,True,SYSTEM,False
+2,169,C:\Windows\System32\wsqmcons.exe,2010-11-20 12:17:58,Yes,True,SYSTEM,False
+2,170,C:\Windows\System32\AuditNativeSnapIn.dll,2009-07-14 01:14:57,No,True,SYSTEM,False
+2,171,C:\Windows\System32\ipsecsnp.dll,2009-07-14 01:15:33,No,True,SYSTEM,False
+2,172,C:\Windows\System32\SrpUxNativeSnapIn.dll,2009-07-14 01:16:15,No,True,SYSTEM,False
+2,173,C:\Windows\System32\napdsnap.dll,2010-11-20 12:20:27,No,True,SYSTEM,False
+2,174,C:\Windows\System32\certmgr.dll,2010-11-20 12:18:11,No,True,SYSTEM,False
+2,175,C:\Windows\System32\wlangpui.dll,2010-11-20 12:21:36,No,True,SYSTEM,False
+2,176,C:\Windows\System32\nlmgp.dll,2009-07-14 01:16:03,No,True,SYSTEM,False
+2,177,C:\Windows\System32\AuthFWGP.dll,2009-07-14 01:14:57,No,True,SYSTEM,False
+2,178,C:\Windows\System32\dot3gpui.dll,2009-07-14 01:15:12,No,True,SYSTEM,False
+2,179,C:\Windows\System32\dnscmmc.dll,2010-11-20 12:18:32,No,True,SYSTEM,False
+2,180,C:\Windows\System32\eqossnap.dll,2009-07-14 01:15:19,No,True,SYSTEM,False
+2,181,C:\Windows\System32\wsecedit.dll,2009-07-14 01:16:20,No,True,SYSTEM,False
+2,182,C:\Windows\System32\ppcsnap.dll,2009-07-14 01:16:12,No,True,SYSTEM,False
+2,183,C:\Windows\System32\scrptadm.dll,2010-11-20 12:21:05,No,True,SYSTEM,False
+2,184,C:\Windows\System32\AdmTmpl.dll,2010-11-20 12:18:02,No,True,SYSTEM,False
+2,185,C:\Windows\System32\gpedit.dll,2009-07-14 01:15:22,No,True,SYSTEM,False
+2,186,C:\Windows\system32\mmc.exe,2009-07-14 01:14:24,Yes,True,SYSTEM,False
+2,187,C:\Windows\system32\atbroker.exe,2009-07-14 01:14:12,Yes,True,SYSTEM,False
+2,188,C:\Windows\system32\NetplWiz.exe,2009-07-14 01:14:27,Yes,True,SYSTEM,False
+2,189,C:\Windows\System32\usercpl.dll,2010-11-20 12:21:33,No,True,SYSTEM,False
+2,190,C:\Windows\System32\wscui.cpl,2009-07-14 01:14:09,No,True,SYSTEM,False
+2,191,C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe,2009-07-14 01:14:24,No,True,SYSTEM,False
+2,192,C:\Windows\system32\MdSched.exe,2010-11-20 12:17:17,No,True,SYSTEM,False
+2,193,C:\Windows\system32\msconfig.exe,2010-11-20 12:17:21,Yes,True,SYSTEM,False
+2,194,C:\Windows\system32\iscsicpl.exe,2009-07-14 01:14:22,No,True,SYSTEM,False
+2,195,C:\Windows\system32\odbcad32.exe,2009-07-14 01:14:28,No,True,SYSTEM,False
+2,196,C:\Windows\System32\sdclt.exe,2010-11-20 12:17:37,Yes,True,SYSTEM,False
+2,197,C:\Windows\System32\powercfg.exe,2009-07-14 01:14:28,Yes,True,SYSTEM,False
+2,198,C:\Windows\system32\aitagent.EXE,2010-11-20 12:16:54,Yes,True,SYSTEM,False
+2,199,C:\Program Files\McAfee\VirusScan Enterprise\SCAN32.EXE,2011-01-12 12:08:00,Yes,True,SYSTEM,False
+2,200,C:\Windows\system32\defrag.exe,2009-07-14 01:14:16,Yes,True,SYSTEM,False
+2,201,C:\Program Files\Common Files\microsoft shared\OFFICE14\msoshext.dll,2010-02-18 03:55:12,No,True,SYSTEM,False
+2,202,C:\Windows\System32\DfsShlEx.dll,2009-07-14 01:15:11,No,True,SYSTEM,False
+2,203,C:\Windows\System32\rshx32.dll,2009-07-14 01:16:13,No,True,SYSTEM,False
+2,204,C:\Windows\System32\mf.dll,2010-11-20 12:19:33,No,True,SYSTEM,False
+2,205,C:\Program Files\Windows Sidebar\sbdrop.dll,2009-07-14 01:16:13,No,True,SYSTEM,False
+2,206,C:\Windows\System32\wmpshell.dll,2010-11-20 12:21:37,No,True,SYSTEM,False
+2,207,C:\Windows\System32\PhotoMetadataHandler.dll,2009-07-14 01:16:12,No,True,SYSTEM,False
+2,208,C:\Program Files\Windows Media Player\WMPNSSUI.dll,2009-07-14 01:16:19,No,True,SYSTEM,False
+2,209,C:\Windows\System32\mssvp.dll,2011-05-04 04:32:02,No,True,SYSTEM,False
+2,210,C:\Windows\Microsoft.NET\Framework\v2.0.50727\cvtres.exe,2010-11-05 01:57:40,Yes,True,SYSTEM,False
+2,211,C:\Windows\Microsoft.NET\Framework\v2.0.50727\csc.exe,2009-06-10 21:22:49,Yes,True,SYSTEM,False
+2,212,C:\Windows\System32\sdiagnhost.exe,2009-07-14 01:14:35,Yes,True,SYSTEM,False
+2,213,C:\Windows\system32\scrnsave.scr,2009-07-14 01:14:09,Yes,True,SYSTEM,False
+2,214,C:\Windows\system32\f-response-ent.exe,2012-02-27 17:54:36,Yes,True,SYSTEM,False
+2,215,C:\Windows\System32\vds.exe,2010-11-20 12:17:49,Yes,True,SYSTEM,False
+2,216,C:\Windows\System32\vdsldr.exe,2009-07-14 01:14:43,Yes,True,SYSTEM,False
+2,217,C:\Windows\System32\devmgr.dll,2009-07-14 01:15:11,No,True,SYSTEM,False
+2,218,C:\Windows\System32\wdc.dll,2010-11-20 12:21:35,No,True,SYSTEM,False
+2,219,C:\Windows\System32\localsec.dll,2010-11-20 12:19:29,No,True,SYSTEM,False
+2,220,C:\Windows\System32\filemgmt.dll,2009-07-14 01:15:21,No,True,SYSTEM,False
+2,221,C:\Windows\System32\dmdskmgr.dll,2009-07-14 01:15:12,No,True,SYSTEM,False
+2,222,C:\Windows\System32\mycomput.dll,2009-07-14 01:16:02,No,True,SYSTEM,False
+2,223,C:\Windows\system32\CompMgmtLauncher.exe,2009-07-14 01:14:31,Yes,True,SYSTEM,False
+2,224,C:\Windows\system32\dfrgui.exe,2010-11-20 12:17:02,Yes,True,SYSTEM,False
+2,225,C:\Program Files\Microsoft Office\Office14\MAPISHELL.DLL,2010-03-23 03:29:56,No,True,SYSTEM,False
+2,226,C:\Windows\system32\plasrv.exe,2009-07-14 01:14:28,Yes,True,SYSTEM,False
+2,227,c:\Program Files\Common Files\Adobe AIR\Versions\1.0\Resources\Adobe AIR Updater.exe,2011-08-28 21:12:49,Yes,True,SYSTEM,False
+2,228,C:\Users\NROMAN~1\AppData\Local\Temp\AIR4C32.tmp\Adobe AIR Installer.exe,2012-03-16 21:36:21,Yes,True,SYSTEM,False
+2,229,C:\Users\nromanoff\AppData\Roaming\Adobe\AIR\Updater\Background\updater,2012-03-05 13:53:47,Yes,True,SYSTEM,False
+2,230,C:\Program Files\Microsoft Office\Office14\POWERPNT.EXE,2010-03-09 15:57:40,Yes,True,SYSTEM,False
+2,231,C:\Program Files\Microsoft Office\Office14\MSOHEVI.DLL,2010-01-10 03:21:18,No,True,SYSTEM,False
+2,232,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\pptico.exe,2010-11-10 10:33:27,No,True,SYSTEM,False
+2,233,C:\Program Files\Windows Photo Viewer\PhotoViewer.dll,2010-11-20 12:20:53,No,True,SYSTEM,False
+2,234,C:\Program Files\Common Files\Adobe\Acrobat\ActiveX\pdfshell.dll,2011-06-06 17:55:30,No,True,SYSTEM,False
+2,235,C:\Windows\System32\docprop.dll,2009-07-14 01:15:12,No,True,SYSTEM,False
+2,236,C:\Windows\System32\cryptext.dll,2009-07-14 01:15:07,No,True,SYSTEM,False
+2,237,C:\Program Files\Microsoft Office\Office14\EXCEL.EXE,2010-03-13 20:53:52,Yes,True,SYSTEM,False
+2,238,C:\Program Files\Microsoft Office\Office14\OUTLOOK.EXE,2010-03-23 16:57:48,Yes,True,SYSTEM,False
+2,239,C:\Program Files\Common Files\Microsoft Shared\OfficeSoftwareProtectionPlatform\OSPPSVC.EXE,2010-01-10 03:37:50,Yes,True,SYSTEM,False
+2,240,C:\Program Files\McAfee\Common Framework\McTray.exe,2011-05-19 20:05:00,Yes,True,SYSTEM,False
+2,241,C:\Program Files\Adobe\Reader 10.0\Reader\Reader_sl.exe,2011-06-06 17:55:32,Yes,True,SYSTEM,False
+2,242,C:\Program Files\Skype\Phone\Skype.exe,2011-08-18 22:54:02,Yes,True,SYSTEM,False
+2,243,C:\Program Files\Jetico\BCWipe\BCWipeTM.exe,2011-12-29 08:06:20,Yes,True,SYSTEM,False
+2,244,C:\Program Files\Jetico\BCWipe\BCWipeSvc.exe,2011-03-28 11:26:14,Yes,True,SYSTEM,False
+2,245,C:\Windows\BCUnInstall.exe,2011-06-23 03:08:24,Yes,True,SYSTEM,False
+2,246,C:\Windows\System32\appwiz.cpl,2010-11-20 12:16:50,No,True,SYSTEM,False
+2,247,C:\Windows\System32\remotepg.dll,2010-11-20 12:21:02,No,True,SYSTEM,False
+2,248,C:\Windows\system32\systempropertiesprotection.exe,2009-07-14 01:14:42,Yes,True,SYSTEM,False
+2,249,C:\Windows\System32\ExplorerFrame.dll,2010-11-20 12:19:01,No,True,SYSTEM,False
+2,250,C:\Windows\System32\control.exe,2009-07-14 01:14:15,Yes,True,SYSTEM,False
+2,251,C:\Program Files\Jetico\Shared\BCShExt.dll,2011-10-12 04:48:50,No,True,SYSTEM,False
+2,252,C:\Windows\system32\icacls.exe,2009-07-14 01:14:21,Yes,True,SYSTEM,False
+2,253,C:\Program Files\Jetico\BCWipe\BCWipe.exe,2011-09-29 08:23:32,Yes,True,SYSTEM,False
+2,254,C:\Program Files\Jetico\BCWipe\BCUpdt.exe,2011-10-12 08:05:48,Yes,True,SYSTEM,False
+2,255,C:\Windows\system32\wlrmdr.exe,2009-07-14 01:14:46,Yes,True,SYSTEM,False
+2,256,C:\Windows\system32\wuapp.exe,2010-11-20 12:17:58,Yes,True,SYSTEM,False
+2,257,C:\Program Files\Jetico\BCWipe\BCResident.exe,2011-02-17 05:24:44,Yes,True,SYSTEM,False
+2,258,C:\Users\rsydow\AppData\Local\Temp\~bcwipe5.TMP\Setup.exe,2011-11-21 06:04:50,Yes,True,SYSTEM,False
+2,259,C:\Program Files\DVD Maker\DVDMaker.exe,2009-07-14 01:14:19,No,True,SYSTEM,False
+2,260,C:\Windows\system32\xpsrchvw.exe,2009-07-14 01:14:51,No,True,SYSTEM,False
+2,261,C:\Windows\system32\wuauclt.exe,2010-11-20 12:17:58,Yes,True,SYSTEM,False
+2,262,C:\Windows\System32\rdrmemptylst.exe,2012-01-25 05:27:51,Yes,True,SYSTEM,False
+2,263,C:\Windows\system32\MRT.exe,2012-03-14 07:01:43,Yes,True,SYSTEM,False
+2,264,c:\4c76ada7aea6a4e3b16ff7d82b\mrtstub.exe,2012-03-04 20:17:38,Yes,True,SYSTEM,False
+2,265,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.6-delta.exe,2012-03-07 19:41:36,Yes,True,SYSTEM,False
+2,266,C:\Windows\SoftwareDistribution\Download\Install\mpsyschk.exe,2012-03-07 06:18:32,Yes,True,SYSTEM,False
+2,267,C:\Windows\System32\sbe.dll,2010-12-23 05:54:18,No,True,SYSTEM,False
+2,268,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\xlicons.exe,2010-11-10 10:33:27,No,True,SYSTEM,False
+2,269,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\outicon.exe,2010-11-10 10:33:27,No,True,SYSTEM,False
+2,270,C:\Program Files\Windows Media Player\setup_wm.exe,2010-11-20 12:17:39,Yes,True,SYSTEM,False
+2,271,C:\Windows\system32\NOTEPAD.EXE,2009-07-14 01:14:27,Yes,True,SYSTEM,False
+2,272,C:\Users\nromanoff\AppData\Local\Microsoft\Windows\Temporary Internet Files\Content.IE5\201RVRNG\7z920.exe,2012-03-09 20:58:33,Yes,True,SYSTEM,False
+2,273,C:\Users\nromanoff\Downloads\adberdr813.exe,2011-08-28 22:35:24,No,True,SYSTEM,False
+2,274,C:\Windows\system32\PhotoScreensaver.scr,2010-11-20 12:16:51,Yes,True,SYSTEM,False
+2,275,C:\Windows\System32\desk.cpl,2010-11-20 12:16:50,No,True,SYSTEM,False
+2,276,C:\Windows\System32\slui.exe,2010-11-20 12:17:46,Yes,True,SYSTEM,False
+2,277,C:\Windows\system32\Wat\WatAdminSvc.exe,2011-09-09 07:00:50,Yes,True,SYSTEM,False
+2,278,C:\Windows\system32\DrvInst.exe,2009-07-14 01:14:18,Yes,True,SYSTEM,False
+2,279,C:\Windows\system32\utilman.exe,2009-07-14 01:14:43,Yes,True,SYSTEM,False
+2,280,C:\Windows\system32\MRT.exe,2012-02-16 08:09:04,Yes,True,SYSTEM,False
+2,281,c:\2f65705acf3a48aae90b5c37e719dee0\mrtstub.exe,2012-01-27 04:13:54,Yes,True,SYSTEM,False
+2,282,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.5-delta.exe,2012-02-09 05:57:36,Yes,True,SYSTEM,False
+2,283,C:\Windows\system32\lodctr.exe,2009-07-14 01:14:22,Yes,True,SYSTEM,False
+2,284,C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe,2010-03-18 17:16:28,Yes,True,SYSTEM,False
+2,285,C:\Windows\system32\wbem\mofcomp.exe,2009-07-14 01:14:24,Yes,True,SYSTEM,False
+2,286,C:\Windows\Microsoft.NET\Framework\v4.0.30319\regtlibv12.exe,2010-03-18 17:16:28,Yes,True,SYSTEM,False
+2,287,C:\Windows\system32\unlodctr.exe,2010-11-20 12:17:48,Yes,True,SYSTEM,False
+2,288,C:\Windows\system32\msiexec.exe,2010-11-20 12:17:22,Yes,True,SYSTEM,False
+2,289,c:\49107904938d6bc8a1ff\Setup.exe,2011-10-26 19:41:40,Yes,True,SYSTEM,False
+2,290,C:\Windows\SoftwareDistribution\Download\Install\NDP40-KB2633870-x86.exe,2012-01-25 21:27:35,Yes,True,SYSTEM,False
+2,291,C:\Windows\SoftwareDistribution\Download\Install\MSIPatchRegFix-X86.exe,2011-11-22 17:56:35,Yes,True,SYSTEM,False
+2,292,C:\Windows\system32\makecab.exe,2009-07-14 01:14:23,Yes,True,SYSTEM,False
+2,293,C:\Windows\system32\lsass.exe,2009-07-14 01:14:23,Yes,True,SYSTEM,False
+2,294,C:\Windows\system32\MRT.exe,2012-01-11 08:06:10,Yes,True,SYSTEM,False
+2,295,c:\c0b3d462445487676b\mrtstub.exe,2012-01-04 22:15:16,Yes,True,SYSTEM,False
+2,296,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.4-delta.exe,2012-01-06 23:21:03,Yes,True,SYSTEM,False
+2,297,c:\b3a886a4ee2d6263678f55da\Setup.exe,2011-12-26 08:51:18,Yes,True,SYSTEM,False
+2,298,C:\Windows\SoftwareDistribution\Download\Install\NDP40-KB2656351-x86.exe,2011-12-28 07:55:12,Yes,True,SYSTEM,False
+2,299,C:\Windows\system32\mcbuilder.exe,2010-11-20 12:17:17,Yes,True,SYSTEM,False
+2,300,C:\Windows\servicing\GC32\tzupd.exe,2011-07-09 04:32:08,Yes,True,SYSTEM,False
+2,301,C:\Windows\WinSxS\x86_microsoft-windows-i..rnational-timezones_31bf3856ad364e35_6.1.7601.17720_none_173ff31967dfdad1\tzupd.exe,2011-07-09 04:32:08,Yes,True,SYSTEM,False
+2,302,C:\Windows\system32\MRT.exe,2011-12-15 08:01:37,Yes,True,SYSTEM,False
+2,303,c:\faac5ebcd01b1cd43f09f4\mrtstub.exe,2011-12-07 16:44:28,Yes,True,SYSTEM,False
+2,304,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.3-delta.exe,2011-12-12 17:58:34,Yes,True,SYSTEM,False
+2,305,C:\Windows\SoftwareDistribution\Download\Install\mpsyschk.exe,2011-11-22 19:12:13,Yes,True,SYSTEM,False
+2,306,C:\Windows\system32\MRT.exe,2011-11-09 08:00:45,Yes,True,SYSTEM,False
+2,307,c:\c1bc67e1618b233182f1\mrtstub.exe,2011-10-28 03:04:56,Yes,True,SYSTEM,False
+2,308,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.2-delta.exe,2011-11-02 23:28:09,Yes,True,SYSTEM,False
+2,309,C:\Windows\system32\MRT.exe,2011-10-13 07:10:31,Yes,True,SYSTEM,False
+2,310,c:\b5abcf8da429b15f7217b9e468db\mrtstub.exe,2011-10-05 14:09:48,Yes,True,SYSTEM,False
+2,311,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.1-delta.exe,2011-10-07 20:16:27,Yes,True,SYSTEM,False
+2,312,c:\0d44cd71ba48a690e56bc18809de\Setup.exe,2011-07-09 13:23:02,Yes,True,SYSTEM,False
+2,313,C:\Windows\SoftwareDistribution\Download\Install\NDP40-KB2572078-x86.exe,2011-09-16 20:06:26,Yes,True,SYSTEM,False
+2,314,C:\Windows\system32\MRT.exe,2011-09-28 07:01:31,Yes,True,SYSTEM,False
+2,315,c:\0255c8c0f671b09a227d73\mrtstub.exe,2011-09-16 14:38:00,Yes,True,SYSTEM,False
+2,316,C:\Windows\SoftwareDistribution\Download\Install\windows-kb890830-v4.0-delta.exe,2011-09-22 17:53:57,Yes,True,SYSTEM,False
+2,317,C:\Program Files\Common Files\System\wab32.dll,2009-07-14 01:16:17,No,True,SYSTEM,False
+2,318,C:\Windows\System32\ieframe.dll,2011-08-28 20:58:26,No,True,SYSTEM,False
+2,319,C:\Windows\WinSxS\x86_microsoft-windows-g..validatefntcache-02_31bf3856ad364e35_6.1.7601.17621_none_4ad2844778d15ff7\invalidateFntcache.exe,2011-05-24 10:38:07,Yes,True,SYSTEM,False
+2,320,C:\Windows\WinSxS\x86_microsoft-windows-g..ebuild-search-index_31bf3856ad364e35_6.1.7601.17610_none_c0f186c99f70eb28\rebuildSearchIndex.exe,2011-05-04 04:28:25,Yes,True,SYSTEM,False
+2,321,C:\Windows\System32\ntshrui.dll,2010-11-20 12:20:46,No,True,SYSTEM,False
+2,322,C:\Program Files\Microsoft Office\Office14\WINWORD.EXE,2010-03-27 14:38:44,Yes,True,SYSTEM,False
+2,323,C:\Windows\Installer\{90140000-003D-0000-0000-0000000FF1CE}\wordicon.exe,2010-11-10 10:33:27,No,True,SYSTEM,False
+2,324,C:\Program Files\Adobe\Reader 10.0\Reader\Eula.exe,2011-06-06 17:55:32,Yes,True,SYSTEM,False
+2,325,C:\Windows\WinSxS\x86_microsoft-windows-p..g-xpsdocumentwriter_31bf3856ad364e35_6.1.7601.17514_none_24e008d5c14862bc\MxdwGc.exe,2010-11-20 12:17:25,Yes,True,SYSTEM,False
+2,326,C:\Windows\System32\netcfg.exe,2010-11-20 12:17:26,Yes,True,SYSTEM,False
+2,327,C:\Windows\System32\netsh.exe,2009-07-14 01:14:27,Yes,True,SYSTEM,False
+2,328,C:\Windows\WinSxS\x86_microsoft-windows-eudc-settings_31bf3856ad364e35_6.1.7601.17514_none_5c2f2db5367a1410\eudcsettings.exe,2010-11-20 12:17:08,Yes,True,SYSTEM,False
+2,329,C:\Windows\bfsvc.exe,2010-11-20 12:16:55,Yes,True,SYSTEM,False

@@ -7,9 +7,18 @@ use super::*;
 
 fn entry(path: &str, executed: Option<bool>) -> ShimcacheEntry {
     ShimcacheEntry {
+        position: 0,
         path: path.to_string(),
         last_modified_filetime: 0,
         executed,
+        insert_flags: None,
+        shim_flags: None,
+        file_size: None,
+        last_update_filetime: 0,
+        path_size: 0,
+        package: String::new(),
+        data: Vec::new(),
+        from_slack: false,
     }
 }
 
@@ -102,7 +111,7 @@ fn analyze_blob_on_real_win7_cfreds_cache() {
     // The CFReDS "Data Leakage" case ran many installers from Temp and — notably for a
     // data-leakage scenario — an executable from the Recycle Bin. The analyzer surfaces these as
     // suspicious-path leads; System32 binaries at their normal paths raise no masquerading hit.
-    assert!(!report.anomalies.is_empty());
+    assert_ne!(report.anomalies, Vec::<ShimcacheAnomaly>::new());
     assert!(report
         .anomalies
         .iter()
@@ -118,7 +127,7 @@ fn analyze_blob_on_real_win7_cfreds_cache() {
 fn analyze_blob_rejects_garbage_with_a_named_error() {
     let err = analyze_blob(&[0u8; 2], "cs").unwrap_err();
     assert!(matches!(err, ShimcacheError::TooShort { len: 2 }));
-    assert!(err.to_string().contains("too short"));
+    assert!(err.to_string().contains("too small"));
 }
 
 #[test]

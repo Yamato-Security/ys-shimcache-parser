@@ -1,32 +1,231 @@
 //! Windows **AppCompatCache** (ShimCache) forensic analyzer.
 //!
 //! ShimCache records, for each executable the OS shimmed, the file's path and last-modification
-//! `FILETIME` — and, on Windows 7/8, whether it was *executed*. [`analyze_blob`] decodes an
+//! `FILETIME` — and, on Windows 7 to 11, whether it was *executed*. [`analyze_blob`] decodes an
 //! AppCompatCache value blob (with [`shimcache_core`]) and [`audit`] adds a small set of
 //! *high-precision* graded findings: a Windows system-binary name recorded at a non-`System32`
 //! path (masquerading) and an entry in a known-suspicious directory.
 //!
-//! This is a *pure* library: it takes the already-extracted AppCompatCache value bytes. Reading
-//! that value out of a `SYSTEM` hive is `winreg-core`'s job — the bundled `shimcache4n6` binary wires
-//! the two together (`winreg-core` → this crate), so a consumer that already has a hive open can
-//! do the same 5-line extraction with `winreg-core` and call [`analyze_blob`].
+//! [`read_system`] reads every control set's cache from a `SYSTEM` hive (see [`hive`]: its
+//! transaction logs replayed when it is dirty), with the entries left in the slack of each value's
+//! cell; [`analyze_blob`] takes a value's bytes.
 //!
 //! Findings are observations, never verdicts: ShimCache establishes that a binary at a given path
-//! was shimmed (and, on Win7/8, executed) — whether that is malicious is a correlation/tribunal
-//! question. Note the well-known caveat that ShimCache *presence* alone is not proof of execution
-//! (the file may only have been browsed to); the Windows 7/8 execution flag is the execution
-//! witness, and Windows 10 dropped it entirely.
+//! was shimmed (and, from Windows 7, executed) — whether that is malicious is a
+//! correlation/tribunal question. Note the well-known caveat that ShimCache *presence* alone is
+//! not proof of execution (the file may only have been browsed to); the execution flag (Windows 7
+//! and 8: insertion flag 0x2; Windows 10 and 11: data tag 0x100) is the execution witness.
 //!
 //! Built on [`shimcache_core`]; findings use [`forensicnomicon::report`].
 
 #![forbid(unsafe_code)]
 
+pub mod hive;
+
 use forensicnomicon::report::{Category, Finding, Observation, Severity, Source, SubjectRef};
-use shimcache_core::ShimcacheError;
+use std::collections::HashSet;
+use std::path::Path;
 
 // Re-export the core types that appear in this crate's public API so consumers need only depend
 // on `shimcache-forensic`.
-pub use shimcache_core::{ShimcacheEntry, ShimcacheFormat};
+pub use hive::{Hive, HiveError, LogFile, Recovery};
+pub use shimcache_core::{
+    decode, recover_slack, Cache, PackageRecord, ShimcacheEntry, ShimcacheError, ShimcacheFormat,
+};
+
+/// Where a control set keeps its cache: `AppCompatCache`, and `AppCompatibility` on Windows XP.
+const CACHE_KEYS: [&str; 2] = [
+    r"Control\Session Manager\AppCompatCache",
+    r"Control\Session Manager\AppCompatibility",
+];
+
+/// A `SYSTEM` hive's AppCompatCaches.
+#[derive(Debug, Clone)]
+pub struct SystemCaches {
+    /// What was done with the hive's transaction logs.
+    pub recovery: Recovery,
+    /// The control set in use (`Select\Current`).
+    pub current_control_set: Option<u32>,
+    /// The system's architecture (`PROCESSOR_ARCHITECTURE` of the current control set is `x86`),
+    /// when the hive records it.
+    pub is_32bit: Option<bool>,
+    /// The control sets with a cache key, in order.
+    pub control_sets: Vec<ControlSetCache>,
+}
+
+/// One control set's cache.
+#[derive(Debug, Clone)]
+pub struct ControlSetCache {
+    /// Its number (`ControlSet001` is 1).
+    pub control_set: u32,
+    /// The cache key's path in the hive.
+    pub key_path: String,
+    /// When the cache key was last written (FILETIME): when Windows last saved the cache.
+    pub key_last_written: u64,
+    /// The decoded cache; `None` when the value is missing or not a cache (see `error`).
+    pub cache: Option<Cache>,
+    /// Why there is no cache.
+    pub error: Option<String>,
+    /// Entries recovered from the slack of the value's cell that are not in the cache.
+    pub slack: Vec<ShimcacheEntry>,
+}
+
+/// One row of output: a control set's entry, and whether the same entry (time and path) was in
+/// an earlier control set or earlier in this one (AppCompatCacheParser's `Duplicate`).
+#[derive(Debug, Clone, Copy)]
+pub struct Row<'a> {
+    /// The control set.
+    pub control_set: u32,
+    /// The entry.
+    pub entry: &'a ShimcacheEntry,
+    /// Seen before.
+    pub duplicate: bool,
+}
+
+impl SystemCaches {
+    /// Every entry in AppCompatCacheParser's order: each control set's cache, then its slack.
+    #[must_use]
+    pub fn rows(&self) -> Vec<Row<'_>> {
+        let mut seen = HashSet::new();
+        let mut out = Vec::new();
+        for cs in &self.control_sets {
+            let entries = cs
+                .cache
+                .iter()
+                .flat_map(|c| c.entries.iter())
+                .chain(cs.slack.iter());
+            for e in entries {
+                out.push(Row {
+                    control_set: cs.control_set,
+                    entry: e,
+                    duplicate: !seen.insert(e.key()),
+                });
+            }
+        }
+        out
+    }
+}
+
+/// The transaction logs next to `hive_path`: its name with `.LOG`, `.LOG1` or `.LOG2`, in any
+/// case, that are not empty.
+#[must_use]
+pub fn find_logs(hive_path: &Path) -> Vec<LogFile> {
+    let Some(name) = hive_path
+        .file_name()
+        .map(|n| n.to_string_lossy().to_uppercase())
+    else {
+        return Vec::new();
+    };
+    let dir = hive_path
+        .parent()
+        .filter(|d| !d.as_os_str().is_empty())
+        .unwrap_or(Path::new("."));
+    let wanted: Vec<String> = [".LOG", ".LOG1", ".LOG2"]
+        .iter()
+        .map(|x| format!("{name}{x}"))
+        .collect();
+    let Ok(entries) = std::fs::read_dir(dir) else {
+        return Vec::new();
+    };
+    let mut logs: Vec<LogFile> = entries
+        .flatten()
+        .filter(|e| wanted.contains(&e.file_name().to_string_lossy().to_uppercase()))
+        .filter_map(|e| {
+            let data = std::fs::read(e.path()).ok().filter(|d| !d.is_empty())?;
+            Some(LogFile {
+                name: e.file_name().to_string_lossy().to_string(),
+                data,
+            })
+        })
+        .collect();
+    logs.sort_by_key(|l| l.name.to_uppercase());
+    logs
+}
+
+/// Read a `SYSTEM` hive file's caches, with its transaction logs (next to it) when it is dirty.
+///
+/// # Errors
+/// When the file can't be read or is not a hive.
+pub fn read_system_file(path: &Path) -> Result<SystemCaches, HiveError> {
+    let data = std::fs::read(path).map_err(|e| HiveError(e.to_string()))?;
+    read_system(data, &find_logs(path))
+}
+
+/// Read a `SYSTEM` hive's caches: every `ControlSetNNN` with a cache key, the value decoded with
+/// the system's architecture, and the entries in the slack of its cell.
+///
+/// # Errors
+/// When `hive` is not a hive.
+pub fn read_system(hive: Vec<u8>, logs: &[LogFile]) -> Result<SystemCaches, HiveError> {
+    let (hive, recovery) = Hive::open(hive, logs)?;
+    let current_control_set = hive
+        .key("Select")
+        .and_then(|k| k.value("Current"))
+        .and_then(|v| v.text().parse::<u32>().ok());
+    let is_32bit = current_control_set.and_then(|cs| {
+        hive.key(&format!(
+            r"ControlSet{cs:03}\Control\Session Manager\Environment"
+        ))
+        .and_then(|k| k.value("PROCESSOR_ARCHITECTURE"))
+        .map(|v| v.text() == "x86")
+    });
+    let mut sets: Vec<(u32, hive::Key<'_>)> = hive
+        .root()
+        .map(|r| r.subkeys())
+        .unwrap_or_default()
+        .into_iter()
+        .filter_map(|k| {
+            let name = k.name();
+            name.get(..10)
+                .filter(|p| p.eq_ignore_ascii_case("ControlSet"))?;
+            let digits = name
+                .get(10..)
+                .filter(|d| d.len() == 3 && d.bytes().all(|b| b.is_ascii_digit()))?;
+            Some((digits.parse().ok()?, k))
+        })
+        .collect();
+    sets.sort_by_key(|(n, _)| *n);
+    let mut control_sets = Vec::new();
+    for (n, set) in sets {
+        let Some((key, sub)) = CACHE_KEYS.iter().find_map(|p| {
+            let mut k = set;
+            for part in p.split('\\') {
+                k = k.subkey(part)?;
+            }
+            Some((k, p))
+        }) else {
+            continue;
+        };
+        let mut cs = ControlSetCache {
+            control_set: n,
+            key_path: format!(r"{}\{sub}", set.name()),
+            key_last_written: key.last_written(),
+            cache: None,
+            error: None,
+            slack: Vec::new(),
+        };
+        match key.value("AppCompatCache") {
+            None => cs.error = Some("no AppCompatCache value".to_owned()),
+            Some(v) => {
+                let (data, slack) = v.data_and_slack();
+                match decode(&data, is_32bit) {
+                    Ok(cache) => {
+                        cs.slack = recover_slack(&slack, &cache);
+                        cs.cache = Some(cache);
+                    }
+                    Err(e) => cs.error = Some(e.to_string()),
+                }
+            }
+        }
+        control_sets.push(cs);
+    }
+    Ok(SystemCaches {
+        recovery,
+        current_control_set,
+        is_32bit,
+        control_sets,
+    })
+}
 
 /// The result of analyzing an AppCompatCache value.
 #[derive(Debug, Clone)]
@@ -54,7 +253,7 @@ pub enum ShimcacheAnomaly {
         path: String,
     },
     /// An entry whose path is a directory commonly used to stage malware (Temp, Downloads,
-    /// `$Recycle.Bin`, …) — `T1204`. `executed` carries the Win7/8 execution flag when known.
+    /// `$Recycle.Bin`, …) — `T1204`. `executed` carries the execution flag when known.
     SuspiciousPath {
         /// The executable base name.
         executable: String,
@@ -74,15 +273,12 @@ pub fn analyze_blob(
     blob: &[u8],
     control_set: impl Into<String>,
 ) -> Result<ShimcacheReport, ShimcacheError> {
-    let entries = shimcache_core::parse(blob)?;
-    // parse() succeeding implies a recognized signature, so detect_format is Some; guard anyway.
-    let format =
-        shimcache_core::detect_format(blob).ok_or(ShimcacheError::TooShort { len: blob.len() })?;
-    let anomalies = audit(&entries);
+    let cache = decode(blob, None)?;
+    let anomalies = audit(&cache.entries);
     Ok(ShimcacheReport {
         control_set: control_set.into(),
-        format,
-        entries,
+        format: cache.format,
+        entries: cache.entries,
         anomalies,
     })
 }
