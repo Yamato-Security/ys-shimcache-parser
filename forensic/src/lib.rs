@@ -259,7 +259,7 @@ pub enum ShimcacheAnomaly {
         executable: String,
         /// The suspicious path.
         path: String,
-        /// Whether the entry's execution flag was set (`None` on Windows 10).
+        /// Whether the entry's execution flag was set (`None` where the format has none).
         executed: Option<bool>,
     },
 }
