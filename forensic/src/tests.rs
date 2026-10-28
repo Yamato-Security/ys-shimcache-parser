@@ -7,9 +7,18 @@ use super::*;
 
 fn entry(path: &str, executed: Option<bool>) -> ShimcacheEntry {
     ShimcacheEntry {
+        position: 0,
         path: path.to_string(),
         last_modified_filetime: 0,
         executed,
+        insert_flags: None,
+        shim_flags: None,
+        file_size: None,
+        last_update_filetime: 0,
+        path_size: 0,
+        package: String::new(),
+        data: Vec::new(),
+        from_slack: false,
     }
 }
 
@@ -34,6 +43,38 @@ fn system_binary_in_system32_is_not_flagged() {
             .any(|a| matches!(a, ShimcacheAnomaly::SystemBinaryRelocated { .. })),
         "a System32 svchost must not be flagged: {anomalies:?}"
     );
+}
+
+#[test]
+fn a_system32_folder_outside_windows_does_not_hide_a_system_binary() {
+    let relocated = |path: &str| {
+        audit(&[entry(path, Some(true))])
+            .iter()
+            .any(|a| matches!(a, ShimcacheAnomaly::SystemBinaryRelocated { .. }))
+    };
+    for path in [
+        r"C:\Program Files\Vendor\System32\svchost.exe",
+        r"C:\Users\Public\SysWOW64\lsass.exe",
+        r"D:\Backup\Windows\System32\svchost.exe",
+        r"C:\Windows\Temp\System32\svchost.exe",
+        r"\\server\share\Windows\System32\svchost.exe",
+    ] {
+        assert!(relocated(path), "{path}");
+    }
+    // Windows' own, in every form the cache records them
+    for path in [
+        r"C:\Windows\System32\svchost.exe",
+        r"c:\windows\syswow64\svchost.exe",
+        r"D:\Windows\System32\wbem\WmiPrvSE.exe",
+        r"C:\WINNT\system32\svchost.exe",
+        r"SYSVOL\Windows\System32\svchost.exe",
+        r"\\?\C:\Windows\system32\svchost.exe",
+        r"%SystemRoot%\System32\svchost.exe",
+        r"\SystemRoot\System32\svchost.exe",
+        "C:/Windows/System32/svchost.exe",
+    ] {
+        assert!(!relocated(path), "{path}");
+    }
 }
 
 #[test]
@@ -102,7 +143,7 @@ fn analyze_blob_on_real_win7_cfreds_cache() {
     // The CFReDS "Data Leakage" case ran many installers from Temp and — notably for a
     // data-leakage scenario — an executable from the Recycle Bin. The analyzer surfaces these as
     // suspicious-path leads; System32 binaries at their normal paths raise no masquerading hit.
-    assert!(!report.anomalies.is_empty());
+    assert_ne!(report.anomalies, Vec::<ShimcacheAnomaly>::new());
     assert!(report
         .anomalies
         .iter()
@@ -118,7 +159,7 @@ fn analyze_blob_on_real_win7_cfreds_cache() {
 fn analyze_blob_rejects_garbage_with_a_named_error() {
     let err = analyze_blob(&[0u8; 2], "cs").unwrap_err();
     assert!(matches!(err, ShimcacheError::TooShort { len: 2 }));
-    assert!(err.to_string().contains("too short"));
+    assert!(err.to_string().contains("too small"));
 }
 
 #[test]

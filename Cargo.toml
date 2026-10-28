@@ -10,18 +10,19 @@ members = ["core", "forensic"]
 edition = "2021"
 rust-version = "1.85"
 license = "Apache-2.0"
-authors = ["Albert Hui"]
-repository = "https://github.com/SecurityRonin/shimcache-forensic"
+authors = ["Albert Hui", "Yamato Security"]
+repository = "https://github.com/Yamato-Security/ys-shimcache-parser"
+homepage = "https://github.com/Yamato-Security/ys-shimcache-parser"
 readme = "README.md"
+# Yamato Security's fork of https://github.com/SecurityRonin/shimcache-forensic: not published
+# under the upstream names.
+publish = false
 
 # Single source of truth for dependency versions (DRY): declare each once;
 # members write `dep.workspace = true`. The inter-crate `shimcache-core` version
 # lives here too, so a bump touches one line instead of every member + dev-dep.
 [workspace.dependencies]
-shimcache-core = { path = "core", version = "0.1.0" }
-# Generic REGF hive parser — the forensic layer reads the AppCompatCache value
-# blob out of a SYSTEM hive with it, then hands the blob to shimcache-core.
-winreg-core = "0.2"
+shimcache-core = { path = "core", version = "0.2.0" }
 forensicnomicon = "1"
 
 [workspace.lints.rust]

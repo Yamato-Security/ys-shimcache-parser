@@ -27,3 +27,10 @@ path = "fuzz_targets/fuzz_forensic.rs"
 test = false
 doc = false
 bench = false
+
+[[bin]]
+name = "fuzz_hive"
+path = "fuzz_targets/fuzz_hive.rs"
+test = false
+doc = false
+bench = false

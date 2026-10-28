@@ -1,18 +1,23 @@
 [package]
 name = "shimcache-core"
-version = "0.1.0"
+version = "0.2.0"
 edition.workspace = true
 rust-version.workspace = true
-description = "Pure-Rust read-only Windows AppCompatCache (ShimCache) decoder — parses the AppCompatCache registry value blob (Windows 7, 8.0, 8.1, 10) into typed entries: executable path, last-modification FILETIME, and execution flag."
+description = "Windows AppCompatCache (ShimCache) values, Windows XP to 11, decoded as Eric Zimmerman's AppCompatCacheParser does: every entry's path, last-modification time, execution flag, flags, data and packaged-app record; damaged entries reported, entries recovered from the slack, never a panic."
 license.workspace = true
 authors.workspace = true
 keywords = ["forensics", "shimcache", "appcompatcache", "windows", "dfir"]
 categories = ["parser-implementations"]
 repository.workspace = true
+homepage.workspace = true
+publish.workspace = true
 readme.workspace = true
 exclude = ["tests/data/", "fuzz/"]
 
 [dependencies]
+
+[dev-dependencies]
+serde_json = "1"
 
 [lints]
 workspace = true

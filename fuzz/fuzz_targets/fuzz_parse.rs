@@ -1,10 +1,16 @@
-//! Fuzz target: feed arbitrary bytes as an AppCompatCache value blob to the decoder.
-//! Invariant: `parse`/`detect_format` never panic — a malformed blob yields an error or a
-//! skipped entry, never an out-of-bounds index or arithmetic panic.
+//! Fuzz target: arbitrary bytes as an AppCompatCache value, and as the slack after one.
+//! Invariant: `decode`, `recover_slack` and the entries' accessors never panic.
 #![no_main]
 use libfuzzer_sys::fuzz_target;
 
 fuzz_target!(|data: &[u8]| {
-    let _ = shimcache_core::detect_format(data);
-    let _ = shimcache_core::parse(data);
+    for hint in [None, Some(true), Some(false)] {
+        let _ = shimcache_core::detect_format(data, hint);
+        if let Ok(cache) = shimcache_core::decode(data, hint) {
+            let _ = shimcache_core::recover_slack(data, &cache);
+            for e in &cache.entries {
+                let _ = (e.data_tags(), e.machine(), e.package_record(), e.last_modified());
+            }
+        }
+    }
 });

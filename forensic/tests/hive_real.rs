@@ -1,5 +1,5 @@
 //! Tier-1 end-to-end validation of the `shimcache4n6` binary against a real `SYSTEM` hive — exercises
-//! the `winreg-core` control-set navigation + `AppCompatCache` value extraction that the library's
+//! the hive reader's control-set navigation + `AppCompatCache` value extraction that the library's
 //! `analyze_blob` does not. Env-gated on `SHIMCACHE_TEST_SYSTEM_HIVE`.
 //!
 //! Point it at the NIST CFReDS "Data Leakage" `SYSTEM` hive (public domain) — the same blob that
@@ -25,7 +25,7 @@ fn shimcache4n6_analyzes_a_real_system_hive_end_to_end() {
     );
     // The whole-hive path reads Win7-64 AppCompatCache from ControlSet001 → 292 entries.
     assert!(
-        stdout.contains("Win7_64, ControlSet001, 292 entries"),
+        stdout.contains("Windows7x64_Windows2008R2, ControlSet001, 292 entries"),
         "unexpected summary; got: {stdout}"
     );
     // …and surfaces the Recycle-Bin execution lead (high-value in a data-leakage case).

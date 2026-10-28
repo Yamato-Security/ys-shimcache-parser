@@ -1,0 +1,63 @@
+ControlSet,CacheEntryPosition,Path,LastModifiedTimeUTC,Executed,Duplicate,SourceFile,FromSlack
+1,0,SYSVOL\Windows\System32\wermgr.exe,2014-03-18 10:30:27,Yes,False,SYSTEM,False
+1,1,SYSVOL\Windows\System32\SearchFilterHost.exe,2014-03-18 10:31:10,Yes,False,SYSTEM,False
+1,2,SYSVOL\Windows\System32\SearchProtocolHost.exe,2014-03-18 10:31:10,Yes,False,SYSTEM,False
+1,3,SYSVOL\Windows\System32\wbem\WmiPrvSE.exe,2013-08-22 11:45:14,Yes,False,SYSTEM,False
+1,4,SYSVOL\Windows\System32\wbem\WMIADAP.exe,2013-08-22 11:44:42,Yes,False,SYSTEM,False
+1,5,SYSVOL\Windows\System32\LogonUI.exe,2013-08-22 11:32:21,Yes,False,SYSTEM,False
+1,6,SYSVOL\Windows\SoftwareDistribution\Download\Install\AllowOSUpgrade.exe,2015-08-24 15:56:38,Yes,False,SYSTEM,False
+1,7,SYSVOL\Windows\System32\SrTasks.exe,2014-03-18 10:31:12,Yes,False,SYSTEM,False
+1,8,SYSVOL\Windows\System32\svchost.exe,2013-08-22 12:45:17,Yes,False,SYSTEM,False
+1,9,SYSVOL\Windows\System32\VSSVC.exe,2014-03-18 10:29:55,Yes,False,SYSTEM,False
+1,10,SYSVOL\Windows\System32\wuauclt.exe,2014-03-18 10:30:06,Yes,False,SYSTEM,False
+1,11,SYSVOL\Windows\System32\SearchIndexer.exe,2014-03-18 10:31:10,Yes,False,SYSTEM,False
+1,12,SYSVOL\Windows\System32\dasHost.exe,2014-03-18 10:29:58,Yes,False,SYSTEM,False
+1,13,SYSVOL\Windows\System32\oobe\FirstLogonAnim.exe,2013-08-22 12:39:51,Yes,False,SYSTEM,False
+1,14,SYSVOL\Windows\WinSxS\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_6.3.9600.17031_none_fa50b3979b1bcb4a\TiWorker.exe,2014-03-18 10:12:01,Yes,False,SYSTEM,False
+1,15,SYSVOL\Windows\servicing\TrustedInstaller.exe,2014-03-18 10:29:29,Yes,False,SYSTEM,False
+1,16,SYSVOL\Program Files\Windows Defender\NisSrv.exe,2013-08-22 12:32:01,Yes,False,SYSTEM,False
+1,17,SYSVOL\Windows\System32\drvinst.exe,2013-08-22 11:28:57,Yes,False,SYSTEM,False
+1,18,SYSVOL\Program Files\Windows Defender\MsMpEng.exe,2013-08-22 12:32:00,Yes,False,SYSTEM,False
+1,19,SYSVOL\Windows\System32\spoolsv.exe,2013-08-22 09:10:12,Yes,False,SYSTEM,False
+1,20,SYSVOL\Windows\System32\mcbuilder.exe,2014-03-18 10:29:56,Yes,False,SYSTEM,False
+1,21,SYSVOL\Windows\System32\oobe\msoobe.exe,2013-08-22 10:34:10,Yes,False,SYSTEM,False
+1,22,SYSVOL\Windows\System32\oobe\oobeldr.exe,2014-03-18 10:29:56,Yes,False,SYSTEM,False
+1,23,SYSVOL\Windows\System32\oobe\windeploy.exe,2014-03-18 10:29:55,Yes,False,SYSTEM,False
+1,24,SYSVOL\Windows\System32\dwm.exe,2014-03-18 10:30:29,Yes,False,SYSTEM,False
+1,25,SYSVOL\Windows\System32\sppsvc.exe,2014-03-18 10:30:05,No,False,SYSTEM,False
+1,26,SYSVOL\Windows\System32\lsass.exe,2013-08-22 13:25:35,Yes,False,SYSTEM,False
+1,27,SYSVOL\Windows\System32\services.exe,2013-08-22 13:25:40,Yes,False,SYSTEM,False
+1,28,SYSVOL\Windows\System32\ByteCodeGenerator.exe,2013-08-22 09:17:04,Yes,False,SYSTEM,False
+1,29,SYSVOL\Windows\SysWOW64\ByteCodeGenerator.exe,2013-08-22 02:22:14,Yes,False,SYSTEM,False
+1,30,SYSVOL\Windows\System32\vds.exe,2014-03-18 10:29:55,Yes,False,SYSTEM,False
+1,31,SYSVOL\Windows\System32\vdsldr.exe,2013-08-22 11:20:21,Yes,False,SYSTEM,False
+1,32,SYSVOL\Program Files\Windows Defender\MpCmdRun.exe,2013-08-22 12:32:00,Yes,False,SYSTEM,False
+1,33,SYSVOL\Windows\System32\oobe\Setup.exe,2014-03-18 10:29:56,Yes,False,SYSTEM,False
+1,34,SYSVOL\Program Files (x86)\Internet Explorer\iexplore.exe,2014-03-18 10:47:08,No,False,SYSTEM,False
+1,35,SYSVOL\Program Files\WindowsApps\Microsoft.WindowsSoundRecorder_6.3.9600.20280_x64__8wekyb3d8bbwe\soundrec.exe,2014-03-18 09:55:00,No,False,SYSTEM,False
+1,36,SYSVOL\Program Files\WindowsApps\Microsoft.WindowsScan_6.3.9600.16422_x64__8wekyb3d8bbwe\scanapp.exe,2014-03-18 09:55:52,No,False,SYSTEM,False
+1,37,SYSVOL\Program Files\WindowsApps\microsoft.windowscommunicationsapps_17.5.9600.20413_x64__8wekyb3d8bbwe\livecomm.exe,2014-03-18 09:53:33,No,False,SYSTEM,False
+1,38,SYSVOL\Program Files\WindowsApps\Microsoft.WindowsCalculator_6.3.9600.20278_x64__8wekyb3d8bbwe\numbers.exe,2014-03-18 09:54:44,No,False,SYSTEM,False
+1,39,SYSVOL\Program Files\WindowsApps\Microsoft.WindowsAlarms_6.3.9654.20335_x64__8wekyb3d8bbwe\time.exe,2014-03-18 09:55:37,No,False,SYSTEM,False
+1,40,SYSVOL\Program Files\WindowsApps\Microsoft.Reader_6.3.9600.16422_x64__8wekyb3d8bbwe\glcnd.exe,2014-03-18 09:54:00,No,False,SYSTEM,False
+1,41,SYSVOL\Program Files\WindowsApps\Microsoft.Office.OneNote_16.0.1929.1156_x64__8wekyb3d8bbwe\onenoteshare.exe,2014-03-18 10:00:42,No,False,SYSTEM,False
+1,42,SYSVOL\Program Files\WindowsApps\Microsoft.Office.OneNote_16.0.1929.1156_x64__8wekyb3d8bbwe\onenoteim.exe,2014-03-18 10:00:42,No,False,SYSTEM,False
+1,43,SYSVOL\Program Files\WindowsApps\Microsoft.HelpAndTips_6.3.9654.20428_x64__8wekyb3d8bbwe\helpandtips.exe,2014-03-18 09:54:27,No,False,SYSTEM,False
+1,44,SYSVOL\Program Files\WindowsApps\Microsoft.BingMaps_2.0.2530.2317_x64__8wekyb3d8bbwe\Map.exe,2014-03-18 09:57:40,No,False,SYSTEM,False
+1,45,SYSVOL\Program Files\Internet Explorer\iexplore.exe,2014-03-18 10:47:08,No,False,SYSTEM,False
+1,46,SYSVOL\Windows\SysWOW64\setup16.exe,2013-08-22 04:03:23,No,False,SYSTEM,False
+1,47,SYSVOL\Windows\SysWOW64\rundll32.exe,2013-08-22 03:40:23,No,False,SYSTEM,False
+1,48,SYSVOL\Windows\SysWOW64\regsvr32.exe,2013-08-22 03:55:58,No,False,SYSTEM,False
+1,49,SYSVOL\Windows\SysWOW64\msiexec.exe,2013-08-22 03:56:51,No,False,SYSTEM,False
+1,50,SYSVOL\Windows\SysWOW64\instnm.exe,2013-08-22 04:03:22,No,False,SYSTEM,False
+1,51,SYSVOL\Windows\SysWOW64\InstallShield\_isdel.exe,2013-06-18 13:14:55,No,False,SYSTEM,False
+1,52,SYSVOL\Windows\SysWOW64\InstallShield\setup.exe,2013-06-18 13:14:55,No,False,SYSTEM,False
+1,53,SYSVOL\Windows\SysWOW64\FlashPlayerApp.exe,2013-08-15 22:09:51,No,False,SYSTEM,False
+1,54,SYSVOL\Windows\SysWOW64\explorer.exe,2014-03-18 10:30:43,No,False,SYSTEM,False
+1,55,SYSVOL\Windows\SysWOW64\dpnsvr.exe,2013-08-22 04:05:19,No,False,SYSTEM,False
+1,56,SYSVOL\Windows\SysWOW64\dplaysvr.exe,2013-08-22 04:05:19,No,False,SYSTEM,False
+1,57,SYSVOL\Windows\System32\SnippingTool.exe,2014-03-18 09:47:27,No,False,SYSTEM,False
+1,58,SYSVOL\Windows\System32\rundll32.exe,2013-08-22 11:03:41,No,False,SYSTEM,False
+1,59,SYSVOL\Windows\System32\regsvr32.exe,2013-08-22 11:22:40,No,False,SYSTEM,False
+1,60,SYSVOL\Windows\System32\msiexec.exe,2013-08-22 11:23:10,No,False,SYSTEM,False
+1,61,SYSVOL\Windows\System32\dpnsvr.exe,2013-08-22 11:33:50,No,False,SYSTEM,False

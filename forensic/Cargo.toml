@@ -1,20 +1,25 @@
 [package]
 name = "shimcache-forensic"
-version = "0.1.0"
+version = "0.2.0"
 edition.workspace = true
 rust-version.workspace = true
-description = "Windows AppCompatCache (ShimCache) forensic analyzer — reads the AppCompatCache value from a SYSTEM hive and reports executed/present binaries with last-modification times and graded findings (masquerading, suspicious-location execution)."
+description = "SYSTEM hives' AppCompatCaches: its own registry reader (transaction logs replayed, every control set, value slack) and the shimcache4n6 command, with Eric Zimmerman's AppCompatCacheParser's CSV and graded findings."
 license.workspace = true
 authors.workspace = true
 keywords = ["forensics", "shimcache", "appcompatcache", "windows", "dfir"]
 categories = ["command-line-utilities", "parser-implementations"]
 repository.workspace = true
+homepage.workspace = true
+publish.workspace = true
 readme.workspace = true
 
 [dependencies]
 shimcache-core = { workspace = true }
-winreg-core = { workspace = true }
 forensicnomicon = { workspace = true }
+
+[dev-dependencies]
+serde_json = "1"
+flate2 = "1"
 
 [lints]
 workspace = true
