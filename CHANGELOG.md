@@ -26,8 +26,8 @@ AppCompatCacheParser 2026.10.1 on every public value and hive found. (@YamatoSec
 - `read_system` / `read_system_file`: every `ControlSetNNN` with a cache key (`AppCompatibility`
   on Windows XP), its value decoded with the system's architecture (`PROCESSOR_ARCHITECTURE`) and
   its slack; `SystemCaches::rows` with AppCompatCacheParser's `Duplicate`.
-- `shimcache4n6 SYSTEM [--list] [--csv FILE]`: the logs next to the hive applied, every control
-  set, and AppCompatCacheParser's CSV columns.
+- `ys-shimcache-parser SYSTEM [--list] [--csv FILE]`: the logs next to the hive applied, every
+  control set, and AppCompatCacheParser's CSV columns.
 - Tests against AppCompatCacheParser's output on 14 values and 7 hive scenarios (its CSV byte for
   byte), its own format tests rewritten, built hives and logs, random damage; a hive fuzz target.
 
@@ -41,6 +41,7 @@ AppCompatCacheParser 2026.10.1 on every public value and hive found. (@YamatoSec
 - Windows XP entries in the order of its LRU array, not the slots'.
 - `\??\` is removed from paths; a time outside 1602–9999 is none.
 - winreg-core is no longer used.
+- The command is named after the repository: `ys-shimcache-parser`, not `shimcache4n6`.
 
 ### Fixed
 - Windows 8.0 and 8.1 values whose first dword is 0, not 0x80 (Windows Server 2012 R2 and
@@ -55,5 +56,5 @@ AppCompatCacheParser 2026.10.1 on every public value and hive found. (@YamatoSec
   the other log is tried. A dirty page outside its entry's hive bins could make the hive grow to
   4 GiB; such an entry now ends the log, and hive bins are at most 2 GiB. A signed cache that
   stopped at a damaged entry signature lost the entries after it without a problem reported.
-  `shimcache4n6` left the entries recovered from the slack out of its findings, and took
+  `ys-shimcache-parser` left the entries recovered from the slack out of its findings, and took
   `--csv --list` as a file named `--list`.

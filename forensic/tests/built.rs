@@ -440,9 +440,9 @@ fn damage_never_panics_or_hangs() {
     let _ = read_system(looped, &[]);
 }
 
-/// `shimcache4n6` in `dir` with these arguments: (exit status, stdout, stderr).
+/// `ys-shimcache-parser` in `dir` with these arguments: (exit status, stdout, stderr).
 fn run_cli(dir: &std::path::Path, args: &[&str]) -> (i32, String, String) {
-    let out = std::process::Command::new(env!("CARGO_BIN_EXE_shimcache4n6"))
+    let out = std::process::Command::new(env!("CARGO_BIN_EXE_ys-shimcache-parser"))
         .current_dir(dir)
         .args(args)
         .output()
@@ -502,7 +502,10 @@ fn the_command_line_is_checked() {
         let (code, out, err) = run_cli(&dir, args);
         assert_eq!(code, 2, "{args:?}: {out}");
         assert!(err.contains(problem), "{args:?}: {err}");
-        assert!(err.contains("usage: shimcache4n6"), "{args:?}: {err}");
+        assert!(
+            err.contains("usage: ys-shimcache-parser"),
+            "{args:?}: {err}"
+        );
     }
     // nothing was written in place of the missing CSV name
     assert!(!dir.join("--list").exists());

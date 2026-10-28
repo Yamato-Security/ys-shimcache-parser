@@ -1,5 +1,5 @@
 //! Real `SYSTEM` hives against Eric Zimmerman's AppCompatCacheParser (its library's output and
-//! its CSV for each, `data/oracle/`), through the library and the `shimcache4n6` binary:
+//! its CSV for each, `data/oracle/`), through the library and the `ys-shimcache-parser` binary:
 //!
 //! - the DFIR Artifact Museum's dirty Windows 11 hive (MIT) with its two transaction logs, and
 //!   without them;
@@ -82,7 +82,7 @@ fn check(name: &str, dir: &Path) -> SystemCaches {
     }
     // the CSV, as AppCompatCacheParser writes it (SourceFile aside)
     let out = dir.join("out.csv");
-    let run = std::process::Command::new(env!("CARGO_BIN_EXE_shimcache4n6"))
+    let run = std::process::Command::new(env!("CARGO_BIN_EXE_ys-shimcache-parser"))
         .arg(dir.join("SYSTEM"))
         .args(["--csv", out.to_str().unwrap()])
         .output()
