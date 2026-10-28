@@ -1,6 +1,6 @@
-//! Tier-1 end-to-end validation of the `shimcache4n6` binary against a real `SYSTEM` hive — exercises
-//! the hive reader's control-set navigation + `AppCompatCache` value extraction that the library's
-//! `analyze_blob` does not. Env-gated on `SHIMCACHE_TEST_SYSTEM_HIVE`.
+//! Tier-1 end-to-end validation of the `ys-shimcache-parser` binary against a real `SYSTEM`
+//! hive — exercises the hive reader's control-set navigation + `AppCompatCache` value extraction
+//! that the library's `analyze_blob` does not. Env-gated on `SHIMCACHE_TEST_SYSTEM_HIVE`.
 //!
 //! Point it at the NIST CFReDS "Data Leakage" `SYSTEM` hive (public domain) — the same blob that
 //! `core/tests/data/win7_appcompatcache.bin` was extracted from, so the whole-hive path must yield
@@ -8,19 +8,19 @@
 #![allow(clippy::unwrap_used)]
 
 #[test]
-fn shimcache4n6_analyzes_a_real_system_hive_end_to_end() {
+fn ys_shimcache_parser_analyzes_a_real_system_hive_end_to_end() {
     let Ok(path) = std::env::var("SHIMCACHE_TEST_SYSTEM_HIVE") else {
         eprintln!("SKIP: set SHIMCACHE_TEST_SYSTEM_HIVE to a real SYSTEM hive (e.g. CFReDS)");
         return;
     };
-    let out = std::process::Command::new(env!("CARGO_BIN_EXE_shimcache4n6"))
+    let out = std::process::Command::new(env!("CARGO_BIN_EXE_ys-shimcache-parser"))
         .arg(&path)
         .output()
-        .expect("run shimcache4n6");
+        .expect("run ys-shimcache-parser");
     let stdout = String::from_utf8_lossy(&out.stdout);
     assert!(
         out.status.success(),
-        "shimcache4n6 failed: {:?}",
+        "ys-shimcache-parser failed: {:?}",
         out.status
     );
     // The whole-hive path reads Win7-64 AppCompatCache from ControlSet001 → 292 entries.

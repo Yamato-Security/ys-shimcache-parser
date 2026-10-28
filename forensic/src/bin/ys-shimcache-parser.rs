@@ -1,4 +1,4 @@
-//! `shimcache4n6 SYSTEM [--list] [--csv FILE]`: a `SYSTEM` hive's AppCompatCaches (its
+//! `ys-shimcache-parser SYSTEM [--list] [--csv FILE]`: a `SYSTEM` hive's AppCompatCaches (its
 //! transaction logs, next to it, replayed when it is dirty): a summary per control set and the
 //! findings; `--list` prints every entry, `--csv` writes them with Eric Zimmerman's
 //! AppCompatCacheParser's columns (times UTC, `yyyy-MM-dd HH:mm:ss`, as its default).
@@ -8,11 +8,11 @@ use shimcache_forensic::{audit, read_system_file, ShimcacheAnomaly, SystemCaches
 use std::io::Write;
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: shimcache4n6 <SYSTEM hive> [--list] [--csv FILE]";
+const USAGE: &str = "usage: ys-shimcache-parser <SYSTEM hive> [--list] [--csv FILE]";
 
 /// A mistake in the arguments: said on stderr with the usage, exit status 2.
 fn usage(problem: &str) -> ExitCode {
-    eprintln!("shimcache4n6: {problem}\n{USAGE}");
+    eprintln!("ys-shimcache-parser: {problem}\n{USAGE}");
     ExitCode::from(2)
 }
 
@@ -44,7 +44,7 @@ fn main() -> ExitCode {
     let caches = match read_system_file(std::path::Path::new(&hive_path)) {
         Ok(c) => c,
         Err(e) => {
-            eprintln!("shimcache4n6: {hive_path}: {e}");
+            eprintln!("ys-shimcache-parser: {hive_path}: {e}");
             return ExitCode::FAILURE;
         }
     };
@@ -53,14 +53,14 @@ fn main() -> ExitCode {
         // `| head`: stop quietly
         Err(e) if e.kind() == std::io::ErrorKind::BrokenPipe => return ExitCode::SUCCESS,
         Err(e) => {
-            eprintln!("shimcache4n6: {e}");
+            eprintln!("ys-shimcache-parser: {e}");
             return ExitCode::FAILURE;
         }
         Ok(()) => {}
     }
     if let Some(out) = csv {
         if let Err(e) = write_csv(&caches, &hive_path, &out) {
-            eprintln!("shimcache4n6: {out}: {e}");
+            eprintln!("ys-shimcache-parser: {out}: {e}");
             return ExitCode::FAILURE;
         }
     }

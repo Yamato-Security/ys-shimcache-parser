@@ -8,7 +8,7 @@ Apache-2.0): the Windows AppCompatCache (ShimCache) parser used by
 | Crate | What it reads |
 | --- | --- |
 | [`shimcache-core`](core/) | An AppCompatCache value, Windows XP to 11: every entry's path, last-modification time, execution flag, position, flags, data and packaged-app record; damaged entries reported; entries recovered from the slack after the value |
-| [`shimcache-forensic`](forensic/) | A `SYSTEM` hive: its own registry reader, the transaction logs replayed when the hive is dirty, every control set's cache and the slack of its cell; graded findings; the `shimcache4n6` command |
+| [`shimcache-forensic`](forensic/) | A `SYSTEM` hive: its own registry reader, the transaction logs replayed when the hive is dirty, every control set's cache and the slack of its cell; graded findings; the `ys-shimcache-parser` command |
 
 ## Why this crate
 
@@ -49,10 +49,10 @@ What the fork changes:
 | An own registry reader (`hive`): base block, `lf`/`lh`/`li`/`ri` lists, big data (`db`), each value's cell slack; bounds-checked, loops and depth limited | Eric Zimmerman's [Registry](https://github.com/EricZimmerman/Registry) (MIT), Maxim Suhanov's [regf specification](https://github.com/msuhanov/regf) (CC BY 4.0) |
 | Transaction log replay: new-format logs (`HvLE`, Marvin32 hashes, sequence numbers, both logs in order, an invalid base block taken from the latest log) and old `DIRT` logs | Registry's `LogReplay`, the regf specification |
 | Every `ControlSetNNN`, with AppCompatCacheParser's `Duplicate` (an entry seen in an earlier control set or the slack) | AppCompatCacheParser |
-| `shimcache4n6 SYSTEM [--list] [--csv FILE]`: the logs next to the hive applied, a summary per control set, the findings, and AppCompatCacheParser's CSV | AppCompatCacheParser |
+| `ys-shimcache-parser SYSTEM [--list] [--csv FILE]`: the logs next to the hive applied, a summary per control set, the findings, and AppCompatCacheParser's CSV | AppCompatCacheParser |
 | A log none of whose entries can be applied (or an old-format log with no dirty page) is not counted as applied, and the other log is tried; a dirty page must be inside its entry's hive bins (at most 2 GiB), and the hive grows only when the memory can be had. AppCompatCacheParser and yarp count such a log as applied, so a hive looked recovered with nothing applied | the regf specification; fork (found in review) |
 | A signed cache (Windows 8 to 11) that stops where bytes other than zeros have no entry signature, or before the count its Windows 10 / 11 header gives, is reported in `Cache::problems`; AppCompatCacheParser stops there without a word | fork (found in review) |
-| Findings: a system binary is in place only in the Windows directory's `System32` or `SysWOW64` (not in any folder of that name, such as `C:\Program Files\Vendor\System32`); the entries recovered from the slack are audited too; `shimcache4n6` rejects a missing `--csv` file name and unknown arguments | fork (found in review) |
+| Findings: a system binary is in place only in the Windows directory's `System32` or `SysWOW64` (not in any folder of that name, such as `C:\Program Files\Vendor\System32`); the entries recovered from the slack are audited too; `ys-shimcache-parser` rejects a missing `--csv` file name and unknown arguments | fork (found in review) |
 | One CI (Linux, macOS, Windows, MSRV 1.85, wasm32, cargo-deny), actions pinned by commit | fork |
 
 ## How it's checked
@@ -75,8 +75,11 @@ What the fork changes:
 
 ## Use
 
+The command is `ys-shimcache-parser` (upstream's was `shimcache4n6`):
+
 ```console
-$ shimcache4n6 SYSTEM --csv shimcache.csv
+$ cargo install --git https://github.com/Yamato-Security/ys-shimcache-parser shimcache-forensic
+$ ys-shimcache-parser SYSTEM --csv shimcache.csv
 Transaction logs applied: SYSTEM.LOG1, SYSTEM.LOG2
   SYSTEM.LOG1: applied 2 log entries (sequence numbers 620 to 621)
   SYSTEM.LOG2: applied 14 log entries (sequence numbers 622 to 635)
