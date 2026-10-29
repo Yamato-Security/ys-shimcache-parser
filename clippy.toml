@@ -6,4 +6,4 @@ allow-unwrap-in-tests = true
 allow-expect-in-tests = true
 
 # Windows-forensic / format names that look like code identifiers to doc_markdown.
-doc-valid-idents = ["AppCompatCache", "AppCompatCaches", "AppCompatCacheParser", "AppCompatibility", "UWP", "PROCESSOR_ARCHITECTURE", "ControlSet001", "LogReplay", "ShimCache", "FILETIME", "WinXP", "dtfabric", "winreg-kb", "ShimCacheParser", "ShimcacheEntry", "CFReDS", "DFIR", "SecurityRonin", "SXS", "CSRSS", "MFT", "..", "SHA-256", "MD5", "NTFS"]
+doc-valid-idents = ["AppCompatCache", "AppCompatCaches", "AppCompatibility", "UWP", "PROCESSOR_ARCHITECTURE", "ControlSet001", "ShimCache", "FILETIME", "WinXP", "dtfabric", "winreg-kb", "ShimCacheParser", "ShimcacheEntry", "CFReDS", "DFIR", "SecurityRonin", "SXS", "CSRSS", "MFT", "..", "SHA-256", "MD5", "NTFS"]

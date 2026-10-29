@@ -3,9 +3,8 @@
 //! the replay of a dirty hive's transaction logs.
 //!
 //! The format is libyal's and Maxim Suhanov's (*Windows registry file format specification*,
-//! <https://github.com/msuhanov/regf>, CC BY 4.0). The log replay follows Eric Zimmerman's
-//! Registry library (MIT), which implements that specification and is checked against yarp:
-//! new-format logs (`HvLE` entries, Windows 8.1 and later) from the sequence number in the log's
+//! <https://github.com/msuhanov/regf>, CC BY 4.0). The log replay implements that specification
+//! and is checked against yarp: new-format logs (`HvLE` entries, Windows 8.1 and later) from the sequence number in the log's
 //! base block on, each entry one more than the last, the first invalid one (signature, size,
 //! hive bins data size, Marvin32 hashes, sequence number) ending the log; both logs, the one with
 //! the earlier entries first, the other when it continues the sequence; a primary file whose

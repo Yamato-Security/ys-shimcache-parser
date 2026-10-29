@@ -71,7 +71,7 @@ pub struct ControlSetCache {
 }
 
 /// One row of output: a control set's entry, and whether the same entry (time and path) was in
-/// an earlier control set or earlier in this one (AppCompatCacheParser's `Duplicate`).
+/// an earlier control set or earlier in this one (the CSV's `Duplicate`).
 #[derive(Debug, Clone, Copy)]
 pub struct Row<'a> {
     /// The control set.
@@ -83,7 +83,7 @@ pub struct Row<'a> {
 }
 
 impl SystemCaches {
-    /// Every entry in AppCompatCacheParser's order: each control set's cache, then its slack.
+    /// Every entry, in order: each control set's cache, then its slack.
     #[must_use]
     pub fn rows(&self) -> Vec<Row<'_>> {
         let mut seen = HashSet::new();

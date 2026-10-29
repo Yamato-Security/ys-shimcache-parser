@@ -1,7 +1,8 @@
 //! `ys-shimcache-parser SYSTEM [--list] [--csv FILE]`: a `SYSTEM` hive's AppCompatCaches (its
 //! transaction logs, next to it, replayed when it is dirty): a summary per control set and the
-//! findings; `--list` prints every entry, `--csv` writes them with Eric Zimmerman's
-//! AppCompatCacheParser's columns (times UTC, `yyyy-MM-dd HH:mm:ss`, as its default).
+//! findings; `--list` prints every entry, `--csv` writes them as CSV (`ControlSet`,
+//! `CacheEntryPosition`, `Path`, `LastModifiedTimeUTC`, `Executed`, `Duplicate`, `SourceFile`,
+//! `FromSlack`; times UTC, `yyyy-MM-dd HH:mm:ss`).
 
 use forensicnomicon::report::Observation;
 use shimcache_forensic::{ShimcacheAnomaly, SystemCaches, audit, read_system_file};
