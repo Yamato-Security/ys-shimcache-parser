@@ -1,6 +1,6 @@
 [package]
-name = "shimcache-forensic"
-version = "0.2.0"
+name = "ys-shimcache-parser"
+version = "1.0.0"
 edition.workspace = true
 rust-version.workspace = true
 description = "SYSTEM hives' AppCompatCaches: its own registry reader (transaction logs replayed, every control set, value slack) and the ys-shimcache-parser command, with Eric Zimmerman's AppCompatCacheParser's CSV and graded findings."
@@ -12,6 +12,10 @@ repository.workspace = true
 homepage.workspace = true
 publish.workspace = true
 readme.workspace = true
+
+# The library keeps its name, so code using it reads `use shimcache_forensic::…`.
+[lib]
+name = "shimcache_forensic"
 
 [dependencies]
 shimcache-core = { workspace = true }

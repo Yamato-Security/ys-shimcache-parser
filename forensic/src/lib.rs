@@ -30,7 +30,7 @@ use std::path::Path;
 // on `shimcache-forensic`.
 pub use hive::{Hive, HiveError, LogFile, Recovery};
 pub use shimcache_core::{
-    decode, recover_slack, Cache, PackageRecord, ShimcacheEntry, ShimcacheError, ShimcacheFormat,
+    Cache, PackageRecord, ShimcacheEntry, ShimcacheError, ShimcacheFormat, decode, recover_slack,
 };
 
 /// Where a control set keeps its cache: `AppCompatCache`, and `AppCompatibility` on Windows XP.

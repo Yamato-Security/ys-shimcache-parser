@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0 (Unreleased)
+
+### Changed
+- The crates are named after their repository: `ys-shimcache-parser` (was `shimcache-forensic`;
+  library `shimcache_forensic`, and the `ys-shimcache-parser` command) and
+  `ys-shimcache-parser-core` (was `shimcache-core`; library `shimcache_core`), version 1.0.0, by
+  Albert Hui and Zach Mathis (@yamatosecurity), on Rust's 2024 edition, and require Rust 1.99.
+  (@YamatoSecurity)
+
 ## 0.2.0 (ys-shimcache-parser)
 
 First version of Yamato Security's fork, based on shimcache-forensic (SecurityRonin/shimcache-forensic

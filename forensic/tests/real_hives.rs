@@ -10,7 +10,7 @@
 #![allow(clippy::unwrap_used)]
 
 use serde_json::Value;
-use shimcache_forensic::{read_system_file, SystemCaches};
+use shimcache_forensic::{SystemCaches, read_system_file};
 use std::io::Read;
 use std::path::{Path, PathBuf};
 

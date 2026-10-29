@@ -2,7 +2,7 @@
 name = "shimcache-fuzz"
 version = "0.0.0"
 publish = false
-edition = "2021"
+edition = "2024"
 
 [package.metadata]
 cargo-fuzz = true
@@ -11,8 +11,8 @@ cargo-fuzz = true
 
 [dependencies]
 libfuzzer-sys = "0.4"
-shimcache-core = { path = "../core" }
-shimcache-forensic = { path = "../forensic" }
+shimcache-core = { package = "ys-shimcache-parser-core", path = "../core" }
+shimcache-forensic = { package = "ys-shimcache-parser", path = "../forensic" }
 
 [[bin]]
 name = "fuzz_parse"

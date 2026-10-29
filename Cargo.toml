@@ -7,10 +7,10 @@ members = ["core", "forensic"]
 # `version` is intentionally NOT hoisted — core and forensic are versioned
 # independently, so each keeps its own inline.
 [workspace.package]
-edition = "2021"
-rust-version = "1.85"
+edition = "2024"
+rust-version = "1.99"
 license = "Apache-2.0"
-authors = ["Albert Hui", "Yamato Security"]
+authors = ["Albert Hui", "Zach Mathis (@yamatosecurity)"]
 repository = "https://github.com/Yamato-Security/ys-shimcache-parser"
 homepage = "https://github.com/Yamato-Security/ys-shimcache-parser"
 readme = "README.md"
@@ -22,7 +22,7 @@ publish = false
 # members write `dep.workspace = true`. The inter-crate `shimcache-core` version
 # lives here too, so a bump touches one line instead of every member + dev-dep.
 [workspace.dependencies]
-shimcache-core = { path = "core", version = "0.2.0" }
+shimcache-core = { package = "ys-shimcache-parser-core", path = "core", version = "1.0.0" }
 forensicnomicon = "1"
 
 [workspace.lints.rust]

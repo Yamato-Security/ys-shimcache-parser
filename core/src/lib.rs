@@ -420,7 +420,9 @@ pub fn recover_slack(slack: &[u8], cache: &Cache) -> Vec<ShimcacheEntry> {
 /// A slack entry that is one: a path without control characters (a tab is in packaged app
 /// records), of a whole number of UTF-16 units.
 fn plausible(e: &ShimcacheEntry) -> bool {
-    !e.path.is_empty() && e.path_size % 2 == 0 && e.path.chars().all(|c| c >= ' ' || c == '\t')
+    !e.path.is_empty()
+        && e.path_size.is_multiple_of(2)
+        && e.path.chars().all(|c| c >= ' ' || c == '\t')
 }
 
 // ── Windows XP ─────────────────────────────────────────────────────────────────────────────
@@ -633,10 +635,11 @@ fn table_entry(
             )
         };
         // data that isn't in the value is left out, not an error
-        if size > 0 && (size as i64) > 0 {
-            if let Some(b) = slice(blob, offset, size) {
-                data = b.to_vec();
-            }
+        if size > 0
+            && (size as i64) > 0
+            && let Some(b) = slice(blob, offset, size)
+        {
+            data = b.to_vec();
         }
     }
     Ok(ShimcacheEntry {
@@ -813,7 +816,9 @@ fn filetime(ft: u64) -> Option<u64> {
 /// UTF-16LE, lossily (an unpaired surrogate is U+FFFD).
 fn utf16(b: &[u8]) -> String {
     let units: Vec<u16> = b
-        .chunks_exact(2)
+        .as_chunks::<2>()
+        .0
+        .iter()
         .map(|c| u16::from_le_bytes([c[0], c[1]]))
         .collect();
     String::from_utf16_lossy(&units)

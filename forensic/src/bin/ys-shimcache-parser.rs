@@ -4,7 +4,7 @@
 //! AppCompatCacheParser's columns (times UTC, `yyyy-MM-dd HH:mm:ss`, as its default).
 
 use forensicnomicon::report::Observation;
-use shimcache_forensic::{audit, read_system_file, ShimcacheAnomaly, SystemCaches};
+use shimcache_forensic::{ShimcacheAnomaly, SystemCaches, audit, read_system_file};
 use std::io::Write;
 use std::process::ExitCode;
 
@@ -58,11 +58,11 @@ fn main() -> ExitCode {
         }
         Ok(()) => {}
     }
-    if let Some(out) = csv {
-        if let Err(e) = write_csv(&caches, &hive_path, &out) {
-            eprintln!("ys-shimcache-parser: {out}: {e}");
-            return ExitCode::FAILURE;
-        }
+    if let Some(out) = csv
+        && let Err(e) = write_csv(&caches, &hive_path, &out)
+    {
+        eprintln!("ys-shimcache-parser: {out}: {e}");
+        return ExitCode::FAILURE;
     }
     ExitCode::SUCCESS
 }
@@ -153,7 +153,10 @@ fn print_report(w: &mut impl Write, caches: &SystemCaches, list: bool) -> std::i
 
 fn write_csv(caches: &SystemCaches, hive: &str, out: &str) -> std::io::Result<()> {
     let mut w = std::io::BufWriter::new(std::fs::File::create(out)?);
-    writeln!(w, "ControlSet,CacheEntryPosition,Path,LastModifiedTimeUTC,Executed,Duplicate,SourceFile,FromSlack")?;
+    writeln!(
+        w,
+        "ControlSet,CacheEntryPosition,Path,LastModifiedTimeUTC,Executed,Duplicate,SourceFile,FromSlack"
+    )?;
     for row in caches.rows() {
         let e = row.entry;
         let executed = match e.executed {

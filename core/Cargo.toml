@@ -1,6 +1,6 @@
 [package]
-name = "shimcache-core"
-version = "0.2.0"
+name = "ys-shimcache-parser-core"
+version = "1.0.0"
 edition.workspace = true
 rust-version.workspace = true
 description = "Windows AppCompatCache (ShimCache) values, Windows XP to 11, decoded as Eric Zimmerman's AppCompatCacheParser does: every entry's path, last-modification time, execution flag, flags, data and packaged-app record; damaged entries reported, entries recovered from the slack, never a panic."
@@ -13,6 +13,10 @@ homepage.workspace = true
 publish.workspace = true
 readme.workspace = true
 exclude = ["tests/data/", "fuzz/"]
+
+# The library keeps its name, so code using it reads `use shimcache_core::…`.
+[lib]
+name = "shimcache_core"
 
 [dependencies]
 

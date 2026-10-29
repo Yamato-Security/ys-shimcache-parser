@@ -7,8 +7,8 @@ Apache-2.0): the Windows AppCompatCache (ShimCache) parser used by
 
 | Crate | What it reads |
 | --- | --- |
-| [`shimcache-core`](core/) | An AppCompatCache value, Windows XP to 11: every entry's path, last-modification time, execution flag, position, flags, data and packaged-app record; damaged entries reported; entries recovered from the slack after the value |
-| [`shimcache-forensic`](forensic/) | A `SYSTEM` hive: its own registry reader, the transaction logs replayed when the hive is dirty, every control set's cache and the slack of its cell; graded findings; the `ys-shimcache-parser` command |
+| [`ys-shimcache-parser-core`](core/) (library `shimcache_core`) | An AppCompatCache value, Windows XP to 11: every entry's path, last-modification time, execution flag, position, flags, data and packaged-app record; damaged entries reported; entries recovered from the slack after the value |
+| [`ys-shimcache-parser`](forensic/) (library `shimcache_forensic`) | A `SYSTEM` hive: its own registry reader, the transaction logs replayed when the hive is dirty, every control set's cache and the slack of its cell; graded findings; the `ys-shimcache-parser` command |
 
 ## Why this crate
 
@@ -53,7 +53,8 @@ What the fork changes:
 | A log none of whose entries can be applied (or an old-format log with no dirty page) is not counted as applied, and the other log is tried; a dirty page must be inside its entry's hive bins (at most 2 GiB), and the hive grows only when the memory can be had. AppCompatCacheParser and yarp count such a log as applied, so a hive looked recovered with nothing applied | the regf specification; fork (found in review) |
 | A signed cache (Windows 8 to 11) that stops where bytes other than zeros have no entry signature, or before the count its Windows 10 / 11 header gives, is reported in `Cache::problems`; AppCompatCacheParser stops there without a word | fork (found in review) |
 | Findings: a system binary is in place only in the Windows directory's `System32` or `SysWOW64` (not in any folder of that name, such as `C:\Program Files\Vendor\System32`); the entries recovered from the slack are audited too; `ys-shimcache-parser` rejects a missing `--csv` file name and unknown arguments | fork (found in review) |
-| One CI (Linux, macOS, Windows, MSRV 1.85, wasm32, cargo-deny), actions pinned by commit | fork |
+| One CI (Linux, macOS, Windows, MSRV, wasm32, cargo-deny), actions pinned by commit | fork |
+| The crates named after the repository (`ys-shimcache-parser`, `ys-shimcache-parser-core`), version 1.0.0, edition 2024, Rust 1.99 | fork |
 
 ## How it's checked
 
@@ -78,7 +79,7 @@ What the fork changes:
 The command is `ys-shimcache-parser` (upstream's was `shimcache4n6`):
 
 ```console
-$ cargo install --git https://github.com/Yamato-Security/ys-shimcache-parser shimcache-forensic
+$ cargo install --git https://github.com/Yamato-Security/ys-shimcache-parser ys-shimcache-parser
 $ ys-shimcache-parser SYSTEM --csv shimcache.csv
 Transaction logs applied: SYSTEM.LOG1, SYSTEM.LOG2
   SYSTEM.LOG1: applied 2 log entries (sequence numbers 620 to 621)
@@ -106,10 +107,12 @@ for row in caches.rows() {
 let cache = shimcache_core::decode(&value, None)?;
 ```
 
-From Cargo, by commit (the crates keep upstream's names and are not published):
+From Cargo, by commit (the crates are named after the repository, `ys-shimcache-parser` and
+`ys-shimcache-parser-core`, and keep upstream's library names, `shimcache_forensic` and
+`shimcache_core`; they are not published, and need Rust 1.99):
 
 ```toml
-shimcache-forensic = { git = "https://github.com/Yamato-Security/ys-shimcache-parser", rev = "<commit>" }
+shimcache-forensic = { package = "ys-shimcache-parser", git = "https://github.com/Yamato-Security/ys-shimcache-parser", rev = "<commit>" }
 ```
 
 > **ShimCache is not proof of execution by itself.** An entry means the file was seen on a shimmed

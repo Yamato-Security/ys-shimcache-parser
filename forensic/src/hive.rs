@@ -162,7 +162,7 @@ impl Hive {
         let mut bin = BASE;
         while self.bytes.get(bin..bin + 4) == Some(b"hbin") {
             let size = u32_at(&self.bytes, bin + 8)? as usize;
-            if size < 32 || size % HBIN_ALIGNMENT as usize != 0 {
+            if size < 32 || !size.is_multiple_of(HBIN_ALIGNMENT as usize) {
                 break;
             }
             let end = (bin + size).min(self.bytes.len());
@@ -375,7 +375,9 @@ impl Value<'_> {
             return u32_at(&d, 0).map(|n| n.to_string()).unwrap_or_default();
         }
         let units: Vec<u16> = d
-            .chunks_exact(2)
+            .as_chunks::<2>()
+            .0
+            .iter()
             .map(|c| u16::from_le_bytes([c[0], c[1]]))
             .collect();
         String::from_utf16_lossy(&units)
@@ -390,7 +392,9 @@ fn decode_name(raw: &[u8], compressed: bool) -> String {
         raw.iter().map(|&b| char::from(b)).collect()
     } else {
         let units: Vec<u16> = raw
-            .chunks_exact(2)
+            .as_chunks::<2>()
+            .0
+            .iter()
             .map(|c| u16::from_le_bytes([c[0], c[1]]))
             .collect();
         String::from_utf16_lossy(&units)
@@ -656,10 +660,10 @@ fn apply_new_logs(st: &mut State, log1: &LogFile, log2: &LogFile) -> Result<(), 
         st.messages.push(m);
         return apply_new_log(st, second);
     }
-    if let Some(last) = st.last_sequence {
-        if u32_at(&second.data, 4) == Some(last.wrapping_add(1)) {
-            return apply_new_log(st, second);
-        }
+    if let Some(last) = st.last_sequence
+        && u32_at(&second.data, 4) == Some(last.wrapping_add(1))
+    {
+        return apply_new_log(st, second);
     }
     Ok(())
 }
@@ -672,13 +676,13 @@ fn apply_new_log(st: &mut State, log: &LogFile) -> Result<(), String> {
             log.name
         ));
     }
-    if let Some(last) = st.last_sequence {
-        if is_earlier(bb.primary_sequence, last.wrapping_add(1)) {
-            return Err(format!(
-                "{}: its entries are not after the last one applied",
-                log.name
-            ));
-        }
+    if let Some(last) = st.last_sequence
+        && is_earlier(bb.primary_sequence, last.wrapping_add(1))
+    {
+        return Err(format!(
+            "{}: its entries are not after the last one applied",
+            log.name
+        ));
     }
     if st.primary.valid && is_earlier(bb.primary_sequence, st.primary.secondary_sequence) {
         return Err(format!(
@@ -783,14 +787,14 @@ fn invalid_entry(b: &[u8], pos: usize, expected: u32) -> Option<String> {
         return Some("no log entry signature".to_owned());
     }
     let size = u32_at(b, pos + 4).unwrap_or(0) as usize;
-    if size < 512 || size % 512 != 0 {
+    if size < 512 || !size.is_multiple_of(512) {
         return Some(format!("invalid size 0x{size:X}"));
     }
     if pos + size > b.len() {
         return Some("the entry is past the end of the log".to_owned());
     }
     let hbins = u32_at(b, pos + 16).unwrap_or(0);
-    if hbins < HBIN_ALIGNMENT || hbins % HBIN_ALIGNMENT != 0 || hbins > MAX_HIVE_BINS {
+    if hbins < HBIN_ALIGNMENT || !hbins.is_multiple_of(HBIN_ALIGNMENT) || hbins > MAX_HIVE_BINS {
         return Some(format!("invalid hive bins data size 0x{hbins:X}"));
     }
     let count = u32_at(b, pos + 20).unwrap_or(0) as usize;
@@ -911,12 +915,11 @@ fn marvin32(data: &[u8], seed: u64) -> u64 {
     }
     let mut p0 = seed as u32;
     let mut p1 = (seed >> 32) as u32;
-    let mut chunks = data.chunks_exact(4);
-    for c in chunks.by_ref() {
-        p0 = p0.wrapping_add(u32::from_le_bytes([c[0], c[1], c[2], c[3]]));
+    let (chunks, rest) = data.as_chunks::<4>();
+    for &c in chunks {
+        p0 = p0.wrapping_add(u32::from_le_bytes(c));
         block(&mut p0, &mut p1);
     }
-    let rest = chunks.remainder();
     let tail = match rest.len() {
         0 => 0x80u32,
         1 => 0x8000 | u32::from(rest[0]),
@@ -1091,9 +1094,11 @@ mod tests {
         );
         // a valid entry with the wrong sequence number
         let wrong = entry(11, 4096, &[(512, page(0xA))]);
-        assert!(invalid_entry(&wrong, 0, 10)
-            .unwrap()
-            .contains("sequence number 11 where 10"));
+        assert!(
+            invalid_entry(&wrong, 0, 10)
+                .unwrap()
+                .contains("sequence number 11 where 10")
+        );
         assert!(invalid_entry(&wrong, 0, 11).is_none());
     }
 
