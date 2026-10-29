@@ -1,9 +1,10 @@
 //! Hives built here, for what the real ones don't have: entries in the slack of the value's cell
 //! (no real hive had any that were not still in the cache), big data values, `ri` lists, the
-//! Windows XP key, a control set without the value, the architecture, and damage.
+//! Windows XP key, a control set without the value, the architecture, `Select` and the size of
+//! each value, and damage.
 #![allow(clippy::unwrap_used)]
 
-use shimcache_forensic::{Hive, read_system};
+use shimcache_forensic::{Hive, Select, read_system};
 
 const WHEN: u64 = 133_000_000_000_000_000;
 
@@ -376,6 +377,89 @@ fn control_sets_the_xp_key_and_the_architecture() {
         r"C:\xp.exe"
     );
     assert_eq!((c.current_control_set, c.is_32bit), (None, None));
+}
+
+#[test]
+fn select_and_the_size_of_each_value() {
+    // Windows uses ControlSet001; it last started from ControlSet002
+    let (one, two) = (
+        win7(true, r"C:\a.exe"),
+        win7(true, r"C:\Program Files\b.exe"),
+    );
+    let (one_len, two_len) = (one.len(), two.len());
+    let mut root = K {
+        name: "ROOT",
+        values: Vec::new(),
+        subkeys: Vec::new(),
+        ri: false,
+    };
+    let mut select = k("Select", Vec::new());
+    for (name, n) in [
+        ("Current", 1u32),
+        ("Default", 1),
+        ("LastKnownGood", 2),
+        ("Failed", 0),
+    ] {
+        select
+            .values
+            .push((name, 4, n.to_le_bytes().to_vec(), Vec::new()));
+    }
+    root.subkeys.push(select);
+    for (name, value) in [("ControlSet001", one), ("ControlSet002", two)] {
+        let mut cache_key = k("AppCompatCache", Vec::new());
+        cache_key
+            .values
+            .push(("AppCompatCache", 3, value, Vec::new()));
+        root.subkeys.push(k(
+            name,
+            vec![k("Control", vec![k("Session Manager", vec![cache_key])])],
+        ));
+    }
+    let c = read_system(hive(&root), &[]).unwrap();
+    assert_eq!(
+        c.select,
+        Select {
+            current: Some(1),
+            default: Some(1),
+            last_known_good: Some(2),
+            failed: Some(0),
+            problems: Vec::new(),
+        }
+    );
+    assert_eq!(c.current_control_set, Some(1));
+    let sizes: Vec<Option<usize>> = c.control_sets.iter().map(|cs| cs.value_size).collect();
+    assert_eq!(sizes, [Some(one_len), Some(two_len)]);
+    // the whole value, not an entry's data
+    let entry = &c.control_sets[0].cache.as_ref().unwrap().entries[0];
+    assert!(entry.data.len() < one_len);
+
+    // Select\Current a string, Failed missing: reported, not guessed
+    let mut select = k("Select", Vec::new());
+    select.values.push(("Current", 1, utf16("1\0"), Vec::new()));
+    for name in ["Default", "LastKnownGood"] {
+        select
+            .values
+            .push((name, 4, 1u32.to_le_bytes().to_vec(), Vec::new()));
+    }
+    root.subkeys[0] = select;
+    let c = read_system(hive(&root), &[]).unwrap();
+    assert_eq!((c.select.current, c.current_control_set), (None, None));
+    assert_eq!(c.select.last_known_good, Some(1));
+    assert_eq!(
+        c.select.problems,
+        [
+            r"Select\Current is not a REG_DWORD (type 1, 4 bytes)",
+            r"no Select\Failed value",
+        ]
+    );
+    // no Select key, and a value-less cache key
+    root.subkeys.remove(0);
+    root.subkeys[1].subkeys[0].subkeys[0].subkeys[0]
+        .values
+        .clear();
+    let c = read_system(hive(&root), &[]).unwrap();
+    assert_eq!(c.select.problems, ["no Select key"]);
+    assert_eq!(c.control_sets[1].value_size, None);
 }
 
 #[test]

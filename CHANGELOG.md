@@ -9,6 +9,14 @@
   Albert Hui and Zach Mathis (@yamatosecurity), on Rust's 2024 edition, and require Rust 1.99.
   (@YamatoSecurity)
 
+### Added
+- `SystemCaches::select`: the `SYSTEM\Select` values (`Current`, `Default`, `LastKnownGood`,
+  `Failed`), each `None` when it is missing or not a `REG_DWORD`, with the problems (no `Select`
+  key, a value missing or malformed). `current_control_set` is `select.current`.
+  (@YamatoSecurity)
+- `ControlSetCache::value_size`: the size of the `AppCompatCache` value, the whole cache, apart
+  from each entry's data size. (@YamatoSecurity)
+
 ## 0.2.0 (ys-shimcache-parser)
 
 First version of Yamato Security's fork, based on shimcache-forensic (SecurityRonin/shimcache-forensic

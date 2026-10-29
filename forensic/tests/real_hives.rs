@@ -118,6 +118,8 @@ fn a_dirty_windows11_hive_with_its_logs() {
     assert_eq!(c.recovery.logs_applied, ["SYSTEM.LOG1", "SYSTEM.LOG2"]);
     assert_eq!(c.recovery.last_sequence, Some(635));
     assert_eq!((c.current_control_set, c.is_32bit), (Some(1), Some(false)));
+    assert_eq!(c.select.last_known_good, Some(1));
+    assert_eq!(c.control_sets[0].value_size, Some(80_260));
     let _ = std::fs::remove_dir_all(dir);
 }
 
@@ -192,6 +194,18 @@ fn a_32bit_windows7_hive_with_two_control_sets() {
     let c = check("regipy-system", &dir);
     assert!(!c.recovery.dirty);
     assert_eq!(c.is_32bit, Some(true));
+    // it uses ControlSet001 and last started from ControlSet002
+    assert_eq!(
+        (
+            c.select.current,
+            c.select.default,
+            c.select.last_known_good,
+            c.select.failed
+        ),
+        (Some(1), Some(1), Some(2), Some(0))
+    );
+    let sizes: Vec<Option<usize>> = c.control_sets.iter().map(|cs| cs.value_size).collect();
+    assert_eq!(sizes, [Some(56_256), Some(56_256)]);
     let rows = c.rows();
     assert_eq!(rows.len(), 660);
     // the second control set's entries are the first's

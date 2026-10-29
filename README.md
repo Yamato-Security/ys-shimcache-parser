@@ -51,6 +51,7 @@ What the fork changes:
 | A log none of whose entries can be applied (or an old-format log with no dirty page) is not counted as applied, and the other log is tried; a dirty page must be inside its entry's hive bins (at most 2 GiB), and the hive grows only when the memory can be had. yarp counts such a log as applied, so a hive looked recovered with nothing applied | the regf specification; fork (found in review) |
 | A signed cache (Windows 8 to 11) that stops where bytes other than zeros have no entry signature, or before the count its Windows 10 / 11 header gives, is reported in `Cache::problems` | fork (found in review) |
 | Findings: a system binary is in place only in the Windows directory's `System32` or `SysWOW64` (not in any folder of that name, such as `C:\Program Files\Vendor\System32`); the entries recovered from the slack are audited too; `ys-shimcache-parser` rejects a missing `--csv` file name and unknown arguments | fork (found in review) |
+| `SystemCaches::select` (`Current`, `Default`, `LastKnownGood`, `Failed`, problems when missing or malformed) and each value's size (`ControlSetCache::value_size`, the whole cache) | fork |
 | One CI (Linux, macOS, Windows, MSRV, wasm32, cargo-deny), actions pinned by commit | fork |
 | The crates named after the repository (`ys-shimcache-parser`, `ys-shimcache-parser-core`), version 1.0.0, edition 2024, Rust 1.99 | fork |
 

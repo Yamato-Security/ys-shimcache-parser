@@ -44,8 +44,10 @@ const CACHE_KEYS: [&str; 2] = [
 pub struct SystemCaches {
     /// What was done with the hive's transaction logs.
     pub recovery: Recovery,
-    /// The control set in use (`Select\Current`).
+    /// The control set in use (`Select\Current`; `select.current`).
     pub current_control_set: Option<u32>,
+    /// `Select`: the control sets Windows chose.
+    pub select: Select,
     /// The system's architecture (`PROCESSOR_ARCHITECTURE` of the current control set is `x86`),
     /// when the hive records it.
     pub is_32bit: Option<bool>,
@@ -62,12 +64,72 @@ pub struct ControlSetCache {
     pub key_path: String,
     /// When the cache key was last written (FILETIME): when Windows last saved the cache.
     pub key_last_written: u64,
+    /// The `AppCompatCache` value's size in bytes, the whole cache (not an entry's data size);
+    /// `None` when there is no value. Less than its recorded length only in a truncated hive.
+    pub value_size: Option<usize>,
     /// The decoded cache; `None` when the value is missing or not a cache (see `error`).
     pub cache: Option<Cache>,
     /// Why there is no cache.
     pub error: Option<String>,
     /// Entries recovered from the slack of the value's cell that are not in the cache.
     pub slack: Vec<ShimcacheEntry>,
+}
+
+/// `SYSTEM\Select`: which control set Windows uses (`Current`), would use by default, last
+/// started from successfully (`LastKnownGood`) and failed to start from (`Failed`, 0 for none).
+/// Each is the number of a `ControlSetNNN`, `None` when the value is missing or isn't a
+/// `REG_DWORD`.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct Select {
+    /// `Current`.
+    pub current: Option<u32>,
+    /// `Default`.
+    pub default: Option<u32>,
+    /// `LastKnownGood`.
+    pub last_known_good: Option<u32>,
+    /// `Failed`.
+    pub failed: Option<u32>,
+    /// A missing `Select` key, and each value missing or malformed.
+    pub problems: Vec<String>,
+}
+
+impl Select {
+    /// The `Select` key of `hive`.
+    fn read(hive: &Hive) -> Self {
+        let mut select = Self::default();
+        let Some(key) = hive.key("Select") else {
+            select.problems.push("no Select key".to_owned());
+            return select;
+        };
+        let mut dword = |name: &str| {
+            let Some(v) = key.value(name) else {
+                select.problems.push(format!("no Select\\{name} value"));
+                return None;
+            };
+            let data = v.data();
+            match (v.data_type(), <[u8; 4]>::try_from(data.as_slice())) {
+                (4, Ok(n)) => Some(u32::from_le_bytes(n)),
+                (kind, _) => {
+                    select.problems.push(format!(
+                        "Select\\{name} is not a REG_DWORD (type {kind}, {} bytes)",
+                        data.len()
+                    ));
+                    None
+                }
+            }
+        };
+        let current = dword("Current");
+        let default = dword("Default");
+        let last_known_good = dword("LastKnownGood");
+        let failed = dword("Failed");
+        Self {
+            current,
+            default,
+            last_known_good,
+            failed,
+            ..select
+        }
+    }
 }
 
 /// One row of output: a control set's entry, and whether the same entry (time and path) was in
@@ -158,10 +220,8 @@ pub fn read_system_file(path: &Path) -> Result<SystemCaches, HiveError> {
 /// When `hive` is not a hive.
 pub fn read_system(hive: Vec<u8>, logs: &[LogFile]) -> Result<SystemCaches, HiveError> {
     let (hive, recovery) = Hive::open(hive, logs)?;
-    let current_control_set = hive
-        .key("Select")
-        .and_then(|k| k.value("Current"))
-        .and_then(|v| v.text().parse::<u32>().ok());
+    let select = Select::read(&hive);
+    let current_control_set = select.current;
     let is_32bit = current_control_set.and_then(|cs| {
         hive.key(&format!(
             r"ControlSet{cs:03}\Control\Session Manager\Environment"
@@ -200,6 +260,7 @@ pub fn read_system(hive: Vec<u8>, logs: &[LogFile]) -> Result<SystemCaches, Hive
             control_set: n,
             key_path: format!(r"{}\{sub}", set.name()),
             key_last_written: key.last_written(),
+            value_size: None,
             cache: None,
             error: None,
             slack: Vec::new(),
@@ -208,6 +269,7 @@ pub fn read_system(hive: Vec<u8>, logs: &[LogFile]) -> Result<SystemCaches, Hive
             None => cs.error = Some("no AppCompatCache value".to_owned()),
             Some(v) => {
                 let (data, slack) = v.data_and_slack();
+                cs.value_size = Some(data.len());
                 match decode(&data, is_32bit) {
                     Ok(cache) => {
                         cs.slack = recover_slack(&slack, &cache);
@@ -222,6 +284,7 @@ pub fn read_system(hive: Vec<u8>, logs: &[LogFile]) -> Result<SystemCaches, Hive
     Ok(SystemCaches {
         recovery,
         current_control_set,
+        select,
         is_32bit,
         control_sets,
     })
