@@ -1,5 +1,4 @@
-//! Values built here in each format (as Eric Zimmerman's AppCompatCacheParser tests build
-//! them): the executed flags, layouts, Windows XP's LRU order, damage, slack. The real values are
+//! Values built here in each format: the executed flags, layouts, Windows XP's LRU order, damage, slack. The real values are
 //! in `tests/`.
 
 use super::*;

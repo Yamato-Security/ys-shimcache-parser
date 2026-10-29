@@ -13,8 +13,7 @@
 //! [`recover_slack`].
 //!
 //! The layouts are libyal's (`winreg-kb`, *Application compatibility cache key*); what is read
-//! from them, and how, is what Eric Zimmerman's AppCompatCacheParser reads (the reference the
-//! results are checked against): Windows XP entries in the order of its LRU array, the 32 or
+//! from them, and how, is checked against a second, independent parser: Windows XP entries in the order of its LRU array, the 32 or
 //! 64 bit table layout checked against the data, the Windows 10 executed tag rather than "the
 //! last 4 bytes are 1", `\??\` removed from paths, invalid times as none.
 //!
@@ -71,7 +70,7 @@ pub enum ShimcacheFormat {
 }
 
 impl ShimcacheFormat {
-    /// The Windows versions that write it, as Eric Zimmerman's AppCompatCacheParser names them.
+    /// The Windows versions that write it.
     #[must_use]
     pub fn name(self) -> &'static str {
         match self {
@@ -132,7 +131,7 @@ pub struct ShimcacheEntry {
 
 impl ShimcacheEntry {
     /// The last-modification time when the stored value is one: `None` for 0, values past
-    /// 9999-12-31 and times in the year 1601 (as AppCompatCacheParser shows them).
+    /// 9999-12-31 and times in the year 1601.
     #[must_use]
     pub fn last_modified(&self) -> Option<u64> {
         filetime(self.last_modified_filetime)
@@ -168,7 +167,7 @@ impl ShimcacheEntry {
         PackageRecord::parse(&self.path)
     }
 
-    /// The key AppCompatCacheParser marks duplicates by: the time and the path in upper case.
+    /// The key duplicates are marked by: the time and the path in upper case.
     #[must_use]
     pub fn key(&self) -> (u64, String) {
         (self.last_modified().unwrap_or(0), self.path.to_uppercase())
@@ -420,7 +419,9 @@ pub fn recover_slack(slack: &[u8], cache: &Cache) -> Vec<ShimcacheEntry> {
 /// A slack entry that is one: a path without control characters (a tab is in packaged app
 /// records), of a whole number of UTF-16 units.
 fn plausible(e: &ShimcacheEntry) -> bool {
-    !e.path.is_empty() && e.path_size % 2 == 0 && e.path.chars().all(|c| c >= ' ' || c == '\t')
+    !e.path.is_empty()
+        && e.path_size.is_multiple_of(2)
+        && e.path.chars().all(|c| c >= ' ' || c == '\t')
 }
 
 // ── Windows XP ─────────────────────────────────────────────────────────────────────────────
@@ -633,10 +634,11 @@ fn table_entry(
             )
         };
         // data that isn't in the value is left out, not an error
-        if size > 0 && (size as i64) > 0 {
-            if let Some(b) = slice(blob, offset, size) {
-                data = b.to_vec();
-            }
+        if size > 0
+            && (size as i64) > 0
+            && let Some(b) = slice(blob, offset, size)
+        {
+            data = b.to_vec();
         }
     }
     Ok(ShimcacheEntry {
@@ -645,7 +647,7 @@ fn table_entry(
         last_modified_filetime: read_u64(e, l.time_at).unwrap_or(0),
         executed: flags_are_executed.then_some(flags & 0x2 != 0),
         // on 32-bit Windows 2003 this dword is the file size, on Vista the insertion flags:
-        // kept as it is, executed unknown (as AppCompatCacheParser has it)
+        // kept as it is, executed unknown
         insert_flags: Some(flags),
         shim_flags: None,
         file_size: None,
@@ -686,8 +688,8 @@ fn decode_signed(blob: &[u8], start: usize, cache: &mut Cache) {
         }
     }
     // The cache ends at the first place without an entry signature: in a whole value, its end
-    // (or zeros after it). AppCompatCacheParser stops there without a word; a damaged
-    // signature would hide the entries after it, so it is reported.
+    // (or zeros after it). A damaged signature would hide the entries after it, so it is
+    // reported.
     let n = cache.entries.len();
     let rest = blob.get(i..).unwrap_or_default();
     if rest.iter().any(|&b| b != 0) {
@@ -813,7 +815,9 @@ fn filetime(ft: u64) -> Option<u64> {
 /// UTF-16LE, lossily (an unpaired surrogate is U+FFFD).
 fn utf16(b: &[u8]) -> String {
     let units: Vec<u16> = b
-        .chunks_exact(2)
+        .as_chunks::<2>()
+        .0
+        .iter()
         .map(|c| u16::from_le_bytes([c[0], c[1]]))
         .collect();
     String::from_utf16_lossy(&units)

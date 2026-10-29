@@ -144,10 +144,12 @@ fn analyze_blob_on_real_win7_cfreds_cache() {
     // data-leakage scenario — an executable from the Recycle Bin. The analyzer surfaces these as
     // suspicious-path leads; System32 binaries at their normal paths raise no masquerading hit.
     assert_ne!(report.anomalies, Vec::<ShimcacheAnomaly>::new());
-    assert!(report
-        .anomalies
-        .iter()
-        .all(|a| matches!(a, ShimcacheAnomaly::SuspiciousPath { .. })));
+    assert!(
+        report
+            .anomalies
+            .iter()
+            .all(|a| matches!(a, ShimcacheAnomaly::SuspiciousPath { .. }))
+    );
     // The Recycle-Bin execution is present — a high-value lead in a data-leakage case.
     assert!(report.anomalies.iter().any(|a| matches!(
         a,

@@ -142,23 +142,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "shimcache-core"
-version = "0.2.0"
-dependencies = [
- "serde_json",
-]
-
-[[package]]
-name = "shimcache-forensic"
-version = "0.2.0"
-dependencies = [
- "flate2",
- "forensicnomicon",
- "serde_json",
- "shimcache-core",
-]
-
-[[package]]
 name = "simd-adler32"
 version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -180,6 +163,23 @@ name = "unicode-ident"
 version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563"
+
+[[package]]
+name = "ys-shimcache-parser"
+version = "1.0.0"
+dependencies = [
+ "flate2",
+ "forensicnomicon",
+ "serde_json",
+ "ys-shimcache-parser-core",
+]
+
+[[package]]
+name = "ys-shimcache-parser-core"
+version = "1.0.0"
+dependencies = [
+ "serde_json",
+]
 
 [[package]]
 name = "zlib-rs"

@@ -3,7 +3,7 @@
 //! Windows XP key, a control set without the value, the architecture, and damage.
 #![allow(clippy::unwrap_used)]
 
-use shimcache_forensic::{read_system, Hive};
+use shimcache_forensic::{Hive, read_system};
 
 const WHEN: u64 = 133_000_000_000_000_000;
 

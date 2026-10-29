@@ -1,5 +1,5 @@
-//! Real `SYSTEM` hives against Eric Zimmerman's AppCompatCacheParser (its library's output and
-//! its CSV for each, `data/oracle/`), through the library and the `ys-shimcache-parser` binary:
+//! Real `SYSTEM` hives against a second, independent parser (its library's output and its CSV
+//! for each, `data/oracle/`), through the library and the `ys-shimcache-parser` binary:
 //!
 //! - the DFIR Artifact Museum's dirty Windows 11 hive (MIT) with its two transaction logs, and
 //!   without them;
@@ -10,7 +10,7 @@
 #![allow(clippy::unwrap_used)]
 
 use serde_json::Value;
-use shimcache_forensic::{read_system_file, SystemCaches};
+use shimcache_forensic::{SystemCaches, read_system_file};
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
@@ -37,20 +37,20 @@ const LOG1: &str = "python-registry/new_log_1";
 
 fn check(name: &str, dir: &Path) -> SystemCaches {
     let caches = read_system_file(&dir.join("SYSTEM")).unwrap();
-    let ez: Value = serde_json::from_str(
+    let oracle: Value = serde_json::from_str(
         &std::fs::read_to_string(data().join(format!("oracle/{name}.json"))).unwrap(),
     )
     .unwrap();
-    let ec = ez["caches"].as_array().unwrap();
-    assert_eq!(caches.control_sets.len(), ec.len(), "{name}");
-    for (cs, x) in caches.control_sets.iter().zip(ec) {
+    let want = oracle["caches"].as_array().unwrap();
+    assert_eq!(caches.control_sets.len(), want.len(), "{name}");
+    for (cs, x) in caches.control_sets.iter().zip(want) {
         assert_eq!(
             u64::from(cs.control_set),
             x["control_set"].as_u64().unwrap(),
             "{name}"
         );
         let cache = cs.cache.as_ref().unwrap();
-        assert_eq!(cache.format.name(), ez["os"], "{name}");
+        assert_eq!(cache.format.name(), oracle["os"], "{name}");
         assert_eq!(
             cache.problems.len(),
             x["errors"].as_array().unwrap().len(),
@@ -80,7 +80,7 @@ fn check(name: &str, dir: &Path) -> SystemCaches {
             }
         }
     }
-    // the CSV, as AppCompatCacheParser writes it (SourceFile aside)
+    // the CSV, as the oracle writes it (SourceFile aside)
     let out = dir.join("out.csv");
     let run = std::process::Command::new(env!("CARGO_BIN_EXE_ys-shimcache-parser"))
         .arg(dir.join("SYSTEM"))

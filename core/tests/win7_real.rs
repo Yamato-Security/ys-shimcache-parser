@@ -11,7 +11,7 @@
 //! Provenance: `core/tests/data/README.md`.
 #![allow(clippy::unwrap_used)]
 
-use shimcache_core::{detect_format, parse, ShimcacheFormat};
+use shimcache_core::{ShimcacheFormat, detect_format, parse};
 
 const BLOB: &[u8] = include_bytes!("data/win7_appcompatcache.bin");
 
