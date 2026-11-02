@@ -3,6 +3,10 @@
 ## 1.0.0 (Unreleased)
 
 ### Changed
+- License: ys-shimcache-parser is now copyright Shirofune Security Co., Ltd. and released under the
+  Reciprocal Public License 1.5 (RPL-1.5) instead of Apache-2.0. Upstream's code stays under
+  Apache-2.0 (`LICENSE-APACHE`). Every Rust file carries the copyright and the RPL License Notice;
+  those changed from upstream also name it, with its copyright and license. (@YamatoSecurity)
 - The crates are named after their repository: `ys-shimcache-parser` (was `shimcache-forensic`;
   library `shimcache_forensic`, and the `ys-shimcache-parser` command) and
   `ys-shimcache-parser-core` (was `shimcache-core`; library `shimcache_core`), version 1.0.0, by

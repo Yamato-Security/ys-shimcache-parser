@@ -1,9 +1,10 @@
 # ys-shimcache-parser
 
 Yamato Security's maintained fork of Security Ronin's
-[shimcache-forensic](https://github.com/SecurityRonin/shimcache-forensic) (Albert Hui,
-Apache-2.0): the Windows AppCompatCache (ShimCache) parser used by
-[Juntei](https://github.com/Yamato-Security/juntei). Upstream's history is kept, with its licence.
+[shimcache-forensic](https://github.com/SecurityRonin/shimcache-forensic) (Albert Hui, Apache-2.0):
+the Windows AppCompatCache (ShimCache) parser used by
+[Juntei](https://github.com/Yamato-Security/juntei). Upstream's history is kept, and its code stays
+under its licence (see [Licence](#licence)).
 
 | Crate | What it reads |
 | --- | --- |
@@ -135,7 +136,11 @@ The data found for this work is also kept, with its licences, in
 
 ## Licence
 
-Apache-2.0 (`LICENSE`), as upstream. The test data keeps its licences, each beside it: the DFIR
-Artifact Museum's, regipy's and artemis's (MIT), python-registry's (Apache-2.0), and the NIST
-CFReDS value (public domain). The reference parser was only run to write the expected values,
-never included.
+ys-shimcache-parser is copyright Shirofune Security Co., Ltd. and released under the [Reciprocal
+Public License 1.5](LICENSE) (RPL-1.5); its source code was published under Apache-2.0 before
+version 1.0.0. It is changed from
+[shimcache-forensic](https://github.com/SecurityRonin/shimcache-forensic) (copyright Albert Hui),
+whose code stays under the Apache License 2.0 (`LICENSE-APACHE`): each Rust file changed from it
+says so in its header. The test data keeps its licences, each beside it: the DFIR Artifact Museum's,
+regipy's and artemis's (MIT), python-registry's (Apache-2.0), and the NIST CFReDS value (public
+domain). The reference parser was only run to write the expected values, never included.
