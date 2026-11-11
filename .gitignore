@@ -4,3 +4,6 @@ Cargo.lock.bak
 /site
 fuzz/target
 fuzz/Cargo.lock
+
+# Local environment files may contain secrets.
+.env
