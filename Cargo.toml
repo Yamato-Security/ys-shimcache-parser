@@ -23,7 +23,7 @@ publish = false
 # lives here too, so a bump touches one line instead of every member + dev-dep.
 [workspace.dependencies]
 shimcache-core = { package = "ys-shimcache-parser-core", path = "core", version = "1.0.0" }
-forensicnomicon = "1"
+forensicnomicon = "1.12.1"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

@@ -10,7 +10,7 @@ cargo-fuzz = true
 [workspace]
 
 [dependencies]
-libfuzzer-sys = "0.4"
+libfuzzer-sys = "0.4.13"
 shimcache-core = { package = "ys-shimcache-parser-core", path = "../core" }
 shimcache-forensic = { package = "ys-shimcache-parser", path = "../forensic" }
 

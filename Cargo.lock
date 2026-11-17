@@ -16,18 +16,18 @@ checksum = "4e7648175b45a9a48536d676f68d918270699102aa8dab5496df06904c914600"
 
 [[package]]
 name = "crc32fast"
-version = "1.5.3"
+version = "1.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ba106e844045ddc02c20768ac4b0b7cb45f2cc2ecbd833ac9f5dacb183c2055"
+checksum = "2b929dd2a135771f40afabd1073f85eed59c800b7c61901e5c254270497dad64"
 dependencies = [
  "cfg-if",
 ]
 
 [[package]]
 name = "flate2"
-version = "1.1.10"
+version = "1.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e634e2e0ebac1ee034020da1ca582e17ffe4e0f5e985823721e168928136dcb"
+checksum = "626d4928326b646e70f65ed36fc7cf9f206bdb68a0019ee7c6b4709da4e084c4"
 dependencies = [
  "crc32fast",
  "miniz_oxide",
@@ -36,9 +36,9 @@ dependencies = [
 
 [[package]]
 name = "forensicnomicon"
-version = "1.6.0"
+version = "1.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67913b90ecf5c59b7d507927fc1ec496413ec252ffb6734f15876726b8fc7221"
+checksum = "b644b342c6bc8b81d33a173542042baba336764c85429536ececd437c44c26aa"
 dependencies = [
  "forensicnomicon-core",
  "forensicnomicon-data",
@@ -46,24 +46,24 @@ dependencies = [
 
 [[package]]
 name = "forensicnomicon-core"
-version = "1.1.0"
+version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b81fa3bf717c97e0b7a877f30e6bf4abaf9dca751d970dab9292d03ae757d152"
+checksum = "3b246d2a6b4b0ccc60485626363ce41437cf7c8276a4d08ce888bdada63c2c35"
 
 [[package]]
 name = "forensicnomicon-data"
-version = "1.2.1"
+version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81a1473002767608b095a3dcd657ffb3c4c6e421c5cfe9fdca70a30fe477e0b7"
+checksum = "1af1e5fc4a0cdafce257a88d807f4599b4cf204d6631be87ded01b5c0442d8c5"
 dependencies = [
  "forensicnomicon-core",
 ]
 
 [[package]]
 name = "itoa"
-version = "1.0.18"
+version = "1.0.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682"
+checksum = "3bd1574e617a9a6c1f8f8181bd7e841e1f20e4277607ef28945765188d6284d4"
 
 [[package]]
 name = "memchr"
@@ -149,9 +149,9 @@ checksum = "3a219298ac11a56ea9a6d2120044824d6f01aeb034955e7af7bc16858527deea"
 
 [[package]]
 name = "syn"
-version = "3.0.9"
+version = "3.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d78c8dee4c7bf0e14673097256fed6142ce9d3b85a408189d07482442145823b"
+checksum = "4ae9ccbea3a7b0b09443036490c8f34a8b1b760fd345e5c0dae0aac718faea79"
 dependencies = [
  "proc-macro2",
  "quote",
