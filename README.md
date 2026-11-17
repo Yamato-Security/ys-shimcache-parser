@@ -134,6 +134,16 @@ Artifact Museum; and the projects whose test data is used here: regipy, python-r
 The data found for this work is also kept, with its licences, in
 [juntei-sample-data](https://github.com/Yamato-Security/juntei-sample-data) (`Shimcache/`).
 
+## Contributing
+
+Contributions require this repository's [Contributor License Agreement](CLA.md).
+It permits **Zachary Mathis** and **Shirofune Security Co., Ltd.** to use and
+sell covered contributions in proprietary editions, while accepted contributions
+also remain available in the free, open-source community edition.
+Read [how to sign](CONTRIBUTING.md#how-to-sign). The `cla/required` check uses
+the [maintainer-verified signer registry](.github/cla/signatures.json); first-time
+signatures require verification and registration.
+
 ## Licence
 
 ys-shimcache-parser is copyright Shirofune Security Co., Ltd. and released under the [Reciprocal
