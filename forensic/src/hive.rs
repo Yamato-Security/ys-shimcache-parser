@@ -384,7 +384,7 @@ impl Value<'_> {
     pub fn text(&self) -> String {
         let d = self.data();
         if self.data_type() == 4 {
-            return u32_at(&d, 0).map(|n| n.to_string()).unwrap_or_default();
+            return u32_at(&d, 0).map_or_default(|n| n.to_string());
         }
         let units: Vec<u16> = d
             .as_chunks::<2>()

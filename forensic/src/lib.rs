@@ -249,8 +249,7 @@ pub fn read_system(hive: Vec<u8>, logs: &[LogFile]) -> Result<SystemCaches, Hive
     });
     let mut sets: Vec<(u32, hive::Key<'_>)> = hive
         .root()
-        .map(|r| r.subkeys())
-        .unwrap_or_default()
+        .map_or_default(|r| r.subkeys())
         .into_iter()
         .filter_map(|k| {
             let name = k.name();
